@@ -1,17 +1,31 @@
 import React, { Component } from 'react';
-import { Text, View, AppRegistry} from 'react-native';
+import { Provider } from 'react-redux';
+//import { StyleSheet, Text, View } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
-import Splash from './Splash';
-import Login from './src/components/Login/Login';
+import store from './store';
+import MainScreen from './screens/MainScreen';
 
-export default class ButtonBasics extends Component {
+export default class App extends React.Component {
   render() {
+    const MainNavigator = StackNavigator({
+      Main: { screen: MainScreen }
+    });
+
     return (
-     <Login />
+    <Provider store={store}>
+      <MainNavigator />
+    </Provider>
     );
   }
 }
 
-
-// skip this line if using Create React Native App
-AppRegistry.registerComponent('AwesomeProject', () => ButtonBasics);
+/*const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+*/
