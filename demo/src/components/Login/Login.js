@@ -12,7 +12,7 @@ export default class Login extends Component{
                     style={styles.logo}
                     source={require('../../images/Octocat.png')} 
                     />
-                    <Text style={styles.title}>An app made for github using React Native</Text>
+                    <Text style={styles.title}>Ana app made for github using React Native</Text>
                 </View>
                 <View style={styles.formContainer}>
                     <LoginForm />
