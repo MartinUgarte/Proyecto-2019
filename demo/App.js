@@ -1,26 +1,17 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-//import { StyleSheet, Text, View } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StyleSheet, Text, View, AppRegistry } from 'react-native';
 
-import store from './store';
-import MainScreen from './screens/MainScreen';
+import Login from './src/components/Login/Login';
 
 export default class App extends React.Component {
   render() {
-    const MainNavigator = StackNavigator({
-      Main: { screen: MainScreen }
-    });
-
-    return (
-    <Provider store={store}>
-      <MainNavigator />
-    </Provider>
+    return(
+      <Login />
     );
   }
 }
 
-/*const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -28,4 +19,5 @@ export default class App extends React.Component {
     justifyContent: 'center',
   },
 });
-*/
+
+AppRegistry.registerComponent('AwesomeProject', () => App );
