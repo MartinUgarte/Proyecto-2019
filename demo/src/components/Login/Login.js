@@ -3,6 +3,7 @@ import { StyleSheet, View, Image, Text, KeyboardAvoidingView } from 'react-nativ
 import LoginForm from './LoginForm';
 
 export default class Login extends Component{
+
     render(){
         return(
 

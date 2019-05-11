@@ -1,7 +1,32 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
+import { StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar, Button} from 'react-native';
+
+export class Botoncito extends Component {
+    render(){
+        return (
+                
+                <TouchableOpacity 
+                style={this.props.status ? styles.buttonContainer2 : styles.buttonContainer1}>
+                    <Text style={styles.buttonText}>LOGIN</Text>
+                </TouchableOpacity>
+        
+        )
+    }
+}
 
 export default class LoginForm extends Component{
+
+    constructor(){
+        super()
+
+        this.state = {status: true}
+    }
+    clicked(){
+        this.setState({
+            status: !this.state.status
+        })
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -27,9 +52,12 @@ export default class LoginForm extends Component{
                 ref={(input) => this.passwordInput} 
                 />
 
-                <TouchableOpacity style={styles.buttonContainer}>
-                    <Text style={styles.buttonText}>LOGIN</Text>
+                <Botoncito status={this.state.status} />
+                
+                <TouchableOpacity style={styles.buttonContainer1}>
+                    <Text style={styles.buttonText} onPress={this.clicked.bind(this)}>SORPRESA</Text>
                 </TouchableOpacity>
+                
             </View>
         );
     }
@@ -46,9 +74,15 @@ const styles = StyleSheet.create({
         color: '#FFF',
         paddingHorizontal: 10,
     },
-    buttonContainer: {
+    buttonContainer1: {
         backgroundColor: '#2980b9',
-        paddingVertical: 15
+        paddingVertical: 15,
+        marginBottom: 20
+    },
+    buttonContainer2: {
+        backgroundColor: '#f92672',
+        paddingVertical: 15,
+        marginBottom: 20
     },
     buttonText: {
         textAlign: 'center',
