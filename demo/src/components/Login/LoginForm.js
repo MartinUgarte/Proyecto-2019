@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar, Button} from 'react-native';
+import { StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar, Button, ActivityIndicator, CheckBox} from 'react-native';
 
 export class Botoncito extends Component {
     render(){
@@ -55,13 +55,33 @@ export default class LoginForm extends Component{
                 <Botoncito status={this.state.status} />
                 
                 <TouchableOpacity style={styles.buttonContainer1}>
-                    <Text style={styles.buttonText} onPress={this.clicked.bind(this)}>SORPRESA</Text>
+                    <Text                 
+                    style={styles.buttonText} onPress={this.clicked.bind(this)}>SORPRESA</Text>
                 </TouchableOpacity>
+
+                <Button
+                onPress={onPressSaludar}
+                title="Saludar"
+                color="#841584"
+                accessibilityLabel="Botón para saludar"
+                />
+
+                <ActivityIndicator size="large" color="#0000ff" />
+
+                <CheckBox
+                title='Click Here'
+                checked={this.state.checked}
+/>
                 
             </View>
         );
     }
 }
+
+const onPressSaludar = () => {
+    alert('¡Hola, soy una alerta!')
+   }
+   
 
 const styles = StyleSheet.create({
     container: {

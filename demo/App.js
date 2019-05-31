@@ -1,23 +1,25 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, AppRegistry } from 'react-native';
+import React from 'react';
+import { Button, View, Text } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
 
-import Login from './src/components/Login/Login';
+import Home from './src/components/Home'
+import Friends from './src/components/Friends'
+
+
+const RootStack = createStackNavigator(
+  {
+    Home: Home,
+    Friends: Friends,
+  },
+  {
+    initialRouteName: 'Home',
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
 
 export default class App extends React.Component {
   render() {
-    return(
-      <Login />
-    );
+    return <AppContainer />;
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-AppRegistry.registerComponent('AwesomeProject', () => App );
