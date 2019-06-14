@@ -5,7 +5,8 @@ import { createStackNavigator, createAppContainer } from 'react-navigation'; // 
 import Home from './src/components/Home'
 import Friends from './src/components/Friends'
 import Animations from './src/components/Animations'
-import Carousel from './src/components/Carousel'
+import Login from './src/components/Login/Login'
+
 
 
 
@@ -15,11 +16,11 @@ const RootStack = createStackNavigator(
     Home: Home,
     Friends: Friends,
     Animations: Animations,
-    Carousel: Carousel,
+    Login: Login,
 
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Login',
   }
 );
 

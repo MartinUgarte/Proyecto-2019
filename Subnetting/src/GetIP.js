@@ -1,31 +1,20 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, KeyboardAvoidingView } from 'react-native';
-
-import {NetworkInfo} from 'react-native-network-info';
+import { StyleSheet, View, Image, Text, KeyboardAvoidingView, TextInput, Button, StatusBar } from 'react-native';
 
 export default class GetIP extends Component {
 
-    componentDidMount() {
-        console.log(NetworkInfo);
-
-        async function getIP() {
-            return await NetworkInfo.getIPAddress();
-        }
-        getIP().then( (IP) => {
-            console.log(IP);
-        } );
         
-    }
-
-    
 
     render() {
         return(
-          <View style={styles.container}>
-          <StatusBar
-          barStyle="light-content"
-          />
-              <TextInput
+          <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        
+
+          <View style={styles.formContainer}>
+          
+            <StatusBar barStyle="light-content" />
+
+            <TextInput
               placeholder="Username or Email" 
               placeholderTextColor="rgba(255,255,255,0.7)"
               returnKeyType="next"
@@ -35,6 +24,7 @@ export default class GetIP extends Component {
               autoCorrect={false}
               style={styles.input} 
               />
+
               <TextInput
               placeholder="Password" 
               placeholderTextColor="rgba(255,255,255,0.7)"
@@ -44,28 +34,14 @@ export default class GetIP extends Component {
               ref={(input) => this.passwordInput} 
               />
 
-              <Botoncito status={this.state.status} />
-              
-              <TouchableOpacity style={styles.buttonContainer1}>
-                  <Text                 
-                  style={styles.buttonText} onPress={this.clicked.bind(this)}>SORPRESA</Text>
-              </TouchableOpacity>
-
               <Button
               onPress={onPressSaludar}
-              title="Saludar"
+              title="Saludasssr"
               color="#841584"
               accessibilityLabel="Botón para saludar"
               />
-
-              <ActivityIndicator size="large" color="#0000ff" />
-
-              <CheckBox
-              title='Click Here'
-              checked={this.state.checked}
-/>
-              
-          </View>
+              </View>
+          </KeyboardAvoidingView>
         );
     }
 }
