@@ -7,9 +7,9 @@ export default class Friends extends React.Component {
       <View style={styles.container}>
         <Text>Add friends here! </Text>
         <Button
-          title="Back to home"
+          title="GO TO ANIMATIONS"
           onPress={() =>
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('Animations')
           }
         />
       </View>

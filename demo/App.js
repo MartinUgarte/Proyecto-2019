@@ -4,12 +4,19 @@ import { createStackNavigator, createAppContainer } from 'react-navigation'; // 
 
 import Home from './src/components/Home'
 import Friends from './src/components/Friends'
+import Animations from './src/components/Animations'
+import Carousel from './src/components/Carousel'
+
+
 
 
 const RootStack = createStackNavigator(
   {
     Home: Home,
     Friends: Friends,
+    Animations: Animations,
+    Carousel: Carousel,
+
   },
   {
     initialRouteName: 'Home',

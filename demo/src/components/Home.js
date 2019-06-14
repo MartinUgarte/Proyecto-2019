@@ -7,9 +7,16 @@ export default class Home extends React.Component {
       <View style={styles.container}>
         <Text>We have no friends! </Text>
         <Button
-          title="Add some friends"
+          title="Ir a amigos"
           onPress={() =>
             this.props.navigation.navigate('Friends')
+          }
+        />
+        <Button
+          style={styles.estiloBoton}
+          title="Ir a animaciones"
+          onPress={() =>
+            this.props.navigation.navigate('Carousel')
           }
         />
       </View>
@@ -24,4 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  estiloBoton: {
+    marginTop: 40,
+  }
 });
