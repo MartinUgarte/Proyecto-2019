@@ -26,7 +26,7 @@ const RootStack = createStackNavigator(
     Bienvenida: Bienvenida
   },
   {
-    initialRouteName: 'Inicio',
+    initialRouteName: 'Login',
   }
 );
 
