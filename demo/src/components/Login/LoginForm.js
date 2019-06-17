@@ -1,7 +1,7 @@
 //Importar paquetes de React Native
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar, Alert, Button, ActivityIndicator, CheckBox} from 'react-native';
-import {console} from 'console';
+import fetchTimeout from 'fetch-timeout';
 
 
 // Clase para realizar el protocolo
@@ -12,7 +12,7 @@ export default class LoginForm extends Component{
 
         //Variables a utilizar
         this.state = {
-            valueIP: "192.168.0.1",
+            valueIP: "192.168.100.16",
             valueMask: "255.255.255.0"
         }
     }
@@ -77,37 +77,75 @@ export default class LoginForm extends Component{
 
         //alert("La operación AND de la IP con la Mascara de Red es: " + mascaraSubredPrimerByte + "." + mascaraSubredSegundoByte + "." + mascaraSubredTercerByte + "." + mascaraSubredCuartoByte + ". La cantidad de hosts posibles en el primer byte son " + hostsPosiblesPrimerByte + ", en el segundo " + hostsPosiblesSegundoByte + ", en el tercero " + hostsPosiblesTercerByte + " y en el cuarto " + hostsPosiblesCuartoByte);
         
-        
         var ipHostSegundoByte;
         var ipHostTercerByte;
-        var ipHostCuartoByte;     
+        var ipHostCuartoByte; 
+        var serverIP = "hola";
 
-        for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
+        /*for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
             ipHostSegundoByte = mascaraSubredSegundoByte + i;
             for (var j = 0; j <= hostsPosiblesTercerByte; j++){
                 ipHostTercerByte = mascaraSubredTercerByte + j;
                 for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
                     ipHostCuartoByte = mascaraSubredCuartoByte + k;
-                    //Envía un post a todos los hosts posibles en la red----------------------------------------------
-                    /*fetch('http://192.168.100.16:3000', {
-                        method: 'POST',
-                        headers: {
-                            Accept: 'application/json',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            firstParam: 'yourValue',
-                            secondParam: 'yourOtherValue',
-                        }),
-                    });*/
-                    //Envía un post a todos los hosts posibles en la red----------------------------------------------
+                    serverIP = this.BuscarServidor(mascaraSubredPrimerByte, ipHostSegundoByte, ipHostTercerByte, ipHostCuartoByte);
+                    Alert.alert("T",serverIP.msg);
+                    if (serverIP.msg === 'Si'){
+                        Alert.alert(mascaraSubredPrimerByte.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString());
+                    }
                 }
             }
-        }
-
-        Alert.alert(mascaraSubredPrimerByte.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString());
+        }*/
+        
+        //Alert.alert(mascaraSubredPrimerByte.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString());
     
+        fetchTimeout('http://192.168.100.16:3000/server', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                msg: 'Sos el servidor?'
+            })
+        }, 500)
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    if(responseJson.msg === "Si"){
+                        Alert.alert("Direccion IP del Servidor", "192.168.100.16");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
     }
+
+    /*BuscarServidor = (primerByte, segundoByte, tercerByte, cuartoByte) => {
+    
+        //Envía un post a todos los hosts posibles en la red----------------------------------------------
+        return fetchTimeout('http://' + primerByte.toString() + "." + segundoByte.toString() + "." + tercerByte.toString() + "." + cuartoByte.toString() + ':3000/server', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                msg: 'Sos el servidor?'
+            })
+        }, 500)
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    return responseJson.msg;
+                    if( responseJson.msg=== 'Si'){
+                        Alert.alert(mascaraSubredPrimerByte.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString());
+
+                    }
+                })
+                .catch((error) => {
+                    //console.error(error);
+                });
+                //Envía un post a todos los hosts posibles en la red----------------------------------------------
+    }*/
 
     //Lo que se ve en la pantalla
     render(){
