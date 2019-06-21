@@ -11,6 +11,8 @@ import Login from './src/components/Login/Login'
 //Proyecto Posta
 import Inicio from './src/screens/Inicio'
 import Bienvenida from './src/screens/Bienvenida'
+import SobreNosotros from './src/screens/SobreNosotros'
+
 
 
 // ATENTI: Modificar en el initialRouteName la pantalla que se quiere testear
@@ -23,10 +25,11 @@ const RootStack = createStackNavigator(
 //-----------------------------------------------
 
     Inicio: Inicio,
-    Bienvenida: Bienvenida
+    Bienvenida: Bienvenida,
+    SobreNosotros: SobreNosotros
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Inicio',
   }
 );
 
