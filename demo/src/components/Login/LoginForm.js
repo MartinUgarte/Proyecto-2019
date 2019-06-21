@@ -17,7 +17,7 @@ export default class LoginForm extends Component{
         }
     }
 
-    //Cambia el valor de "valueIP" a lo ingresado en el TextInput
+    /*//Cambia el valor de "valueIP" a lo ingresado en el TextInput
     onChangeTextIP = (valueIP) => {
         this.setState({ valueIP });
     }
@@ -25,18 +25,164 @@ export default class LoginForm extends Component{
     //Cambia el valor de "valueMask" a lo ingresado en el TextInput
     onChangeTextMask = (valueMask) => {
         this.setState({ valueMask });
+    }*/
+
+    /*guardarIPyMascara(){
+        //IPByte es un array que guarda string de la IP, separandolos por el punto
+        var IPByte = this.state.valueIP.split(".");
+        //MaskByte es un array que guarda string de la Mascara de subred, separandolos por el punto
+        var MaskByte = this.state.valueMask.split(".");
+        //Convierte el primer byte de la IP en un int
+
+        Alert.alert("Espere por favor");
+
+        var primerByteIP = 10 //parseInt(IPByte[0]);
+        var segundoByteIP = 8 //parseInt(IPByte[1]);
+        var tercerByteIP = 17 //parseInt(IPByte[2]);
+        var cuartoByteIP = 11 //parseInt(IPByte[3]);
+        var primerByteMask = 255 //parseInt(MaskByte[0]);
+        var segundoByteMask = 255 //parseInt(MaskByte[1]);
+        var tercerByteMask = 255  //parseInt(MaskByte[2]);
+        var cuartoByteMask = 0  //parseInt(MaskByte[3]);
+
+        var mascaraSubredPrimerByte = primerByteIP & primerByteMask;
+        var mascaraSubredSegundoByte = segundoByteIP & segundoByteMask;
+        var mascaraSubredTercerByte = tercerByteIP & tercerByteMask;
+        var mascaraSubredCuartoByte = cuartoByteIP & cuartoByteMask;
+
+        var hostsPosiblesPrimerByte = 255 - primerByteMask;
+        var hostsPosiblesSegundoByte = 255 - segundoByteMask;
+        var hostsPosiblesTercerByte = 255 - tercerByteMask;
+        var hostsPosiblesCuartoByte = 255 - cuartoByteMask;
+
+        var ipHostSegundoByte;
+        var ipHostTercerByte;
+        var ipHostCuartoByte; 
+        
+        let requests = [];
+
+        for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
+            ipHostSegundoByte = mascaraSubredSegundoByte + i;
+            for (var j = 0; j <= hostsPosiblesTercerByte; j++){
+                ipHostTercerByte = mascaraSubredTercerByte + j;
+                for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
+                    ipHostCuartoByte = mascaraSubredCuartoByte + k;
+                    requests.push(
+                        fetchTimeout('http://' + primerByteIP.toString() + "." + segundoByteIP.toString() + "." + tercerByteIP.toString() + "." + cuartoByteIP.toString() + ':3000/server', {
+                            method: 'POST',
+                            headers: {
+                                Accept: 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                msg: 'Sos el servidor?'
+                            })
+                        }, 500)
+                            .then(async (response) => {
+                                const body = await response.text();
+                                if (response.status !== 200) {
+                                    return Promise.resolve(primerByteIP.toString() + "." + segundoByteIP.toString() + "." + tercerByteIP.toString() + "." + cuartoByteIP.toString());
+                                }
+                            })
+                            .catch((e) => {
+                                console.error(e)
+                                return Promise.resolve(false);
+                            })
+                    )
+                }
+            }
+        }
+
+        await Promise.all(requests).then((results) => {
+            Alert.alert("Ya se enviaron todas las requests", results[12]);
+        })
+
+    }*/
+
+    guardarIPyMascara = () => {
+        var promises = [];
+        var IPs = [];
+
+        Alert.alert("Espere por favor");
+
+        var primerByteIP = 10 //parseInt(IPByte[0]);
+        var segundoByteIP = 8 //parseInt(IPByte[1]);
+        var tercerByteIP = 17 //parseInt(IPByte[2]);
+        var cuartoByteIP = 11 //parseInt(IPByte[3]);
+        var primerByteMask = 255 //parseInt(MaskByte[0]);
+        var segundoByteMask = 255 //parseInt(MaskByte[1]);
+        var tercerByteMask = 255  //parseInt(MaskByte[2]);
+        var cuartoByteMask = 0  //parseInt(MaskByte[3]);
+
+        var mascaraSubredPrimerByte = primerByteIP & primerByteMask;
+        var mascaraSubredSegundoByte = segundoByteIP & segundoByteMask;
+        var mascaraSubredTercerByte = tercerByteIP & tercerByteMask;
+        var mascaraSubredCuartoByte = cuartoByteIP & cuartoByteMask;
+
+        var hostsPosiblesPrimerByte = 255 - primerByteMask;
+        var hostsPosiblesSegundoByte = 255 - segundoByteMask;
+        var hostsPosiblesTercerByte = 255 - tercerByteMask;
+        var hostsPosiblesCuartoByte = 255 - cuartoByteMask;
+
+        var ipHostSegundoByte;
+        var ipHostTercerByte;
+        var ipHostCuartoByte; 
+
+        for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
+            ipHostSegundoByte = mascaraSubredSegundoByte + i;
+            for (var j = 0; j <= hostsPosiblesTercerByte; j++){
+                ipHostTercerByte = mascaraSubredTercerByte + j;
+                for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
+                    ipHostCuartoByte = mascaraSubredCuartoByte + k;
+                    promises.push(this.llamadaAlServidor(primerByteIP.toString() + "." + segundoByteIP.toString() + "." + tercerByteIP.toString() + "." + cuartoByteIP.toString()));
+                }
+            }
+        }
+
+        Promise.all(promises).then(() => {
+            for (let i = 0; i < promises.length; i++){
+                setTimeout(function(){
+                    Alert.alert(promises[i]);
+                }, 1000);
+            }
+        })
+    }
+
+    llamadaAlServidor = (ip) => {
+        return new Promise(resolve => {
+            fetchTimeout('http://'+ ip +':3000/server', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    msg: 'Sos el servidor?',
+                    ip: ip
+                })
+            }, 500)
+                .then((response) => response.json())
+                    .then((responseJson) => {
+                        if(responseJson.msg === "Si"){
+                            resolve(responseJson.ip);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+        })
     }
 
     //Función que obtiene la IP y la Mascara de subred
     guardarIPyMascara = () => {
-        //IPByte es un array que guarda string de la IP, separandolos por el punto
+        /*//IPByte es un array que guarda string de la IP, separandolos por el punto
         var IPByte = this.state.valueIP.split(".");
         //MaskByte es un array que guarda string de la Mascara de subred, separandolos por el punto
         var MaskByte = this.state.valueMask.split(".");
         //Convierte el primer byte de la IP en un int
         var primerByteIP = parseInt(IPByte[0]);
         
-        /*//Verificador de clase de la IP-------------------------------------------------------------------
+        //Verificador de clase de la IP-------------------------------------------------------------------
         var clase;
         if (primerByteIP >= 0 && primerByteIP <= 127){
             clase = "A";
@@ -53,7 +199,7 @@ export default class LoginForm extends Component{
         else {
             alert ("El IP ingresado no es aceptado");
         }
-        //Verificador de clase de la IP-------------------------------------------------------------------*/
+        //Verificador de clase de la IP-------------------------------------------------------------------
         
         var segundoByteIP = parseInt(IPByte[1]);
         var tercerByteIP = parseInt(IPByte[2]);
@@ -82,7 +228,7 @@ export default class LoginForm extends Component{
         var ipHostCuartoByte; 
         var serverIP = "hola";
 
-        /*for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
+        for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
             ipHostSegundoByte = mascaraSubredSegundoByte + i;
             for (var j = 0; j <= hostsPosiblesTercerByte; j++){
                 ipHostTercerByte = mascaraSubredTercerByte + j;
@@ -95,9 +241,9 @@ export default class LoginForm extends Component{
                     }
                 }
             }
-        }*/
+        }
         
-        //Alert.alert(mascaraSubredPrimerByte.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString());
+        //Alert.alert(mascaraSubredPrimerByte.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString());*/
     
         fetchTimeout('http://192.168.100.16:3000/server', {
             method: 'POST',
