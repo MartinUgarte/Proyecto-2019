@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground } from 'react-native'
+import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button } from 'react-native'
 
 export default class Inicio extends Component{
 
@@ -14,7 +14,7 @@ export default class Inicio extends Component{
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
                   
                     <View style={styles.titleView}>
-                        <Text style={styles.title}>MYCRO XP </Text>
+                        <Text style={styles.title}>MYCRO XP.</Text>
                         <Image style={styles.logo} source={require('../images/Micro2.png')} />
 
                     </View>
@@ -29,7 +29,9 @@ export default class Inicio extends Component{
                     <View style={styles.buttonView}>  
                             
                             <View style={styles.icons}>
-                                <Image style={styles.iconImage} source={require('../images/SobreNosotros.png')} />
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('SobreNosotros')}>
+                                    <Image style={styles.iconImage} source={require('../images/SobreNosotros.png')} />
+                                </TouchableOpacity>
                                 <Text style={styles.txtIcon}>Sobre Nosotros .</Text>
                             </View>
                             <View style={styles.icons}>
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 40,
         color: '#fff',
-        fontFamily: 'sans-serif'
+    //    fontFamily: 'sans-serif'
     },
     logo: {
         marginTop: 20,

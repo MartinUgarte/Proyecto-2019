@@ -14,16 +14,16 @@ export default class Bienvenida extends Component{
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
                   
                     <View style={styles.titleView}>
-                        <Text style={styles.title}>MYCRO XP </Text>
+                        <Text style={styles.title}>MYCRO XP.</Text>
                         <Image style={styles.logo} source={require('../images/Micro2.png')} />
 
                     </View>
 
                     <View style={styles.textView}>  
                             <Text style={styles.txtWelcome}>¡Bienvenido, Gustavo! .</Text>     
-                            <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Bienvenida')}>  
+                            <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('SobreNosotros')}>  
                             <Text style = {styles.txtBtn}>Continuar </Text>   
-                        </TouchableOpacity>
+                            </TouchableOpacity>
                     </View>
 
 
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 40,
         color: '#fff',
-        fontFamily: 'sans-serif'
+   //     fontFamily: 'sans-serif'
     },
     logo: {
         marginTop: 20,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: '#fff',
         marginBottom: 20,
-        fontFamily: 'sans-serif'
+    //    fontFamily: 'sans-serif'
     },
     btn: {
         height: 40,
