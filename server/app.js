@@ -26,18 +26,15 @@ app.post('/server', function (req, res){
         msg: ""
     };
     var mensaje = req.body.msg;
+    var ip = req.body.ipEnviado;
     console.log(mensaje);
     if (mensaje === 'Sos el servidor?'){
+        console.log(ip);
         respuesta = {
-            msg: "Si"
+            msg: "Si",
+            direccionIP: ip
         };
         console.log("Si");
-        res.end(JSON.stringify(respuesta));
-    }
-    else {
-        respuesta = {
-            msg: "No te entiendo"
-        };
         res.end(JSON.stringify(respuesta));
     }
 })

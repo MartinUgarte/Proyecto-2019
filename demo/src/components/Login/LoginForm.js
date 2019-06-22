@@ -17,7 +17,7 @@ export default class LoginForm extends Component{
         }
     }
 
-    /*//Cambia el valor de "valueIP" a lo ingresado en el TextInput
+    //Cambia el valor de "valueIP" a lo ingresado en el TextInput
     onChangeTextIP = (valueIP) => {
         this.setState({ valueIP });
     }
@@ -25,25 +25,23 @@ export default class LoginForm extends Component{
     //Cambia el valor de "valueMask" a lo ingresado en el TextInput
     onChangeTextMask = (valueMask) => {
         this.setState({ valueMask });
-    }*/
+    }
 
-    /*guardarIPyMascara(){
+    guardarIPyMascara = () => {
         //IPByte es un array que guarda string de la IP, separandolos por el punto
         var IPByte = this.state.valueIP.split(".");
         //MaskByte es un array que guarda string de la Mascara de subred, separandolos por el punto
         var MaskByte = this.state.valueMask.split(".");
         //Convierte el primer byte de la IP en un int
 
-        Alert.alert("Espere por favor");
-
-        var primerByteIP = 10 //parseInt(IPByte[0]);
-        var segundoByteIP = 8 //parseInt(IPByte[1]);
-        var tercerByteIP = 17 //parseInt(IPByte[2]);
-        var cuartoByteIP = 11 //parseInt(IPByte[3]);
-        var primerByteMask = 255 //parseInt(MaskByte[0]);
-        var segundoByteMask = 255 //parseInt(MaskByte[1]);
-        var tercerByteMask = 255  //parseInt(MaskByte[2]);
-        var cuartoByteMask = 0  //parseInt(MaskByte[3]);
+        var primerByteIP = parseInt(IPByte[0]);
+        var segundoByteIP = parseInt(IPByte[1]);
+        var tercerByteIP = parseInt(IPByte[2]);
+        var cuartoByteIP = parseInt(IPByte[3]);
+        var primerByteMask = parseInt(MaskByte[0]);
+        var segundoByteMask = parseInt(MaskByte[1]);
+        var tercerByteMask = parseInt(MaskByte[2]);
+        var cuartoByteMask = parseInt(MaskByte[3]);
 
         var mascaraSubredPrimerByte = primerByteIP & primerByteMask;
         var mascaraSubredSegundoByte = segundoByteIP & segundoByteMask;
@@ -60,6 +58,7 @@ export default class LoginForm extends Component{
         var ipHostCuartoByte; 
         
         let requests = [];
+        let req;
 
         for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
             ipHostSegundoByte = mascaraSubredSegundoByte + i;
@@ -67,115 +66,63 @@ export default class LoginForm extends Component{
                 ipHostTercerByte = mascaraSubredTercerByte + j;
                 for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
                     ipHostCuartoByte = mascaraSubredCuartoByte + k;
-                    requests.push(
-                        fetchTimeout('http://' + primerByteIP.toString() + "." + segundoByteIP.toString() + "." + tercerByteIP.toString() + "." + cuartoByteIP.toString() + ':3000/server', {
+
+                        fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':3000/server', {
                             method: 'POST',
                             headers: {
                                 Accept: 'application/json',
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({
-                                msg: 'Sos el servidor?'
+                                msg: 'Sos el servidor?',
+                                ipEnviado: primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString()
                             })
                         }, 500)
-                            .then(async (response) => {
-                                const body = await response.text();
-                                if (response.status !== 200) {
-                                    return Promise.resolve(primerByteIP.toString() + "." + segundoByteIP.toString() + "." + tercerByteIP.toString() + "." + cuartoByteIP.toString());
-                                }
-                            })
-                            .catch((e) => {
-                                console.error(e)
-                                return Promise.resolve(false);
-                            })
-                    )
+                            .then((response) => response.json())
+                                .then((responseJson) => {
+                                    if(responseJson.msg === "Si"){
+                                        req = new Promise(function (resolve, reject) {
+                                            resolve({
+                                                ip: responseJson.direccionIP
+                                            })
+                                        })
+                                        req.then(function(value) {
+                                            var servidores = null;
+                                            requests.push(value.ip);
+                                            for (var i = 0; i < requests.length; i++){
+                                                if (requests.length === 1){
+                                                    servidores = "";
+                                                    Alert.alert("Servidor encontrado", requests[i]);
+                                                }
+                                                else{
+                                                    if (servidores === null){
+                                                        servidores = requests[i];
+                                                    }
+                                                    else {
+                                                        servidores = servidores + " y " + requests[i];
+                                                    }
+                                                }
+                                            }
+                                            console.log(servidores);
+                                            if (servidores !== null){
+                                                Alert.alert("Servidores encontrados", servidores);
+                                            }
+                                        });
+                                    }
+                                })
+                                .catch((error) => {
+                                    //console.error(error);
+                                });
                 }
             }
         }
 
-        await Promise.all(requests).then((results) => {
-            Alert.alert("Ya se enviaron todas las requests", results[12]);
-        })
-
-    }*/
-
-    guardarIPyMascara = () => {
-        var promises = [];
-        var IPs = [];
-
-        Alert.alert("Espere por favor");
-
-        var primerByteIP = 10 //parseInt(IPByte[0]);
-        var segundoByteIP = 8 //parseInt(IPByte[1]);
-        var tercerByteIP = 17 //parseInt(IPByte[2]);
-        var cuartoByteIP = 11 //parseInt(IPByte[3]);
-        var primerByteMask = 255 //parseInt(MaskByte[0]);
-        var segundoByteMask = 255 //parseInt(MaskByte[1]);
-        var tercerByteMask = 255  //parseInt(MaskByte[2]);
-        var cuartoByteMask = 0  //parseInt(MaskByte[3]);
-
-        var mascaraSubredPrimerByte = primerByteIP & primerByteMask;
-        var mascaraSubredSegundoByte = segundoByteIP & segundoByteMask;
-        var mascaraSubredTercerByte = tercerByteIP & tercerByteMask;
-        var mascaraSubredCuartoByte = cuartoByteIP & cuartoByteMask;
-
-        var hostsPosiblesPrimerByte = 255 - primerByteMask;
-        var hostsPosiblesSegundoByte = 255 - segundoByteMask;
-        var hostsPosiblesTercerByte = 255 - tercerByteMask;
-        var hostsPosiblesCuartoByte = 255 - cuartoByteMask;
-
-        var ipHostSegundoByte;
-        var ipHostTercerByte;
-        var ipHostCuartoByte; 
-
-        for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
-            ipHostSegundoByte = mascaraSubredSegundoByte + i;
-            for (var j = 0; j <= hostsPosiblesTercerByte; j++){
-                ipHostTercerByte = mascaraSubredTercerByte + j;
-                for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
-                    ipHostCuartoByte = mascaraSubredCuartoByte + k;
-                    promises.push(this.llamadaAlServidor(primerByteIP.toString() + "." + segundoByteIP.toString() + "." + tercerByteIP.toString() + "." + cuartoByteIP.toString()));
-                }
-            }
-        }
-
-        Promise.all(promises).then(() => {
-            for (let i = 0; i < promises.length; i++){
-                setTimeout(function(){
-                    Alert.alert(promises[i]);
-                }, 1000);
-            }
-        })
     }
 
-    llamadaAlServidor = (ip) => {
-        return new Promise(resolve => {
-            fetchTimeout('http://'+ ip +':3000/server', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    msg: 'Sos el servidor?',
-                    ip: ip
-                })
-            }, 500)
-                .then((response) => response.json())
-                    .then((responseJson) => {
-                        if(responseJson.msg === "Si"){
-                            resolve(responseJson.ip);
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-        })
-    }
-
+    
     //Función que obtiene la IP y la Mascara de subred
-    guardarIPyMascara = () => {
-        /*//IPByte es un array que guarda string de la IP, separandolos por el punto
+    /*guardarIPyMascara = () => {
+        //IPByte es un array que guarda string de la IP, separandolos por el punto
         var IPByte = this.state.valueIP.split(".");
         //MaskByte es un array que guarda string de la Mascara de subred, separandolos por el punto
         var MaskByte = this.state.valueMask.split(".");
@@ -201,96 +148,28 @@ export default class LoginForm extends Component{
         }
         //Verificador de clase de la IP-------------------------------------------------------------------
         
-        var segundoByteIP = parseInt(IPByte[1]);
-        var tercerByteIP = parseInt(IPByte[2]);
-        var cuartoByteIP = parseInt(IPByte[3]);
-        var primerByteMask = parseInt(MaskByte[0]);
-        var segundoByteMask = parseInt(MaskByte[1]);
-        var tercerByteMask = parseInt(MaskByte[2]);
-        var cuartoByteMask = parseInt(MaskByte[3]);
-
-        var mascaraSubredPrimerByte = primerByteIP & primerByteMask;
-        var mascaraSubredSegundoByte = segundoByteIP & segundoByteMask;
-        var mascaraSubredTercerByte = tercerByteIP & tercerByteMask;
-        var mascaraSubredCuartoByte = cuartoByteIP & cuartoByteMask;
-
-        //alert("La operación AND de la IP con la Mascara de Red es: " + mascaraSubredPrimerByte + "." + mascaraSubredSegundoByte + "." + mascaraSubredTercerByte + "." + mascaraSubredCuartoByte);
-
-        var hostsPosiblesPrimerByte = 255 - primerByteMask;
-        var hostsPosiblesSegundoByte = 255 - segundoByteMask;
-        var hostsPosiblesTercerByte = 255 - tercerByteMask;
-        var hostsPosiblesCuartoByte = 255 - cuartoByteMask;
-
-        //alert("La operación AND de la IP con la Mascara de Red es: " + mascaraSubredPrimerByte + "." + mascaraSubredSegundoByte + "." + mascaraSubredTercerByte + "." + mascaraSubredCuartoByte + ". La cantidad de hosts posibles en el primer byte son " + hostsPosiblesPrimerByte + ", en el segundo " + hostsPosiblesSegundoByte + ", en el tercero " + hostsPosiblesTercerByte + " y en el cuarto " + hostsPosiblesCuartoByte);
         
-        var ipHostSegundoByte;
-        var ipHostTercerByte;
-        var ipHostCuartoByte; 
-        var serverIP = "hola";
-
-        for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
-            ipHostSegundoByte = mascaraSubredSegundoByte + i;
-            for (var j = 0; j <= hostsPosiblesTercerByte; j++){
-                ipHostTercerByte = mascaraSubredTercerByte + j;
-                for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
-                    ipHostCuartoByte = mascaraSubredCuartoByte + k;
-                    serverIP = this.BuscarServidor(mascaraSubredPrimerByte, ipHostSegundoByte, ipHostTercerByte, ipHostCuartoByte);
-                    Alert.alert("T",serverIP.msg);
-                    if (serverIP.msg === 'Si'){
-                        Alert.alert(mascaraSubredPrimerByte.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString());
-                    }
-                }
-            }
-        }
-        
-        //Alert.alert(mascaraSubredPrimerByte.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString());*/
     
-        fetchTimeout('http://192.168.100.16:3000/server', {
+        fetchTimeout('http://192.168.100.17:3000/server', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                msg: 'Sos el servidor?'
+                msg: 'Sos el servidor?',
+                ipEnviado: "192.168.100.17"
             })
         }, 500)
             .then((response) => response.json())
                 .then((responseJson) => {
                     if(responseJson.msg === "Si"){
-                        Alert.alert("Direccion IP del Servidor", "192.168.100.16");
+                        Alert.alert("Direccion IP del Servidor", responseJson.direccionIP);
                     }
                 })
                 .catch((error) => {
                     console.error(error);
                 });
-    }
-
-    /*BuscarServidor = (primerByte, segundoByte, tercerByte, cuartoByte) => {
-    
-        //Envía un post a todos los hosts posibles en la red----------------------------------------------
-        return fetchTimeout('http://' + primerByte.toString() + "." + segundoByte.toString() + "." + tercerByte.toString() + "." + cuartoByte.toString() + ':3000/server', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                msg: 'Sos el servidor?'
-            })
-        }, 500)
-            .then((response) => response.json())
-                .then((responseJson) => {
-                    return responseJson.msg;
-                    if( responseJson.msg=== 'Si'){
-                        Alert.alert(mascaraSubredPrimerByte.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString());
-
-                    }
-                })
-                .catch((error) => {
-                    //console.error(error);
-                });
-                //Envía un post a todos los hosts posibles en la red----------------------------------------------
     }*/
 
     //Lo que se ve en la pantalla
