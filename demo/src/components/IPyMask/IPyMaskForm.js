@@ -5,7 +5,7 @@ import fetchTimeout from 'fetch-timeout';
 
 
 // Clase para realizar el protocolo
-export default class LoginForm extends Component{
+export default class IPyMaskForm extends Component{
 
     constructor(){
         super()
@@ -58,8 +58,8 @@ export default class LoginForm extends Component{
         var ipHostCuartoByte; 
         
         let requests = [];
-        let req;
 
+        
         for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
             ipHostSegundoByte = mascaraSubredSegundoByte + i;
             for (var j = 0; j <= hostsPosiblesTercerByte; j++){
@@ -87,26 +87,7 @@ export default class LoginForm extends Component{
                                             })
                                         })
                                         req.then(function(value) {
-                                            var servidores = null;
                                             requests.push(value.ip);
-                                            for (var i = 0; i < requests.length; i++){
-                                                if (requests.length === 1){
-                                                    servidores = "";
-                                                    Alert.alert("Servidor encontrado", requests[i]);
-                                                }
-                                                else{
-                                                    if (servidores === null){
-                                                        servidores = requests[i];
-                                                    }
-                                                    else {
-                                                        servidores = servidores + " y " + requests[i];
-                                                    }
-                                                }
-                                            }
-                                            console.log(servidores);
-                                            if (servidores !== null){
-                                                Alert.alert("Servidores encontrados", servidores);
-                                            }
                                         });
                                     }
                                 })
@@ -116,6 +97,33 @@ export default class LoginForm extends Component{
                 }
             }
         }
+
+        setTimeout(function(){
+            if (requests.length === 0){
+                Alert.alert("No hay servidores en la red", "Verifique que los servidores esten encendidos y conectados a la red o si usted se encuentra en la misma red");
+            }
+            else{
+                Promise.all(requests).then(() => {
+                    var servidores = null;
+                    for (var i = 0; i < requests.length; i++){
+                        if (requests.length === 1){
+                            Alert.alert("Servidor encontrado", requests[i]);
+                        }
+                        else{
+                            if (servidores === null){
+                                servidores = requests[i];
+                            }
+                            else {
+                                servidores = servidores + " y " + requests[i];
+                            }
+                        }
+                    }
+                    if (servidores !== null){
+                        Alert.alert("Servidores encontrados", servidores);
+                    }
+                })
+            }
+        }, 500)
 
     }
 

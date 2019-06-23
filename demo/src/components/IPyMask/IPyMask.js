@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, Text, KeyboardAvoidingView } from 'react-native'
-import LoginForm from './LoginForm';
+import IPyMaskForm from './IPyMaskForm';
 
-export default class Login extends Component{
+export default class IPyMask extends Component{
 
     render(){
         return(
@@ -16,7 +16,7 @@ export default class Login extends Component{
                     <Text style={styles.title}>App para probar cosas</Text>
                 </View>
                 <View style={styles.formContainer}>
-                    <LoginForm />
+                    <IPyMaskForm />
                 </View>
             </KeyboardAvoidingView>
         );

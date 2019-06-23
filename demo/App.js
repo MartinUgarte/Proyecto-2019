@@ -6,7 +6,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation'; // 
 import Home from './src/components/Home'
 import Friends from './src/components/Friends'
 import Animations from './src/components/Animations'
-import Login from './src/components/Login/Login'
+import IPyMask from './src/components/IPyMask/IPyMask'
 
 //Proyecto Posta
 import Inicio from './src/screens/Inicio'
@@ -21,7 +21,7 @@ const RootStack = createStackNavigator(
     Home: Home,
     Friends: Friends,
     Animations: Animations,
-    Login: Login,
+    IPyMask: IPyMask,
 //-----------------------------------------------
 
     Inicio: Inicio,
@@ -29,7 +29,7 @@ const RootStack = createStackNavigator(
     SobreNosotros: SobreNosotros
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'IPyMask',
   }
 );
 
