@@ -12,6 +12,8 @@ import IPyMask from './src/components/IPyMask/IPyMask'
 import Inicio from './src/screens/Inicio'
 import Bienvenida from './src/screens/Bienvenida'
 import SobreNosotros from './src/screens/SobreNosotros'
+import Control from './src/screens/Control'
+
 
 
 
@@ -26,10 +28,11 @@ const RootStack = createStackNavigator(
 
     Inicio: Inicio,
     Bienvenida: Bienvenida,
-    SobreNosotros: SobreNosotros
+    SobreNosotros: SobreNosotros,
+    Control: Control
   },
   {
-    initialRouteName: 'IPyMask',
+    initialRouteName: 'Control',
   }
 );
 
