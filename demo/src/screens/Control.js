@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button } from 'react-native'
 import Slider from "react-native-slider";
+import { AntDesign } from '@expo/vector-icons'
 
 export default class Control extends Component{
 
@@ -30,38 +31,51 @@ export default class Control extends Component{
                   
                    <View style={styles.sliderZContainer}>
                     
+                        <AntDesign name="caretleft" size={30} color="green" onPress={() => this.setState({valueZ:this.state.valueZ-1})}  />
+
                         <Slider 
                             style={styles.sliderZ} 
                             value={this.state.valueZ} 
-                            onValueChange={value => this.setState({ value })}
+                            onValueChange={valueZ => this.setState({ valueZ })}
                             step={1}
-                            minimumValue={-20}
-                            maximumValue={20}
+                            minimumValue={-100}
+                            maximumValue={100}
                             minimumTrackTintColor={'#ffb2f7'}
                             thumbTintColor={'#e398dc'}
                         />
+
+                        <AntDesign name="caretright" size={30} color="green" onPress={() => this.setState({valueZ:this.state.valueZ+1})}  />
+
 
                    </View>
 
                    <View style={styles.sliderXContainer}>
 
+
+                        <AntDesign name="caretleft" size={30} color="green" onPress={() => this.setState({valueX:this.state.valueX-1})}  />
+
                         <Slider 
                             style={styles.sliderX} 
                             value={this.state.valueX} 
-                            onValueChange={value => this.setState({ value })}
+                            onValueChange={valueX => this.setState({ valueX })}
                             step={1}
-                            minimumValue={-20}
-                            maximumValue={20}
+                            minimumValue={-100}
+                            maximumValue={100}
                             minimumTrackTintColor={'#ffb2f7'}
                             thumbTintColor={'#e398dc'}
                         />
+
+                        <AntDesign name="caretright" size={30} color="green" onPress={() => this.setState({valueX:this.state.valueX+1})} />
 
                    </View>
 
                    <View style={styles.sliderRContainer}>
 
                         <Text>
-                        Value: {this.state.value}
+                        ValueX: {this.state.valueX} mm 
+                        </Text>
+                        <Text>
+                        ValueZ: {this.state.valueZ} mm 
                         </Text>
 
                    </View>
@@ -81,8 +95,9 @@ const styles = StyleSheet.create({
     },
     sliderZContainer: {
         flex: 1,
-        flexDirection: 'column',
+        flexDirection: 'row',
         justifyContent: 'center',
+        marginTop: 35,
         alignItems: 'center',
         transform: [{rotateZ:'-90deg'}]
 
@@ -91,7 +106,7 @@ const styles = StyleSheet.create({
         flex: 0.5,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'flex-end'
     },
     sliderRContainer: {
         flex: 1,
@@ -103,10 +118,19 @@ const styles = StyleSheet.create({
         width: 150,
     },
     sliderX: {
-        width: 250
+        width: 200
     },
-    arrow: {
-
+    arrowImage: {
+        width: 30,
+        height: 30
+    },
+    semicirculo: {
+        
+        width: 150,
+        height: 150,
+        borderRadius: 150 / 2,
+        backgroundColor: '#FF00FF',
+        
     }
 
 });
