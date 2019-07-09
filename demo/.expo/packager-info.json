@@ -1,10 +1,10 @@
 {
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 9828,
+  "expoServerNgrokUrl": "https://fe-c7g.anonymous.demo.exp.direct",
+  "packagerNgrokUrl": "https://packager.fe-c7g.anonymous.demo.exp.direct",
+  "ngrokPid": 11832,
   "devToolsPort": 19002,
   "webpackServerPort": null
 }
