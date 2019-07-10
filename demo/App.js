@@ -5,6 +5,7 @@ import Inicio from './src/screens/Inicio'
 import Bienvenida from './src/screens/Bienvenida'
 import SobreNosotros from './src/screens/SobreNosotros'
 import Control from './src/screens/Control'
+import IPyMask from './src/components/IPyMask/IPyMask'
 
 import { createAppContainer, createDrawerNavigator } from 'react-navigation';
 
@@ -24,7 +25,11 @@ const RootStack = createDrawerNavigator({
   Bienvenida: {screen: Bienvenida},
   SobreNosotros: {screen: SobreNosotros},
   Control: {screen: Control},
+  IPyMask: {screen: IPyMask}
 
+  },
+  {
+    initialRouteName: 'IPyMask',
   },
   DrawerConfig
 );
