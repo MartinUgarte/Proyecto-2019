@@ -14,13 +14,8 @@ export default class Inicio extends Component{
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
                   
                     <View style={styles.titleView}>
-<<<<<<< HEAD
                         <Text style={styles.title}>MYCROTECH</Text>
-=======
-                        <Text style={styles.title}>MYCRO XP. </Text>
->>>>>>> parent of d8d5504... Menu Lateral Listo
                         <Image style={styles.logo} source={require('../images/Micro2.png')} />
-
                     </View>
 
                     <View style={styles.textView}>          

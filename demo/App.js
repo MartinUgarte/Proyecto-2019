@@ -1,61 +1,34 @@
 import React from 'react';
-import { Button, View, Text } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
+import { Platform, Dimensions } from 'react-native';
 
-//Boludeces
-import Home from './src/components/Home'
-import Friends from './src/components/Friends'
-import Animations from './src/components/Animations'
-import IPyMask from './src/components/IPyMask/IPyMask'
-
-//Proyecto Posta
 import Inicio from './src/screens/Inicio'
 import Bienvenida from './src/screens/Bienvenida'
 import SobreNosotros from './src/screens/SobreNosotros'
 import Control from './src/screens/Control'
-import IPyMask from './src/components/IPyMask/IPyMask'
 
+import { createAppContainer, createDrawerNavigator } from 'react-navigation';
 
+import MenuDrawer from './src/components/MenuDrawer'
 
+const WIDTH = Dimensions.get('window').width;
 
-<<<<<<< HEAD
+const DrawerConfig = {
+  drawerWidth: WIDTH*0.80,
+  contentComponent: ({ navigation}) => {
+    return(<MenuDrawer navigation={navigation} />)
+  }
+}
+
 const RootStack = createDrawerNavigator({
   Inicio: {screen: Inicio},
   Bienvenida: {screen: Bienvenida},
   SobreNosotros: {screen: SobreNosotros},
   Control: {screen: Control},
-  IPyMask: {screen: IPyMask}
-=======
-// ATENTI: Modificar en el initialRouteName la pantalla que se quiere testear
-const RootStack = createStackNavigator(
-  {
-    Home: Home,
-    Friends: Friends,
-    Animations: Animations,
-    IPyMask: IPyMask,
-//-----------------------------------------------
->>>>>>> parent of d8d5504... Menu Lateral Listo
-
-    Inicio: Inicio,
-    Bienvenida: Bienvenida,
-    SobreNosotros: SobreNosotros,
-    Control: Control
-  },
-  {
-<<<<<<< HEAD
-    initialRouteName: 'IPyMask',
-  },
+},
+//Axel: no pongas initial route xq sino no anda el menu lateral. Si queres ir a Ip config o lo que quieras desliza el menu y elegi la pantalla q quierass. Salu2
   DrawerConfig
-=======
-    initialRouteName: 'Control',
-  }
->>>>>>> parent of d8d5504... Menu Lateral Listo
 );
 
-const AppContainer = createAppContainer(RootStack);
+const App = createAppContainer(RootStack);
 
-export default class App extends React.Component {
-  render() {
-    return <AppContainer />;
-  }
-}
+export default App;

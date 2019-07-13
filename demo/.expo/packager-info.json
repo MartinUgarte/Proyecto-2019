@@ -1,19 +1,10 @@
 {
-<<<<<<< HEAD
-  "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 9156,
-  "expoServerNgrokUrl": "https://fe-c7g.anonymous.demo.exp.direct",
-  "packagerNgrokUrl": "https://packager.fe-c7g.anonymous.demo.exp.direct",
-  "ngrokPid": 8016,
-=======
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
->>>>>>> parent of d8d5504... Menu Lateral Listo
+  "packagerPid": 10620,
+  "expoServerNgrokUrl": "https://ai-k8z.anonymous.demo.exp.direct",
+  "packagerNgrokUrl": "https://packager.ai-k8z.anonymous.demo.exp.direct",
+  "ngrokPid": 7408,
   "devToolsPort": 19002,
+  "expoServerPort": 19000,
   "webpackServerPort": null
 }
