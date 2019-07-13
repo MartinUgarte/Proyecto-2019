@@ -3,9 +3,15 @@ import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Butto
 import Slider from "react-native-slider";
 import { AntDesign } from '@expo/vector-icons'
 
-import MenuButton from '../components/MenuButton'
-
 export default class Control extends Component{
+
+    static navigationOptions = {
+        title: 'Control ',
+        headerStyle: {
+            backgroundColor: '#FC4AF5',
+        },
+ 
+    };
 
     constructor(){
         super()
@@ -20,13 +26,13 @@ export default class Control extends Component{
 
     render(){
         return(
-            
+
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
                   
-                  <MenuButton navigation={this.props.navigation} />
-
                    <View style={styles.sliderZContainer}>
+                    
                         <AntDesign name="caretleft" size={30} color="green" onPress={() => this.setState({valueZ:this.state.valueZ-1})}  />
+
                         <Slider 
                             style={styles.sliderZ} 
                             value={this.state.valueZ} 
@@ -37,11 +43,17 @@ export default class Control extends Component{
                             minimumTrackTintColor={'#ffb2f7'}
                             thumbTintColor={'#e398dc'}
                         />
+
                         <AntDesign name="caretright" size={30} color="green" onPress={() => this.setState({valueZ:this.state.valueZ+1})}  />
+
+
                    </View>
 
                    <View style={styles.sliderXContainer}>
+
+
                         <AntDesign name="caretleft" size={30} color="green" onPress={() => this.setState({valueX:this.state.valueX-1})}  />
+
                         <Slider 
                             style={styles.sliderX} 
                             value={this.state.valueX} 
@@ -52,7 +64,9 @@ export default class Control extends Component{
                             minimumTrackTintColor={'#ffb2f7'}
                             thumbTintColor={'#e398dc'}
                         />
+
                         <AntDesign name="caretright" size={30} color="green" onPress={() => this.setState({valueX:this.state.valueX+1})} />
+
                    </View>
 
                    <View style={styles.sliderRContainer}>
@@ -63,8 +77,9 @@ export default class Control extends Component{
                         <Text>
                         ValueZ: {this.state.valueZ} mm 
                         </Text>
-                   </View>
 
+                   </View>
+             
                 </ImageBackground>
 
         );

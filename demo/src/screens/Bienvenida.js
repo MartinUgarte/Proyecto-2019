@@ -14,7 +14,7 @@ export default class Bienvenida extends Component{
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
                   
                     <View style={styles.titleView}>
-                        <Text style={styles.title}>MYCROTECH. </Text>
+                        <Text style={styles.title}>MYCRO XP. </Text>
                         <Image style={styles.logo} source={require('../images/Micro2.png')} />
 
                     </View>
