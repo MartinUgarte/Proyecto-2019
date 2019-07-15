@@ -12,7 +12,7 @@ export default class IPyMaskForm extends Component{
 
         //Variables a utilizar
         this.state = {
-            valueIP: "192.168.100.16",
+            valueIP: "10.8.17.8",
             valueMask: "255.255.255.0"
         }
     }
@@ -67,7 +67,7 @@ export default class IPyMaskForm extends Component{
                 for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
                     ipHostCuartoByte = mascaraSubredCuartoByte + k;
 
-                        fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':3000/server', {
+                        fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':80/server', {
                             method: 'POST',
                             headers: {
                                 Accept: 'application/json',

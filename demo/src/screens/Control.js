@@ -2,22 +2,16 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker } from 'react-native';
 import Slider from "react-native-slider";
 import { AntDesign } from '@expo/vector-icons';
+import VerticalSlider from 'rn-vertical-slider'
 import fetchTimeout from 'fetch-timeout';
-//import CircleSlider from 'react-native-circle-slider';
+import CircleSlider from '../components/CircleSlider'
 
 import MenuButton from '../components/MenuButton'
 
 
 export default class Control extends Component{
 
-    static navigationOptions = {
-        title: 'Control ',
-        headerStyle: {
-            backgroundColor: '#FC4AF5',
-        },
- 
-    };
-
+   
     constructor(){
         super()
  
@@ -30,7 +24,7 @@ export default class Control extends Component{
             angleLength: 3.1416,
 
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
-            valueIP: "192.168.100.16",
+            valueIP: "10.8.17.8",
             valueMask: "255.255.255.0",
             brazos: ["Hola"],
         } 
@@ -38,7 +32,7 @@ export default class Control extends Component{
     }
 
     //Martin si no queres que te jodan los alerts, comenta esto
-    componentDidMount(){
+    /*componentDidMount(){
         //IPByte es un array que guarda string de la IP, separandolos por el punto
         var IPByte = this.state.valueIP.split(".");
         //MaskByte es un array que guarda string de la Mascara de subred, separandolos por el punto
@@ -151,7 +145,7 @@ export default class Control extends Component{
 
         
     }
-
+*/
     handleChange = value => {
         console.log(`Changed value ${value}`);
         this.setState({ valueR });
@@ -174,21 +168,29 @@ export default class Control extends Component{
 
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
                   
+                  <View style={styles.header}>
+                        <MenuButton navigation={this.props.navigation} />
+                  </View>
+
                   <MenuButton navigation={this.props.navigation} />
                   
                    <View style={styles.sliderZContainer}>
-                        <AntDesign name="caretleft" size={30} color="green" onPress={() => this.setState({valueZ:this.state.valueZ-1})}  />
-                        <Slider 
-                            style={styles.sliderZ} 
-                            value={this.state.valueZ} 
-                            onValueChange={valueZ => this.setState({ valueZ })}
-                            step={1}
-                            minimumValue={-100}
-                            maximumValue={100}
-                            minimumTrackTintColor={'#ffb2f7'}
-                            thumbTintColor={'#e398dc'}
+                        <VerticalSlider
+                                    disabled={false}
+                                    min={0}
+                                    max={100}
+                                    value={this.state.valueR} 
+                                    onValueChange={valueR => this.setState({ valueR })}
+                                    width={10}
+                                    height={200}
+                                    step={1}
+                                    borderRadius={5}
+                                    minimumTrackTintColor={"gray"}
+                                    maximumTrackTintColor={"tomato"}
+                                    showBallIndicator
+                                    ballIndicatorColor={"gray"}
+                                    ballIndicatorTextColor={"white"}
                         />
-                        <AntDesign name="caretright" size={30} color="green" onPress={() => this.setState({valueZ:this.state.valueZ+1})}  />
                    </View>
 
                    <View style={styles.sliderXContainer}>
@@ -205,21 +207,23 @@ export default class Control extends Component{
                         />
                         <AntDesign name="caretright" size={30} color="green" onPress={() => this.setState({valueX:this.state.valueX+1})} />
                    </View>
+                         
+
+                   <View style={styles.sliderRContainer}>
+                        <CircleSlider
+                        value={100}
+                        />
+                   </View>
 
                    <View style={styles.dropdown}> 
                         <Picker
-                            style={{height: 50, width: 240}}
+                            style={styles.picker}
                             itemStyle={{ color: 'rgb(255, 255, 255)' }}
                         >
-
                             {IPs}
 
                         </Picker>
-                    </View>              
-
-                   <View style={styles.sliderRContainer}>
-                        
-                   </View>
+                    </View> 
              
                 </ImageBackground>
 
@@ -240,7 +244,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 35,
         alignItems: 'center',
-        transform: [{rotateZ:'-90deg'}]
 
     },
     sliderXContainer: {
@@ -274,8 +277,19 @@ const styles = StyleSheet.create({
         
     },
     dropdown: {
-        width: 250,
-        marginLeft: 68,
-        marginTop: 20,
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+      },
+    picker: {
+        height: 50,
+        width: 240,
+        backgroundColor: 'white',
+        marginBottom: 20,
     },
+    header: {
+        flex: 0.5,
+        backgroundColor: '#DBB5F8'
+    }
 });
