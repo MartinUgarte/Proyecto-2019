@@ -1,10 +1,10 @@
 {
-  "packagerPort": 19001,
-  "packagerPid": 10620,
-  "expoServerNgrokUrl": "https://ai-k8z.anonymous.demo.exp.direct",
-  "packagerNgrokUrl": "https://packager.ai-k8z.anonymous.demo.exp.direct",
-  "ngrokPid": 7408,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
+  "expoServerPort": null,
   "webpackServerPort": null
 }
