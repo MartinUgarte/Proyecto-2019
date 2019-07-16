@@ -24,15 +24,16 @@ export default class Control extends Component{
             angleLength: 3.1416,
 
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
-            valueIP: "10.8.17.8",
+            valueIP: "192.168.100.16",
             valueMask: "255.255.255.0",
             brazos: ["Hola"],
+            pickerValue: "",
         } 
     
     }
 
     //Martin si no queres que te jodan los alerts, comenta esto
-    /*componentDidMount(){
+    componentDidMount(){
         //IPByte es un array que guarda string de la IP, separandolos por el punto
         var IPByte = this.state.valueIP.split(".");
         //MaskByte es un array que guarda string de la Mascara de subred, separandolos por el punto
@@ -145,7 +146,7 @@ export default class Control extends Component{
 
         
     }
-*/
+
     handleChange = value => {
         console.log(`Changed value ${value}`);
         this.setState({ valueR });
@@ -156,6 +157,96 @@ export default class Control extends Component{
             valueR: event.target.valueAsNumber,
         });
     };
+
+    sendVerticalSlider = (valueZ) => {
+        this.setState({ valueZ });
+        console.log(this.state.valueZ);
+        let IP = this.state.pickerValue;
+        console.log(IP);
+        if (IP !== "Brazos Roboticos"){
+            fetchTimeout(IP + ':3000/z', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    direction: "Z",
+                    value: this.state.valueZ,
+                })
+            }, 10)
+                .then((response) => response.json())
+                    .then((responseJson) => {
+                        if(responseJson.msg === "Listo"){
+                            console.log("Posicion cambiada al brazo " + IP + ": Z -> " + this.state.valueZ);
+                        }
+                    })
+                    .catch((error) => {
+                        //console.error(error);
+                        Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
+                    });
+        }
+    }
+
+    sendSlider = (valueX) => {
+        this.setState({ valueX });
+        console.log(this.state.valueX);
+        let IP = this.state.pickerValue;
+        console.log(IP);
+        if (IP !== "Brazos Roboticos"){
+            fetchTimeout(IP + ':3000/x', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    direction: "X",
+                    value: this.state.valueX,
+                })
+            }, 10)
+                .then((response) => response.json())
+                    .then((responseJson) => {
+                        if(responseJson.msg === "Listo"){
+                            console.log("Posicion cambiada al brazo " + IP + ": X -> " + this.state.valueX);
+                        }
+                    })
+                    .catch((error) => {
+                        //console.error(error);
+                        Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
+                    });
+        }
+    }
+
+    sendCircleSlider = (valueR) => {
+        /*this.setState({ valueR });
+        console.log(this.state.valueR);
+        let IP = this.state.pickerValue;
+        console.log(IP);
+        if (IP !== "Brazos Roboticos"){
+            fetchTimeout(IP + ':3000/r', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    direction: "R",
+                    value: this.state.valueR,
+                })
+            }, 10)
+                .then((response) => response.json())
+                    .then((responseJson) => {
+                        if(responseJson.msg === "Listo"){
+                            console.log("Posicion cambiada al brazo " + IP + ": R -> " + this.state.valueR);
+                        }
+                    })
+                    .catch((error) => {
+                        //console.error(error);
+                        Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
+                    });
+        }*/
+    }
 
     render(){
         
@@ -180,7 +271,7 @@ export default class Control extends Component{
                                     min={0}
                                     max={100}
                                     value={this.state.valueR} 
-                                    onValueChange={valueR => this.setState({ valueR })}
+                                    onValueChange={this.sendVerticalSlider}
                                     width={10}
                                     height={200}
                                     step={1}
@@ -198,7 +289,7 @@ export default class Control extends Component{
                         <Slider 
                             style={styles.sliderX} 
                             value={this.state.valueX} 
-                            onValueChange={valueX => this.setState({ valueX })}
+                            onValueChange={this.sendSlider}
                             step={1}
                             minimumValue={-100}
                             maximumValue={100}
@@ -211,14 +302,15 @@ export default class Control extends Component{
 
                    <View style={styles.sliderRContainer}>
                         <CircleSlider
-                        value={100}
+                        value={this.state.valueR}
+                        onValueChange={this.sendCircleSlider}
                         />
                    </View>
 
                    <View style={styles.dropdown}> 
                         <Picker
                             style={styles.picker}
-                            itemStyle={{ color: 'rgb(255, 255, 255)' }}
+                            selectedValue={this.state.pickerValue}
                         >
                             {IPs}
 
