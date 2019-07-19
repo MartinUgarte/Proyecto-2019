@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Butto
 import Slider from "react-native-slider";
 import { AntDesign } from '@expo/vector-icons';
 import fetchTimeout from 'fetch-timeout';
-import CircleSlider from '../components/CircleSlider'
+import CircularSlider from '../components/CircularSlider'
 
 import MenuButton from '../components/MenuButton'
 import AddButton from '../components/AddButton'
@@ -14,14 +14,11 @@ export default class Control extends Component{
    
     constructor(){
         super()
- 
         this.state = {
+
             valueZ: 0,
             valueX: 0,
             valueR: 0,
-
-            startAngle: 0.7,
-            angleLength: 3.1416,
 
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
             valueIP: "192.168.100.16",
@@ -31,6 +28,7 @@ export default class Control extends Component{
         } 
     
     }
+    /*
     //Martin si no queres que te jodan los alerts, comenta esto
     componentDidMount(){
         //IPByte es un array que guarda string de la IP, separandolos por el punto
@@ -244,9 +242,8 @@ export default class Control extends Component{
                         //console.error(error);
                         Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
                     });
-        }*/
-    
-    }
+        }*/   
+//}
 
     render(){
         
@@ -300,12 +297,11 @@ export default class Control extends Component{
                          
 
                    <View style={styles.sliderRContainer}>
-                        <Text style={styles.axelito}>
-                        ValueX: {this.state.valueX} mm 
-                        </Text>
-                        <Text style={styles.axelito}>
-                        ValueZ: {this.state.valueZ} mm 
-                        </Text>
+
+                        <CircularSlider width={150} height={150} meterColor='#d14ba6' textColor='#fff'
+                        value={this.state.valueR} onValueChange={(value)=>this.setState({valueR:value})}/>
+                        
+
                    </View>
 
                    <View style={styles.dropdown}> 
@@ -352,7 +348,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 30
     },
     sliderZ: {
         width: 150,
