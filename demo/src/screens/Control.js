@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, PanResponder } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker } from 'react-native';
 import Slider from "react-native-slider";
 import { AntDesign } from '@expo/vector-icons';
 import fetchTimeout from 'fetch-timeout';
 import CircleSlider from '../components/CircleSlider'
 
 import MenuButton from '../components/MenuButton'
+import AddButton from '../components/AddButton'
 
 
 export default class Control extends Component{
@@ -30,7 +31,6 @@ export default class Control extends Component{
         } 
     
     }
-/*
     //Martin si no queres que te jodan los alerts, comenta esto
     componentDidMount(){
         //IPByte es un array que guarda string de la IP, separandolos por el punto
@@ -245,16 +245,7 @@ export default class Control extends Component{
                         Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
                     });
         }*/
-    //}
     
-    componentWillMount () {
-        this._panResponder = PanResponder.create({
-          // Ask to be the responder:
-          onStartShouldSetPanResponder: (evt, gestureState) => true,
-          onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-          onMoveShouldSetPanResponder: (evt, gestureState) => true,
-          onMoveShouldSetPanResponderCapture: (evt, gestureState) => true
-        })
     }
 
     render(){
@@ -269,12 +260,13 @@ export default class Control extends Component{
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
                   <View style={styles.header}>
                         <MenuButton navigation={this.props.navigation} />
+                        <Text style={styles.titulo}>Control </Text>
                   </View>
                   <MenuButton navigation={this.props.navigation} />
                   
                    <View style={styles.sliderZContainer}>
+                        <AntDesign name="caretleft" size={30} color="#d14ba6" onPress={() => this.setState({valueZ:this.state.valueZ-1})}  />
                         <Slider
-                            _panResponder
                             trackStyle={customStyles4.track}
                             thumbStyle={customStyles4.thumb}
                             minimumTrackTintColor='#d14ba6'
@@ -283,8 +275,10 @@ export default class Control extends Component{
                             step={1}
                             value={this.state.valueZ}
                             onValueChange={valueZ => this.setState({ valueZ })}   
+                            vertical
                             style={styles.sliderZ}                         
                         />
+                        <AntDesign name="caretright" size={30} color="#d14ba6" onPress={() => this.setState({valueZ:this.state.valueZ+1})} />
 
                    </View>
 
@@ -306,8 +300,11 @@ export default class Control extends Component{
                          
 
                    <View style={styles.sliderRContainer}>
-                        <Text>
+                        <Text style={styles.axelito}>
                         ValueX: {this.state.valueX} mm 
+                        </Text>
+                        <Text style={styles.axelito}>
+                        ValueZ: {this.state.valueZ} mm 
                         </Text>
                    </View>
 
@@ -319,6 +316,7 @@ export default class Control extends Component{
                             {IPs}
 
                         </Picker>
+                        <AddButton/>
                     </View> 
              
                 </ImageBackground>
@@ -335,30 +333,29 @@ const styles = StyleSheet.create({
 
     },
     sliderZContainer: {
-        flex: 1,
+        flex: 1.5,
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 35,
+        marginTop: 60,        
         alignItems: 'center',
-        transform: [
-            { rotateZ : '-90deg' },
-        ],
-
+        transform: [{ rotate: '90deg' }]
     },
     sliderXContainer: {
         flex: 0.5,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        marginTop: 50,
+        
     },
     sliderRContainer: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center'
     },
     sliderZ: {
-        width: 100
+        width: 150,
     },
     sliderX: {
         width: 200
@@ -377,20 +374,35 @@ const styles = StyleSheet.create({
     },
     dropdown: {
         flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         alignItems: 'center',
       },
     picker: {
-        height: 50,
-        width: 240,
+        height: 30,
+        width: 150,
         backgroundColor: '#d14ba6',
-        marginBottom: 20,
     },
     header: {
-        flex: 0.65,
-        backgroundColor: '#d14ba6'
+        flex: 0.80,
+        backgroundColor: '#d14ba6',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    titulo: {
+        fontSize: 20,
+        marginLeft: 67,
+        marginTop: 20
+        
+    },
+    axelito: {
+        backgroundColor: '#d14ba6',
+        borderRadius: 10,
+        opacity: 0.3,
+        textAlign: 'center'
     }
+
 });
 
 var customStyles4 = StyleSheet.create({
