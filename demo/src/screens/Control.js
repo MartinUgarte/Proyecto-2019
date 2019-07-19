@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, PanResponder } from 'react-native';
 import Slider from "react-native-slider";
 import { AntDesign } from '@expo/vector-icons';
-import VerticalSlider from 'rn-vertical-slider'
 import fetchTimeout from 'fetch-timeout';
 import CircleSlider from '../components/CircleSlider'
 
@@ -31,7 +30,7 @@ export default class Control extends Component{
         } 
     
     }
-
+/*
     //Martin si no queres que te jodan los alerts, comenta esto
     componentDidMount(){
         //IPByte es un array que guarda string de la IP, separandolos por el punto
@@ -246,6 +245,16 @@ export default class Control extends Component{
                         Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
                     });
         }*/
+    //}
+    
+    componentWillMount () {
+        this._panResponder = PanResponder.create({
+          // Ask to be the responder:
+          onStartShouldSetPanResponder: (evt, gestureState) => true,
+          onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+          onMoveShouldSetPanResponder: (evt, gestureState) => true,
+          onMoveShouldSetPanResponderCapture: (evt, gestureState) => true
+        })
     }
 
     render(){
@@ -258,53 +267,48 @@ export default class Control extends Component{
         return(
 
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
-                  
                   <View style={styles.header}>
                         <MenuButton navigation={this.props.navigation} />
                   </View>
-
                   <MenuButton navigation={this.props.navigation} />
                   
                    <View style={styles.sliderZContainer}>
-                        <VerticalSlider
-                                    disabled={false}
-                                    min={0}
-                                    max={100}
-                                    value={this.state.valueR} 
-                                    onValueChange={this.sendVerticalSlider}
-                                    width={10}
-                                    height={200}
-                                    step={1}
-                                    borderRadius={5}
-                                    minimumTrackTintColor={"gray"}
-                                    maximumTrackTintColor={"tomato"}
-                                    showBallIndicator
-                                    ballIndicatorColor={"gray"}
-                                    ballIndicatorTextColor={"white"}
+                        <Slider
+                            _panResponder
+                            trackStyle={customStyles4.track}
+                            thumbStyle={customStyles4.thumb}
+                            minimumTrackTintColor='#d14ba6'
+                            minimumValue={-100}
+                            maximumValue={100}
+                            step={1}
+                            value={this.state.valueZ}
+                            onValueChange={valueZ => this.setState({ valueZ })}   
+                            style={styles.sliderZ}                         
                         />
+
                    </View>
 
                    <View style={styles.sliderXContainer}>
-                        <AntDesign name="caretleft" size={30} color="green" onPress={() => this.setState({valueX:this.state.valueX-1})}  />
-                        <Slider 
-                            style={styles.sliderX} 
-                            value={this.state.valueX} 
-                            onValueChange={this.sendSlider}
-                            step={1}
+                        <AntDesign name="caretleft" size={30} color="#d14ba6" onPress={() => this.setState({valueX:this.state.valueX-1})}  />
+                        <Slider
+                            trackStyle={customStyles4.track}
+                            thumbStyle={customStyles4.thumb}
+                            minimumTrackTintColor='#d14ba6'
                             minimumValue={-100}
                             maximumValue={100}
-                            minimumTrackTintColor={'#ffb2f7'}
-                            thumbTintColor={'#e398dc'}
+                            step={1}
+                            value={this.state.valueX}
+                            onValueChange={valueX => this.setState({ valueX })}   
+                            style={styles.sliderX}                         
                         />
-                        <AntDesign name="caretright" size={30} color="green" onPress={() => this.setState({valueX:this.state.valueX+1})} />
+                        <AntDesign name="caretright" size={30} color="#d14ba6" onPress={() => this.setState({valueX:this.state.valueX+1})} />
                    </View>
                          
 
                    <View style={styles.sliderRContainer}>
-                        <CircleSlider
-                        value={this.state.valueR}
-                        onValueChange={this.sendCircleSlider}
-                        />
+                        <Text>
+                        ValueX: {this.state.valueX} mm 
+                        </Text>
                    </View>
 
                    <View style={styles.dropdown}> 
@@ -336,6 +340,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 35,
         alignItems: 'center',
+        transform: [
+            { rotateZ : '-90deg' },
+        ],
 
     },
     sliderXContainer: {
@@ -351,7 +358,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     sliderZ: {
-        width: 150,
+        width: 100
     },
     sliderX: {
         width: 200
@@ -377,11 +384,35 @@ const styles = StyleSheet.create({
     picker: {
         height: 50,
         width: 240,
-        backgroundColor: 'white',
+        backgroundColor: '#d14ba6',
         marginBottom: 20,
     },
     header: {
-        flex: 0.5,
-        backgroundColor: '#DBB5F8'
+        flex: 0.65,
+        backgroundColor: '#d14ba6'
     }
 });
+
+var customStyles4 = StyleSheet.create({
+    track: {
+      height: 10,
+      borderRadius: 4,
+      backgroundColor: '#a4126e',
+      shadowColor: 'black',
+      shadowOffset: {width: 0, height: 1},
+      shadowRadius: 1,
+      shadowOpacity: 0.15,
+    },
+    thumb: {
+      width: 25,
+      height: 25,
+      backgroundColor: '#f8a1d6',
+      borderColor: '#a4126e',
+      borderWidth: 5,
+      borderRadius: 10,
+      shadowColor: 'black',
+      shadowOffset: {width: 0, height: 2},
+      shadowRadius: 2,
+      shadowOpacity: 0.35,
+    }
+  });
