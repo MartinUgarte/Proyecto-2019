@@ -17,18 +17,21 @@ export default class Control extends Component{
         this.state = {
 
             valueZ: 0,
+            lastValueZ: 0,
             valueX: 0,
+            lastValueX: 0,
             valueR: 0,
+            lastValueR: 0,
 
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
             valueIP: "192.168.100.16",
             valueMask: "255.255.255.0",
-            brazos: ["Hola"],
+            brazos: ["Null"],
             pickerValue: "",
         } 
     
     }
-    /*
+    
     //Martin si no queres que te jodan los alerts, comenta esto
     componentDidMount(){
         //IPByte es un array que guarda string de la IP, separandolos por el punto
@@ -64,8 +67,6 @@ export default class Control extends Component{
         
         let requests = [];
 
-        requests.push("Brazos Roboticos");
-
         
         for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
             ipHostSegundoByte = mascaraSubredSegundoByte + i;
@@ -84,7 +85,7 @@ export default class Control extends Component{
                                 msg: 'Sos el servidor?',
                                 ipEnviado: primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString()
                             })
-                        }, 10)
+                        }, 100)
                             .then((response) => response.json())
                                 .then((responseJson) => {
                                     if(responseJson.msg === "Si"){
@@ -107,15 +108,17 @@ export default class Control extends Component{
 
         setTimeout(function(){
             if (requests.length === 0){
-                Alert.alert("No hay servidores en la red", "Verifique que los servidores esten encendidos y conectados a la red o si usted se encuentra en la misma red");
-                requests.push("No hay brazos conectados");
+                this.setState({ verificar: true });
+                Alert.alert("No hay brazos en la red", "Verifique que los brazos esten encendidos y conectados a la red o si usted se encuentra en la misma red");
+                requests.push("Empty");
             }
             else{
                 Promise.all(requests).then(() => {
+                    this.setState({ verificar: true });
                     var servidores = null;
                     for (var i = 0; i < requests.length; i++){
-                        if (requests.length === 2){
-                            Alert.alert("Servidor encontrado", requests[1]);
+                        if (requests.length === 1){
+                            Alert.alert("Brazo encontrado", requests[0]);
                         }
                         else{
                             if (requests[i] !== "Brazos Roboticos"){
@@ -129,7 +132,7 @@ export default class Control extends Component{
                         }
                     }
                     if (servidores !== null){
-                        Alert.alert("Servidores encontrados", servidores);
+                        Alert.alert("Brazos encontrados", servidores);
                     }
                 })
             }
@@ -139,9 +142,8 @@ export default class Control extends Component{
             });
     
             console.log(this.state.brazos);
-        }.bind(this), 1)
-
-        
+            
+        }.bind(this), 3000)        
     }
 
     handleChange = value => {
@@ -155,95 +157,76 @@ export default class Control extends Component{
         });
     };
 
-    sendVerticalSlider = (valueZ) => {
-        this.setState({ valueZ });
-        console.log(this.state.valueZ);
-        let IP = this.state.pickerValue;
-        console.log(IP);
-        if (IP !== "Brazos Roboticos"){
-            fetchTimeout(IP + ':3000/z', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    direction: "Z",
-                    value: this.state.valueZ,
-                })
-            }, 10)
-                .then((response) => response.json())
-                    .then((responseJson) => {
-                        if(responseJson.msg === "Listo"){
-                            console.log("Posicion cambiada al brazo " + IP + ": Z -> " + this.state.valueZ);
-                        }
-                    })
-                    .catch((error) => {
-                        //console.error(error);
-                        Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
-                    });
+    sendVerticalSlider = (lastValueZ) => {
+        if (this.state.valueZ !== this.state.lastValueZ){
+            this.setState({ lastValueZ });
+            this.sendData("Z", this.state.valueZ);
         }
     }
 
-    sendSlider = (valueX) => {
-        this.setState({ valueX });
-        console.log(this.state.valueX);
-        let IP = this.state.pickerValue;
-        console.log(IP);
-        if (IP !== "Brazos Roboticos"){
-            fetchTimeout(IP + ':3000/x', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    direction: "X",
-                    value: this.state.valueX,
-                })
-            }, 10)
-                .then((response) => response.json())
-                    .then((responseJson) => {
-                        if(responseJson.msg === "Listo"){
-                            console.log("Posicion cambiada al brazo " + IP + ": X -> " + this.state.valueX);
-                        }
-                    })
-                    .catch((error) => {
-                        //console.error(error);
-                        Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
-                    });
+    buttonVerticalSliderN = () => {
+        this.setState({valueZ: this.state.valueZ-1});
+        this.setState({lastValueZ: this.state.valueZ});
+        this.sendData("Z", this.state.valueZ);       
+    }
+
+    buttonVerticalSliderP = () => {
+        this.setState({valueZ: this.state.valueZ+1});
+        this.setState({lastValueZ: this.state.valueZ});
+        this.sendData("Z", this.state.valueZ);  
+    }
+
+    sendSlider = (lastValueX) => {
+        if (this.state.valueX !== this.state.lastValueX){
+            this.setState({ lastValueX });
+            this.sendData("X", this.state.valueX);
         }
+    }
+
+    buttonSliderN = () => {
+        this.setState({valueX: this.state.valueX-1});
+        this.setState({lastValueX: this.state.valueX});
+        this.sendData("X", this.state.valueX);
+    }
+
+    buttonSliderP = () => {
+        this.setState({valueX: this.state.valueX+1});
+        this.setState({lastValueX: this.state.valueX});
+        this.sendData("X", this.state.valueX);
+    }
+
+    sendData = (direccion, valor) => {
+        let IP = this.state.pickerValue;
+        fetchTimeout('http://' + IP + ':3000/move', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                direction: direccion,
+                value: valor,
+            })
+        }, 500)
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    if(responseJson.msg === "Listo"){
+                        Alert.alert("Posicion cambiada al brazo " + IP, direccion + " -> " + valor);
+                    }
+                })
+                .catch((error) => {
+                    //console.error(error);
+                    Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
+                });
     }
 
     sendCircleSlider = (valueR) => {
-        /*this.setState({ valueR });
-        console.log(this.state.valueR);
-        let IP = this.state.pickerValue;
-        console.log(IP);
-        if (IP !== "Brazos Roboticos"){
-            fetchTimeout(IP + ':3000/r', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    direction: "R",
-                    value: this.state.valueR,
-                })
-            }, 10)
-                .then((response) => response.json())
-                    .then((responseJson) => {
-                        if(responseJson.msg === "Listo"){
-                            console.log("Posicion cambiada al brazo " + IP + ": R -> " + this.state.valueR);
-                        }
-                    })
-                    .catch((error) => {
-                        //console.error(error);
-                        Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
-                    });
-        }*/   
-//}
+        console.log("Hola");
+        if (this.state.valueR !== this.state.lastValueR){
+            console.log("Eje R: " + this.state.valueR);
+            //this.setState({ lastValueR });
+        }
+    }
 
     render(){
         
@@ -262,7 +245,13 @@ export default class Control extends Component{
                   <MenuButton navigation={this.props.navigation} />
                   
                    <View style={styles.sliderZContainer}>
-                        <AntDesign name="caretleft" size={30} color="#d14ba6" onPress={() => this.setState({valueZ:this.state.valueZ-1})}  />
+                        <AntDesign 
+                            name="caretleft" 
+                            size={30} 
+                            color="#d14ba6" 
+                            onPress={this.buttonVerticalSliderN}  
+                        />
+
                         <Slider
                             trackStyle={customStyles4.track}
                             thumbStyle={customStyles4.thumb}
@@ -271,16 +260,27 @@ export default class Control extends Component{
                             maximumValue={100}
                             step={1}
                             value={this.state.valueZ}
-                            onValueChange={valueZ => this.setState({ valueZ })}   
+                            onValueChange={valueZ => this.setState({ valueZ })}
+                            onSlidingComplete={this.sendVerticalSlider}   
                             vertical
                             style={styles.sliderZ}                         
                         />
-                        <AntDesign name="caretright" size={30} color="#d14ba6" onPress={() => this.setState({valueZ:this.state.valueZ+1})} />
+                        <AntDesign 
+                            name="caretright" 
+                            size={30} 
+                            color="#d14ba6" 
+                            onPress={this.buttonVerticalSliderP} 
+                        />
 
                    </View>
 
                    <View style={styles.sliderXContainer}>
-                        <AntDesign name="caretleft" size={30} color="#d14ba6" onPress={() => this.setState({valueX:this.state.valueX-1})}  />
+                        <AntDesign 
+                            name="caretleft" 
+                            size={30} 
+                            color="#d14ba6" 
+                            onPress={this.buttonSliderN}  
+                        />
                         <Slider
                             trackStyle={customStyles4.track}
                             thumbStyle={customStyles4.thumb}
@@ -290,16 +290,29 @@ export default class Control extends Component{
                             step={1}
                             value={this.state.valueX}
                             onValueChange={valueX => this.setState({ valueX })}   
+                            onSlidingComplete={this.sendSlider}   
                             style={styles.sliderX}                         
                         />
-                        <AntDesign name="caretright" size={30} color="#d14ba6" onPress={() => this.setState({valueX:this.state.valueX+1})} />
+                        <AntDesign 
+                            name="caretright" 
+                            size={30} 
+                            color="#d14ba6" 
+                            onPress={this.buttonSliderP} 
+                        />
                    </View>
                          
 
                    <View style={styles.sliderRContainer}>
 
-                        <CircularSlider width={150} height={150} meterColor='#d14ba6' textColor='#fff'
-                        value={this.state.valueR} onValueChange={(value)=>this.setState({valueR:value})}/>
+                        <CircularSlider 
+                            width={150} 
+                            height={150} 
+                            meterColor='#d14ba6' 
+                            textColor='#fff'
+                            value={this.state.valueR} 
+                            onValueChange={(value) => this.setState({valueR: value})}
+                            onSlidingComplete={this.sendCircleSlider}
+                        />
                         
 
                    </View>
@@ -308,6 +321,7 @@ export default class Control extends Component{
                         <Picker
                             style={styles.picker}
                             selectedValue={this.state.pickerValue}
+                            onValueChange={pickerValue => this.setState({ pickerValue })}
                         >
                             {IPs}
 

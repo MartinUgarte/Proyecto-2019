@@ -19,11 +19,6 @@ app.use(bodyParser.json())
 //Variable que se va utilizar para responder al cliente
 var respuesta;
 
-//Variable de posicion
-var z;
-var x;
-var r;
-
 
 //Demuestra al celular donde se encuentra el servidor (IP)
 app.post('/server', function (req, res){
@@ -34,54 +29,23 @@ app.post('/server', function (req, res){
     var ip = req.body.ipEnviado;
     console.log(mensaje);
     if (mensaje === 'Sos el servidor?'){
-        console.log(ip);
+        //console.log(ip);
         respuesta = {
             msg: "Si",
             direccionIP: ip
         };
-        console.log("Si");
+        //console.log("Si");
         res.end(JSON.stringify(respuesta));
     }
 })
 
-app.post('/z', function (req, res){
+app.post('/move', function (req, res){
     respuesta = {
         msg: ""
     };
     var direccion = req.body.direction;
     var value = req.body.value;
     console.log(direccion + ": " + value.toString());
-    z = value;
-    respuesta = {
-        msg: "Listo",
-    };
-    console.log("Listo");
-    res.end(JSON.stringify(respuesta));
-})
-
-app.post('/x', function (req, res){
-    respuesta = {
-        msg: ""
-    };
-    var direccion = req.body.direction;
-    var value = req.body.value;
-    console.log(direccion + ": " + value.toString());
-    x = value;
-    respuesta = {
-        msg: "Listo",
-    };
-    console.log("Listo");
-    res.end(JSON.stringify(respuesta));
-})
-
-app.post('/r', function (req, res){
-    respuesta = {
-        msg: ""
-    };
-    var direccion = req.body.direction;
-    var value = req.body.value;
-    console.log(direccion + ": " + value.toString());
-    r = value;
     respuesta = {
         msg: "Listo",
     };
