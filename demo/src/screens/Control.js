@@ -35,7 +35,7 @@ export default class Control extends Component{
     
     }
 np    
-/*
+
     //Martin si no queres que te jodan los alerts, comenta esto
     componentDidMount(){
         //IPByte es un array que guarda string de la IP, separandolos por el punto
@@ -230,7 +230,7 @@ np
             console.log("Eje R: " + this.state.valueR);
             //this.setState({ lastValueR });
         }
-    }*/
+    }
 
     render(){
         
@@ -448,12 +448,6 @@ const styles = StyleSheet.create({
     numeros: {
         position: 'absolute'
     }, 
-    arrowsR: {
-        flex: 0.3,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
     
 
 });
