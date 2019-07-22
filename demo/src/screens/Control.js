@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker } from 'react-native';
 import Slider from "react-native-slider";
 import { AntDesign } from '@expo/vector-icons';
+
 import fetchTimeout from 'fetch-timeout';
-import CircularSlider from '../components/CircularSlider'
+
+import CircularSlider from 'rn-circular-slider'
+
 
 import MenuButton from '../components/MenuButton'
 import AddButton from '../components/AddButton'
@@ -31,7 +34,8 @@ export default class Control extends Component{
         } 
     
     }
-    
+np    
+/*
     //Martin si no queres que te jodan los alerts, comenta esto
     componentDidMount(){
         //IPByte es un array que guarda string de la IP, separandolos por el punto
@@ -226,7 +230,7 @@ export default class Control extends Component{
             console.log("Eje R: " + this.state.valueR);
             //this.setState({ lastValueR });
         }
-    }
+    }*/
 
     render(){
         
@@ -244,7 +248,9 @@ export default class Control extends Component{
                   </View>
                   <MenuButton navigation={this.props.navigation} />
                   
+                
                    <View style={styles.sliderZContainer}>
+                       
                         <AntDesign 
                             name="caretleft" 
                             size={30} 
@@ -275,6 +281,11 @@ export default class Control extends Component{
                    </View>
 
                    <View style={styles.sliderXContainer}>
+                        <View style={styles.numeros}>
+                            <Text style={styles.axelito}> ValueX: {this.state.valueX} </Text>
+                            <Text style={styles.axelito}> ValueZ: {this.state.valueZ} </Text>
+                            <Text style={styles.axelito}> ValueR: {this.state.valueR} </Text>
+                        </View>
                         <AntDesign 
                             name="caretleft" 
                             size={30} 
@@ -291,7 +302,8 @@ export default class Control extends Component{
                             value={this.state.valueX}
                             onValueChange={valueX => this.setState({ valueX })}   
                             onSlidingComplete={this.sendSlider}   
-                            style={styles.sliderX}                         
+                            style={styles.sliderX}  
+                                                   
                         />
                         <AntDesign 
                             name="caretright" 
@@ -304,18 +316,29 @@ export default class Control extends Component{
 
                    <View style={styles.sliderRContainer}>
 
-                        <CircularSlider 
-                            width={150} 
-                            height={150} 
-                            meterColor='#d14ba6' 
-                            textColor='#fff'
-                            value={this.state.valueR} 
-                            onValueChange={(value) => this.setState({valueR: value})}
-                            onSlidingComplete={this.sendCircleSlider}
-                        />
-                        
+                   
+                   <CircularSlider
+                        style={styles.halfCircleSlider}
+                        step={1}
+                        min={-45}
+                        max={45}
+                        value={this.state.valueR}
+                        onChange={valueR => this.setState({ valueR })}
+                        strokeWidth={10}
+                        buttonBorderColor="#a4126e"
+                        buttonFillColor="#f8a1d6"
+                        buttonStrokeWidth={5}
+                        openingRadian={Math.PI / 2}
+                        buttonRadius={11}
+                        radius={70}
+                        backgroundTrackColor={'#a4126e'}
+                        linearGradient={[{ stop: '0%', color: '#d14ba6' }, { stop: '100%', color: '#d14ba6' }]}
+
+                        >
+                    </CircularSlider>
 
                    </View>
+
 
                    <View style={styles.dropdown}> 
                         <Picker
@@ -327,6 +350,7 @@ export default class Control extends Component{
 
                         </Picker>
                         <AddButton/>
+                        
                     </View> 
              
                 </ImageBackground>
@@ -334,6 +358,7 @@ export default class Control extends Component{
         );
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -355,15 +380,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'flex-end',
-        marginTop: 50,
+        marginTop: 60,
+        marginBottom: 70
         
     },
     sliderRContainer: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        marginTop: 30
     },
     sliderZ: {
         width: 150,
@@ -371,6 +396,9 @@ const styles = StyleSheet.create({
     sliderX: {
         width: 200
     },
+    halfCircleSlider: {
+        marginTop: 40
+    },     
     arrowImage: {
         width: 30,
         height: 30
@@ -395,16 +423,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#d14ba6',
     },
     header: {
-        flex: 0.80,
+        flex: 0.55,
         backgroundColor: '#d14ba6',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: 'black',
+        shadowOffset: {width: 1, height: 2},
+        shadowRadius: 2,
+        shadowOpacity: 0.6,
     },
     titulo: {
         fontSize: 20,
         marginLeft: 67,
-        marginTop: 20
+        marginTop: 10
         
     },
     axelito: {
@@ -412,7 +444,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         opacity: 0.3,
         textAlign: 'center'
+    },
+    numeros: {
+        position: 'absolute'
+    }, 
+    arrowsR: {
+        flex: 0.3,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
+    
 
 });
 
