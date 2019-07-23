@@ -26,6 +26,8 @@ export default class Control extends Component{
             valueR: 0,
             lastValueR: 0,
 
+            timer: null,
+
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
             valueIP: "192.168.100.16",
             valueMask: "255.255.255.0",
@@ -33,8 +35,7 @@ export default class Control extends Component{
             pickerValue: "",
         } 
     
-    }
-np    
+    }    
 
     //Martin si no queres que te jodan los alerts, comenta esto
     componentDidMount(){
@@ -171,13 +172,17 @@ np
     buttonVerticalSliderN = () => {
         this.setState({valueZ: this.state.valueZ-1});
         this.setState({lastValueZ: this.state.valueZ});
-        this.sendData("Z", this.state.valueZ);       
+        setTimeout(function(){
+            this.sendData("Z", this.state.valueZ);
+        }.bind(this), 1);        
     }
 
     buttonVerticalSliderP = () => {
         this.setState({valueZ: this.state.valueZ+1});
         this.setState({lastValueZ: this.state.valueZ});
-        this.sendData("Z", this.state.valueZ);  
+        setTimeout(function(){
+            this.sendData("Z", this.state.valueZ);
+        }.bind(this), 1);  
     }
 
     sendSlider = (lastValueX) => {
@@ -190,13 +195,28 @@ np
     buttonSliderN = () => {
         this.setState({valueX: this.state.valueX-1});
         this.setState({lastValueX: this.state.valueX});
-        this.sendData("X", this.state.valueX);
+        setTimeout(function(){
+            this.sendData("X", this.state.valueX);
+        }.bind(this), 1); 
     }
 
     buttonSliderP = () => {
         this.setState({valueX: this.state.valueX+1});
         this.setState({lastValueX: this.state.valueX});
-        this.sendData("X", this.state.valueX);
+        setTimeout(function(){
+            this.sendData("X", this.state.valueX);
+        }.bind(this), 1);        
+    }
+
+    sendCircleSlider = (valueR, lastValueR) => {
+        clearTimeout(this.state.timer);
+        this.state.timer = setTimeout(function(){
+            this.setState({ valueR });
+            if (this.state.valueR !== this.state.lastValueR){
+                this.setState({ lastValueR });
+                this.sendData("R", this.state.valueR);
+            }
+        }.bind(this), 1);        
     }
 
     sendData = (direccion, valor) => {
@@ -222,14 +242,6 @@ np
                     //console.error(error);
                     Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
                 });
-    }
-
-    sendCircleSlider = (valueR) => {
-        console.log("Hola");
-        if (this.state.valueR !== this.state.lastValueR){
-            console.log("Eje R: " + this.state.valueR);
-            //this.setState({ lastValueR });
-        }
     }
 
     render(){
@@ -323,7 +335,7 @@ np
                         min={-45}
                         max={45}
                         value={this.state.valueR}
-                        onChange={valueR => this.setState({ valueR })}
+                        onChange={this.sendCircleSlider}
                         strokeWidth={10}
                         buttonBorderColor="#a4126e"
                         buttonFillColor="#f8a1d6"
