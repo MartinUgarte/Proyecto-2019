@@ -1,10 +1,10 @@
 {
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://hq-3r3.anonymous.demo.exp.direct",
+  "packagerNgrokUrl": "https://packager.hq-3r3.anonymous.demo.exp.direct",
+  "ngrokPid": 7544,
   "devToolsPort": 19002,
-  "expoServerPort": null,
+  "expoServerPort": 19000,
   "webpackServerPort": null
 }

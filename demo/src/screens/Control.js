@@ -36,7 +36,7 @@ export default class Control extends Component{
         } 
     
     }    
-
+/*
     //Martin si no queres que te jodan los alerts, comenta esto
     componentDidMount(){
         //IPByte es un array que guarda string de la IP, separandolos por el punto
@@ -243,7 +243,7 @@ export default class Control extends Component{
                     Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
                 });
     }
-
+*/
     render(){
         
         let IPs = this.state.brazos.map((s, i) => {
@@ -353,6 +353,12 @@ export default class Control extends Component{
 
 
                    <View style={styles.dropdown}> 
+                        <AntDesign 
+                            name="menu-fold" 
+                            size={33} 
+                            color="#d14ba6"
+                            style={styles.wifiIcon} 
+                        />
                         <Picker
                             style={styles.picker}
                             selectedValue={this.state.pickerValue}
@@ -432,7 +438,13 @@ const styles = StyleSheet.create({
     picker: {
         height: 30,
         width: 150,
-        backgroundColor: '#d14ba6',
+        backgroundColor: '#eb52ba',
+        shadowColor: 'black',
+        shadowOffset: {width: 1, height: 2},
+        shadowRadius: 2,
+        shadowOpacity: 0.9,
+        borderRadius: 3, 
+        marginLeft: 25
     },
     header: {
         flex: 0.55,
@@ -460,6 +472,12 @@ const styles = StyleSheet.create({
     numeros: {
         position: 'absolute'
     }, 
+    wifiIcon: {
+        zIndex: 9,
+        position: 'absolute',
+        top: 33,
+        left: 20,
+    }
     
 
 });
