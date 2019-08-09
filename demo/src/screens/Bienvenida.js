@@ -21,7 +21,7 @@ export default class Bienvenida extends Component{
 
                     <View style={styles.textView}>  
                             <Text style={styles.txtWelcome}>¡Bienvenido, Gustavo! .</Text>     
-                            <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Control')}>  
+                            <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Conexion')}>  
                             <Text style = {styles.txtBtn}>Continuar </Text>   
                             </TouchableOpacity>
                     </View>

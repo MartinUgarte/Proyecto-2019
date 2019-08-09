@@ -5,6 +5,7 @@ import Inicio from './src/screens/Inicio'
 import Bienvenida from './src/screens/Bienvenida'
 import SobreNosotros from './src/screens/SobreNosotros'
 import Control from './src/screens/Control'
+import Conexion from './src/screens/Conexion'
 import IPyMask from './src/components/IPyMask/IPyMask'
 
 
@@ -25,6 +26,7 @@ const RootStack = createDrawerNavigator({
   Inicio: {screen: Inicio},
   Bienvenida: {screen: Bienvenida},
   SobreNosotros: {screen: SobreNosotros},
+  Conexion: {screen: Conexion},
   Control: {screen: Control},
   IPyMask: {screen: IPyMask},
 
