@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, ActivityIndicator } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 import MenuButton from '../components/MenuButton'
-import Box from '../components/Box'
 
 
 export default class Conexion extends Component{
@@ -12,15 +11,34 @@ export default class Conexion extends Component{
 
         super( props )
         this.state = {
-            conectado: true
+            conectado: false
 
         };
     }
 
-    toggleDiv = () => {
-        Alert.alert("Se ha conectado a la red");
-        const { conectado } = this.state;
-        this.setState( { conectado : !conectado } )
+    comprobarConectividad = () => {
+        if(this.state.conectado){
+            Alert.alert("Se ha conectado a la red");
+            return <Text style={styles.conectividadTxt}>Estás conectado</Text>
+        }else{
+            Alert.alert("Se ha desconectado de la red");
+            return <Text style={styles.conectividadTxt}>Por favor, conectate.</Text>
+        }
+    }
+
+    conectar = () => {
+        this.setState({ conectado: !this.state.conectado });
+    }
+
+    buscarBrazos = () => {
+        if(this.state.conectado){
+            return (
+                <View>
+                    <Text style={styles.buscandoBrazosTxt}>Buscando brazos robóticos...</Text>
+                    <ActivityIndicator size="large" color="#d14ba6" />
+                </View>
+            )
+        }
     }
 
     render(){
@@ -35,8 +53,9 @@ export default class Conexion extends Component{
                   <MenuButton navigation={this.props.navigation} />
                   
                 
+                
                    <View style={styles.textContainer}>    
-                        { this.state.conectado && <Box />}
+                        { this.comprobarConectividad()}                        
                    </View>
 
                    <View style={styles.wifiContainer}>
@@ -44,12 +63,12 @@ export default class Conexion extends Component{
                             name="wifi" 
                             size={150} 
                             color="#d14ba6" 
-                            onPress={this.toggleDiv}
+                            onPress={this.conectar}
                         />
                    </View>
                          
-
                    <View style={styles.footer}>
+                        { this.buscarBrazos()} 
                    </View>
              
                 </ImageBackground>
@@ -109,7 +128,21 @@ const styles = StyleSheet.create({
         left: 20,
     },
     footer: {
-        flex: 1
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        marginTop: 60,
+        marginBottom: 70
+    },
+    conectividadTxt: {
+        fontSize: 25,
+        color: 'white'
+    },
+    buscandoBrazosTxt: {
+        fontSize: 20,
+        color: 'white',
+        opacity: 0.7
     }
     
 
