@@ -3,6 +3,11 @@ import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Butto
 
 export default class Inicio extends Component{
 
+    constructor(props){
+        super(props);
+        global.brazos = ["Null"];
+    }
+
     static navigationOptions = {
         //To hide the ActionBar/NavigationBar
         header: null,

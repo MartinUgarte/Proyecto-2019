@@ -27,129 +27,11 @@ export default class Control extends Component{
             lastValueR: 0,
 
             timer: null,
-
-            //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
-            valueIP: "192.168.100.16",
-            valueMask: "255.255.255.0",
-            brazos: ["Null"],
-            pickerValue: "",
+            brazos: [],
+            pickerValue: global.brazos[0],
         } 
     
     }    
-/*
-    //Martin si no queres que te jodan los alerts, comenta esto
-    componentDidMount(){
-        //IPByte es un array que guarda string de la IP, separandolos por el punto
-        var IPByte = this.state.valueIP.split(".");
-        //MaskByte es un array que guarda string de la Mascara de subred, separandolos por el punto
-        var MaskByte = this.state.valueMask.split(".");
-        //Convierte el primer byte de la IP en un int
-
-        Alert.alert("Buscando Brazos...", "Espere por favor");
-
-        var primerByteIP = parseInt(IPByte[0]);
-        var segundoByteIP = parseInt(IPByte[1]);
-        var tercerByteIP = parseInt(IPByte[2]);
-        var cuartoByteIP = parseInt(IPByte[3]);
-        var primerByteMask = parseInt(MaskByte[0]);
-        var segundoByteMask = parseInt(MaskByte[1]);
-        var tercerByteMask = parseInt(MaskByte[2]);
-        var cuartoByteMask = parseInt(MaskByte[3]);
-
-        var mascaraSubredPrimerByte = primerByteIP & primerByteMask;
-        var mascaraSubredSegundoByte = segundoByteIP & segundoByteMask;
-        var mascaraSubredTercerByte = tercerByteIP & tercerByteMask;
-        var mascaraSubredCuartoByte = cuartoByteIP & cuartoByteMask;
-
-        var hostsPosiblesPrimerByte = 255 - primerByteMask;
-        var hostsPosiblesSegundoByte = 255 - segundoByteMask;
-        var hostsPosiblesTercerByte = 255 - tercerByteMask;
-        var hostsPosiblesCuartoByte = 255 - cuartoByteMask;
-
-        var ipHostSegundoByte;
-        var ipHostTercerByte;
-        var ipHostCuartoByte; 
-        
-        let requests = [];
-
-        
-        for (var i = 0; i <= hostsPosiblesSegundoByte; i++){
-            ipHostSegundoByte = mascaraSubredSegundoByte + i;
-            for (var j = 0; j <= hostsPosiblesTercerByte; j++){
-                ipHostTercerByte = mascaraSubredTercerByte + j;
-                for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
-                    ipHostCuartoByte = mascaraSubredCuartoByte + k;
-
-                        fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':3000/server', {
-                            method: 'POST',
-                            headers: {
-                                Accept: 'application/json',
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                msg: 'Sos el servidor?',
-                                ipEnviado: primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString()
-                            })
-                        }, 100)
-                            .then((response) => response.json())
-                                .then((responseJson) => {
-                                    if(responseJson.msg === "Si"){
-                                        req = new Promise(function (resolve, reject) {
-                                            resolve({
-                                                ip: responseJson.direccionIP
-                                            })
-                                        })
-                                        req.then(function(value) {
-                                            requests.push(value.ip);
-                                        });
-                                    }
-                                })
-                                .catch((error) => {
-                                    //console.error(error);
-                                });
-                }
-            }
-        }
-
-        setTimeout(function(){
-            if (requests.length === 0){
-                this.setState({ verificar: true });
-                Alert.alert("No hay brazos en la red", "Verifique que los brazos esten encendidos y conectados a la red o si usted se encuentra en la misma red");
-                requests.push("Empty");
-            }
-            else{
-                Promise.all(requests).then(() => {
-                    this.setState({ verificar: true });
-                    var servidores = null;
-                    for (var i = 0; i < requests.length; i++){
-                        if (requests.length === 1){
-                            Alert.alert("Brazo encontrado", requests[0]);
-                        }
-                        else{
-                            if (requests[i] !== "Brazos Roboticos"){
-                                if (servidores === null){
-                                    servidores = requests[i];
-                                }
-                                else {
-                                    servidores = servidores + " y " + requests[i];
-                                }
-                            }
-                        }
-                    }
-                    if (servidores !== null){
-                        Alert.alert("Brazos encontrados", servidores);
-                    }
-                })
-            }
-
-            this.setState({
-                brazos: requests
-            });
-    
-            console.log(this.state.brazos);
-            
-        }.bind(this), 3000)        
-    }
 
     handleChange = value => {
         console.log(`Changed value ${value}`);
@@ -243,26 +125,30 @@ export default class Control extends Component{
                     Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
                 });
     }
-*/
+    
     render(){
         
-        let IPs = this.state.brazos.map((s, i) => {
+        let IPs;
+        if (global.brazos[0] == "Null" || global.brazos[0] == "Empty"){
+            Alert.alert("Error: No hay brazos conectados", "Por favor busque si hay brazos disponibles en la pantalla Conexion");
+        }
+        IPs = global.brazos.map((s, i) => {
             return <Picker.Item key={i} value={s} label={s} />
-        });
+        });            
 
 
         return(
 
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
-                  <View style={styles.header}>
+                <View style={styles.header}>
                         <MenuButton navigation={this.props.navigation} />
                         <Text style={styles.titulo}>Control </Text>
-                  </View>
-                  <MenuButton navigation={this.props.navigation} />
-                  
+                </View>
+                <MenuButton navigation={this.props.navigation} />
                 
-                   <View style={styles.sliderZContainer}>
-                       
+                
+                <View style={styles.sliderZContainer}>
+                    
                         <AntDesign 
                             name="caretleft" 
                             size={30} 
@@ -290,9 +176,9 @@ export default class Control extends Component{
                             onPress={this.buttonVerticalSliderP} 
                         />
 
-                   </View>
+                </View>
 
-                   <View style={styles.sliderXContainer}>
+                <View style={styles.sliderXContainer}>
                         <View style={styles.numeros}>
                             <Text style={styles.axelito}> ValueX: {this.state.valueX} </Text>
                             <Text style={styles.axelito}> ValueZ: {this.state.valueZ} </Text>
@@ -315,7 +201,7 @@ export default class Control extends Component{
                             onValueChange={valueX => this.setState({ valueX })}   
                             onSlidingComplete={this.sendSlider}   
                             style={styles.sliderX}  
-                                                   
+                                                
                         />
                         <AntDesign 
                             name="caretright" 
@@ -323,13 +209,13 @@ export default class Control extends Component{
                             color="#d14ba6" 
                             onPress={this.buttonSliderP} 
                         />
-                   </View>
-                         
+                </View>
+                        
 
-                   <View style={styles.sliderRContainer}>
+                <View style={styles.sliderRContainer}>
 
-                   
-                   <CircularSlider
+                
+                <CircularSlider
                         style={styles.halfCircleSlider}
                         step={1}
                         min={-45}
@@ -349,10 +235,10 @@ export default class Control extends Component{
                         >
                     </CircularSlider>
 
-                   </View>
+                </View>
 
 
-                   <View style={styles.dropdown}> 
+                <View style={styles.dropdown}> 
                         <AntDesign 
                             name="menu-fold" 
                             size={33} 
@@ -370,7 +256,7 @@ export default class Control extends Component{
                         <AddButton/>
                         
                     </View> 
-             
+            
                 </ImageBackground>
 
         );
