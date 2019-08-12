@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button } from 'react-native'
+import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, StatusBar } from 'react-native'
 
 export default class Inicio extends Component{
 
@@ -18,6 +18,8 @@ export default class Inicio extends Component{
 
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
                   
+                <StatusBar barStyle='light-content' />
+
                     <View style={styles.titleView}>
                         <Text style={styles.title}>MYCROTECH</Text>
                         <Image style={styles.logo} source={require('../images/Micro2.png')} />

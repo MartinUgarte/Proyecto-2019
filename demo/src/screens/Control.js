@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, StatusBar } from 'react-native';
 import Slider from "react-native-slider";
 import { AntDesign } from '@expo/vector-icons';
 
@@ -139,7 +139,10 @@ export default class Control extends Component{
 
         return(
 
-                <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
+                <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.4}}>
+
+                <StatusBar hidden/>
+
                 <View style={styles.header}>
                         <MenuButton navigation={this.props.navigation} />
                         <Text style={styles.titulo}>Control </Text>
@@ -334,7 +337,7 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 0.55,
-        backgroundColor: '#d14ba6',
+        backgroundColor: 'rgba(209,75,166,0.83)',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -362,7 +365,7 @@ const styles = StyleSheet.create({
         zIndex: 9,
         position: 'absolute',
         top: 33,
-        left: 20,
+        left: 25,
     }
     
 

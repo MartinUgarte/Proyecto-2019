@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, ActivityIndicator, StatusBar } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 import MenuButton from '../components/MenuButton';
@@ -18,7 +18,7 @@ export default class Conexion extends Component{
             llamados: 0,
 
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
-            valueIP: "192.168.100.16",
+            valueIP: "10.8.17.8",
             valueMask: "255.255.255.0",
 
         };
@@ -186,6 +186,9 @@ export default class Conexion extends Component{
         return(
 
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
+
+                    <StatusBar hidden/>
+
                   <View style={styles.header}>
                         <MenuButton navigation={this.props.navigation} />
                         <Text style={styles.titulo}>Conexión</Text>
@@ -241,15 +244,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     header: {
-        flex: 0.36,
-        backgroundColor: '#d14ba6',
+        flex: 0.46,
+        backgroundColor: 'rgba(209,75,166,0.83)',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        shadowColor: 'black',
-        shadowOffset: {width: 1, height: 2},
-        shadowRadius: 2,
-        shadowOpacity: 0.6,
+        
+ 
     },
     titulo: {
         fontSize: 20,
