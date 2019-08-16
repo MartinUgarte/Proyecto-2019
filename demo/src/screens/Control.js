@@ -128,11 +128,7 @@ export default class Control extends Component{
     
     render(){
         
-        let IPs;
-        if (global.brazos[0] == "Null" || global.brazos[0] == "Empty"){
-            Alert.alert("Error: No hay brazos conectados", "Por favor busque si hay brazos disponibles en la pantalla Conexion");
-        }
-        IPs = global.brazos.map((s, i) => {
+        let IPs = global.brazos.map((s, i) => {
             return <Picker.Item key={i} value={s} label={s} />
         });            
 

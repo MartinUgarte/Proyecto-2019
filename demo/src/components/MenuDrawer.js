@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, Dimensions, StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import { Platform, Dimensions, StyleSheet, Text, View, TouchableOpacity, Image, Alert} from 'react-native';
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -11,6 +11,28 @@ export default class MenuDrawer extends React.Component {
                 <Text style={styles.link}>{text}</Text>
             </TouchableOpacity>
         );
+    }
+
+    brazosConectados = () => {
+        if (global.brazos[0] == "Null" || global.brazos[0] == "Empty"){
+            return (
+                <View>
+                    {this.navLink('Bienvenida','Bienvenida')}
+                    {this.navLink('Conexion','Conexion')}
+                    {this.navLink('SobreNosotros','SobreNosotros')}
+                </View>
+            )
+        }
+        else {
+            return(
+                <View>
+                    {this.navLink('Bienvenida','Bienvenida')}
+                    {this.navLink('Control','Control')}
+                    {this.navLink('Conexion','Conexion')}
+                    {this.navLink('SobreNosotros','SobreNosotros')}
+                </View>
+            )
+        }
     }
 
     render(){
@@ -27,11 +49,8 @@ export default class MenuDrawer extends React.Component {
                     </View>
                 </View>
                 <View style={styles.bottomLinks}>
-                    {this.navLink('Bienvenida','Bienvenida')}
-                    {this.navLink('Control','Control')}
-                    {this.navLink('Conexion','Conexion')}
-                    {this.navLink('SobreNosotros','SobreNosotros')}
-                    {this.navLink('IPyMask','IPyMask')}
+
+                    {this.brazosConectados()}
                 </View>
                 <View style={styles.footer}>
                     <Text style={styles.description}>Mycrotech</Text>
