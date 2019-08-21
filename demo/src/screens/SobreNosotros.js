@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, ScrollView } from 'react-native'
 
+import MenuButton from '../components/MenuButton';
+
+
 export default class Bienvenida extends Component{
 
     static navigationOptions = {
@@ -25,8 +28,10 @@ export default class Bienvenida extends Component{
                         scrollEventThrottle={16}                       
                     >
                         <View style={styles.imagesContainer}>
-                            <Text>What can we help you find, Varun, I'm very funny xddd lol ajdiasjdi</Text>
+                            <Image style={styles.logo} source={require('../images/jaja_xd.png')} />
                         </View>
+
+                        
                         
                     </ScrollView>
 
@@ -44,7 +49,7 @@ const styles = StyleSheet.create({
 
     },
     header: {
-        flex: 0.46,
+        flex: 0.1,
         backgroundColor: 'rgba(209,75,166,0.83)',
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -58,7 +63,14 @@ const styles = StyleSheet.create({
         
     },
     imagesContainer: {
-        flex: 1
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    logo: {
+        width: 200,
+        height: 250,
     }
 
 });

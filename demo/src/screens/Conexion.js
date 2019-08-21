@@ -18,7 +18,7 @@ export default class Conexion extends Component{
             llamados: 0,
 
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
-            valueIP: "10.8.17.8",
+            valueIP: "10.8.5.22",
             valueMask: "255.255.255.0",
 
         };
