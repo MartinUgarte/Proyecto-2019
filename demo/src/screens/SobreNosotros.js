@@ -1,40 +1,68 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, ScrollView } from 'react-native'
+import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, SafeAreaView } from 'react-native'
 
 import MenuButton from '../components/MenuButton';
+import Carousel from 'react-native-snap-carousel';
+
 
 
 export default class Bienvenida extends Component{
 
     static navigationOptions = {
-        title: 'Sobre Nosotros.',
-        headerStyle: {
-            backgroundColor: '#F5E81D',
-        },
+        header: null,   
     };
+
+    constructor(props){
+        super(props);
+        this.state = {
+            carouselItems: [
+                {
+                    title: "Item 1"
+                },
+                {
+                    title: "item 2"
+                },
+                {
+                    title: "Item 3"
+                },
+                {
+                    title: "Item 4"
+                },
+                {
+                    title: "Item 5"
+                }
+            ]
+        }
+    }
+
+    _renderItem({item,index}){
+        return (
+            <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
+                <Image style={styles.ImageStyle} source={require('../images/jaja_xd.png')} />
+                <Text style={{color:'#fff'}} >{item.title}</Text>
+            </View>
+        )
+    }
 
     render(){
         return(
 
                 <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
-                  
-                    <View style={styles.header}>
-                            <MenuButton navigation={this.props.navigation} />
-                            <Text style={styles.titulo}>Sobre Nosotros</Text>
-                    </View>
-                    <MenuButton navigation={this.props.navigation} />
-
-                    <ScrollView
-                        scrollEventThrottle={16}                       
-                    >
-                        <View style={styles.imagesContainer}>
-                            <Image style={styles.logo} source={require('../images/jaja_xd.png')} />
+                        <View style={styles.header}>
+                                <MenuButton navigation={this.props.navigation} />
+                                <Text style={styles.titulo}>Sobre Nosotros</Text>
                         </View>
+                        <MenuButton navigation={this.props.navigation} />
 
-                        
-                        
-                    </ScrollView>
-
+                        <View style={styles.carouselContainer}>
+                            <Carousel
+                                ref = { ref => this.carousel = ref}
+                                data={this.state.carouselItems}
+                                sliderWidth={260}
+                                itemWidth={180}
+                                renderItem={this._renderItem}
+                            />
+                        </View>
                 </ImageBackground>
 
         );
@@ -52,7 +80,7 @@ const styles = StyleSheet.create({
         flex: 0.1,
         backgroundColor: 'rgba(209,75,166,0.83)',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
         
     },
@@ -62,15 +90,16 @@ const styles = StyleSheet.create({
         marginTop: 10
         
     },
-    imagesContainer: {
+    carouselContainer: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
     },
-    logo: {
-        width: 200,
-        height: 250,
-    }
+    imageStyle: {
+        width: 100,
+        height: 100
+    },  
+
 
 });
