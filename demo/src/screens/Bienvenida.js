@@ -12,7 +12,7 @@ export default class Bienvenida extends Component{
         return(
 
                 
-                <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
+                <ImageBackground style={styles.container} source={require('../images/fondo.png')} imageStyle={{opacity: 1}}>
                   
 
                     <View style={styles.titleView}>
@@ -22,7 +22,7 @@ export default class Bienvenida extends Component{
                     </View>
 
                     <View style={styles.textView}>  
-                            <Text style={styles.txtWelcome}>¡Bienvenido, Gustavo! .</Text>     
+                            <Text style={styles.txtWelcome}>¡Bienvenido, Gustavo!</Text>     
                             <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Conexion')}>  
                             <Text style = {styles.txtBtn}>Continuar </Text>   
                             </TouchableOpacity>
@@ -30,7 +30,9 @@ export default class Bienvenida extends Component{
 
 
                     <View style={styles.buttonView}>  
-                            <Text style={styles.txtChange}>Cambiar de usuario .</Text>
+                        <TouchableOpacity style={styles.changeView} onPress={() => this.props.navigation.navigate('Bienvenida')}>  
+                            <Text style = {styles.txtChange}>Cambiar de usuario</Text>   
+                        </TouchableOpacity>
                     </View>
 
                 
@@ -60,8 +62,9 @@ const styles = StyleSheet.create({
     },
     buttonView: {
         flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center'   
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
     },
     title: {
         fontSize: 40,
@@ -70,8 +73,8 @@ const styles = StyleSheet.create({
     },
     logo: {
         marginTop: 20,
-        width: 100,
-        height: 100
+        width: 130,
+        height: 130
     },
     txtWelcome: {
         fontSize: 25,
@@ -81,11 +84,16 @@ const styles = StyleSheet.create({
     },
     btn: {
         height: 40,
-        width: 200,
-        borderRadius: 3, 
-        backgroundColor: '#ebc20e',
+        width: 230,
+        marginTop: 16,
+        overflow: 'hidden',
+        borderColor: '#fff',
+        borderRadius: 50,
+        borderWidth: 1.8, 
+        backgroundColor: 'rgba(0,0,0,0)',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        opacity: 0.85
     },
     txtBtn: {
         fontSize: 20,
@@ -95,10 +103,15 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70
     },
+    changeView: {
+        marginBottom: 23,
+        backgroundColor: 'rgba(0,0,0,0)',
+
+    },
     txtChange: {
-        fontSize: 15,
+        fontSize: 17,
         color: '#fff',
         textDecorationLine: 'underline',
-        marginBottom: 6,   
+        opacity: 0.85
     }
 });

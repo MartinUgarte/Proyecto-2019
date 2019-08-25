@@ -185,7 +185,7 @@ export default class Conexion extends Component{
         
         return(
 
-                <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
+                <ImageBackground style={styles.container} source={require('../images/fondo2.png')} imageStyle={{opacity: 1}}>
 
                     <StatusBar hidden/>
 
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 0.46,
-        backgroundColor: 'rgba(209,75,166,0.83)',
+        backgroundColor: 'rgba(147,53,117,0.8)',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',

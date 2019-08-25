@@ -16,7 +16,7 @@ export default class Inicio extends Component{
     render(){
         return(
 
-                <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.6}}>
+                <ImageBackground style={styles.container} source={require('../images/fondo.png')} imageStyle={{opacity: 1}}>
                   
                 <StatusBar barStyle='light-content' />
 
@@ -29,21 +29,17 @@ export default class Inicio extends Component{
                         <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Bienvenida')}>  
                             <Text style = {styles.txtBtn}>Iniciar Sesión </Text>   
                         </TouchableOpacity>
+                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Bienvenida')}>  
+                            <Text style = {styles.txtBtn}>Registrarse </Text>   
+                        </TouchableOpacity>
                     </View>
 
 
                     <View style={styles.buttonView}>  
                             
-                            <View style={styles.icons}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('SobreNosotros')}>
-                                    <Image style={styles.iconImage} source={require('../images/SobreNosotros.png')} />
-                                </TouchableOpacity>
-                                <Text style={styles.txtIcon}>Sobre Nosotros .</Text>
-                            </View>
-                            <View style={styles.icons}>
-                                <Image style={styles.iconImage} source={require('../images/Registrarse.png')} />
-                                <Text style={styles.txtIcon}>¡Registrarse! .</Text>
-                            </View>
+                        <TouchableOpacity style={styles.sobreNostrosView} onPress={() => this.props.navigation.navigate('SobreNosotros')}>  
+                                <Text style = {styles.txtSobreNosotros}>Sobre Nosotros</Text>   
+                        </TouchableOpacity>
                     </View>
 
                 
@@ -68,14 +64,15 @@ const styles = StyleSheet.create({
  
     textView: {
         flex: 2,
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
     },
     buttonView: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
     },
     title: {
         fontSize: 40,
@@ -84,33 +81,33 @@ const styles = StyleSheet.create({
     },
     logo: {
         marginTop: 20,
-        width: 100,
-        height: 100
+        width: 130,
+        height: 130
     },
     btn: {
         height: 40,
-        width: 200,
-        borderRadius: 3, 
-        backgroundColor: '#ebc20e',
+        width: 230,
+        marginTop: 16,
+        overflow: 'hidden',
+        borderColor: '#fff',
+        borderRadius: 50,
+        borderWidth: 1.8, 
+        backgroundColor: 'rgba(0,0,0,0)',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        opacity: 0.85
+    },
+    sobreNostrosView: {
+        marginBottom: 23,
+        backgroundColor: 'rgba(0,0,0,0)',
     },
     txtBtn: {
         fontSize: 20,
-        color: '#fff'
+        color: '#fff',
     },
-    icons: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    iconImage: {
-        width: 70,
-        height: 70
-    },
-    txtIcon: {
-        fontSize: 15,
-        marginTop: 7,
-        color: '#fff'
+    txtSobreNosotros: {
+        fontSize: 17,
+        color: '#fff',
+        opacity: 0.85
     }
 });

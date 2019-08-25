@@ -135,7 +135,7 @@ export default class Control extends Component{
 
         return(
 
-                <ImageBackground style={styles.container} source={require('../images/Estudio.jpg')} imageStyle={{opacity: 0.4}}>
+                <ImageBackground style={styles.container} source={require('../images/fondo2.png')} imageStyle={{opacity: 0.6}}>
 
                 <StatusBar hidden/>
 
@@ -238,12 +238,7 @@ export default class Control extends Component{
 
 
                 <View style={styles.dropdown}> 
-                        <AntDesign 
-                            name="menu-fold" 
-                            size={33} 
-                            color="#d14ba6"
-                            style={styles.wifiIcon} 
-                        />
+                        
                         <Picker
                             style={styles.picker}
                             selectedValue={this.state.pickerValue}
@@ -323,17 +318,16 @@ const styles = StyleSheet.create({
     picker: {
         height: 30,
         width: 150,
+        overflow: 'hidden',
         backgroundColor: '#eb52ba',
-        shadowColor: 'black',
-        shadowOffset: {width: 1, height: 2},
-        shadowRadius: 2,
-        shadowOpacity: 0.9,
-        borderRadius: 3, 
+        borderColor: '#fff',
+        borderWidth: 1.8, 
+        borderRadius: 50, 
         marginLeft: 25
     },
     header: {
         flex: 0.55,
-        backgroundColor: 'rgba(209,75,166,0.83)',
+        backgroundColor: 'rgba(147,53,117,0.8)',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
