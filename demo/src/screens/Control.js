@@ -103,7 +103,7 @@ export default class Control extends Component{
 
     sendData = (direccion, valor) => {
         let IP = this.state.pickerValue;
-        fetchTimeout('http://' + IP + ':3000/move', {
+        fetchTimeout('http://' + IP + ':80/move', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

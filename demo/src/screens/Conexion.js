@@ -18,7 +18,7 @@ export default class Conexion extends Component{
             llamados: 0,
 
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
-            valueIP: "10.8.5.22",
+            valueIP: "10.10.32.114",
             valueMask: "255.255.255.0",
 
         };
@@ -94,7 +94,9 @@ export default class Conexion extends Component{
                 for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
                     ipHostCuartoByte = mascaraSubredCuartoByte + k;
 
-                        fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':3000/server', {
+                        console.log(primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString());
+
+                        fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':80/server', {
                             method: 'POST',
                             headers: {
                                 Accept: 'application/json',
@@ -104,7 +106,7 @@ export default class Conexion extends Component{
                                 msg: 'Sos el servidor?',
                                 ipEnviado: primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString()
                             })
-                        }, 100)
+                        }, 2000)
                             .then((response) => response.json())
                                 .then((responseJson) => {
                                     if(responseJson.msg === "Si"){
@@ -185,7 +187,7 @@ export default class Conexion extends Component{
         
         return(
 
-                <ImageBackground style={styles.container} source={require('../images/fondo2.png')} imageStyle={{opacity: 1}}>
+                <View style={styles.container} imageStyle={{opacity: 1}}>
 
                     <StatusBar hidden/>
 
@@ -214,7 +216,7 @@ export default class Conexion extends Component{
                         { this.buscarBrazosFrontEnd()} 
                    </View>
              
-                </ImageBackground>
+                </View>
         );
     }
 }
@@ -225,7 +227,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#000'
+        backgroundColor: '#fff'
 
     },
     textContainer: {
@@ -245,7 +247,7 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 0.46,
-        backgroundColor: 'rgba(147,53,117,0.8)',
+        backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -277,11 +279,11 @@ const styles = StyleSheet.create({
     },
     conectividadTxt: {
         fontSize: 25,
-        color: 'white'
+        color: 'black'
     },
     buscandoBrazosTxt: {
         fontSize: 20,
-        color: 'white',
+        color: 'black',
         opacity: 0.7
     }
     

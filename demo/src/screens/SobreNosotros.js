@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 0.1,
-        backgroundColor: 'rgba(147,53,117,0.8)',
+        backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',

@@ -1,10 +1,10 @@
 {
-  "packagerPort": 19001,
-  "packagerPid": 4396,
-  "expoServerNgrokUrl": "https://wq-th9.anonymous.demo.exp.direct",
-  "packagerNgrokUrl": "https://packager.wq-th9.anonymous.demo.exp.direct",
-  "ngrokPid": 14312,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
+  "expoServerPort": null,
   "webpackServerPort": null
 }
