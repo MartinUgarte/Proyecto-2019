@@ -18,7 +18,7 @@ export default class Conexion extends Component{
             llamados: 0,
 
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
-            valueIP: "10.10.32.114",
+            valueIP: "10.10.32.65",
             valueMask: "255.255.255.0",
 
         };
@@ -94,8 +94,6 @@ export default class Conexion extends Component{
                 for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
                     ipHostCuartoByte = mascaraSubredCuartoByte + k;
 
-                        console.log(primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString());
-
                         fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':80/server', {
                             method: 'POST',
                             headers: {
@@ -106,7 +104,7 @@ export default class Conexion extends Component{
                                 msg: 'Sos el servidor?',
                                 ipEnviado: primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString()
                             })
-                        }, 2000)
+                        }, 3000)
                             .then((response) => response.json())
                                 .then((responseJson) => {
                                     if(responseJson.msg === "Si"){
@@ -169,7 +167,7 @@ export default class Conexion extends Component{
                 this.props.navigation.navigate('Control');
             }
             
-        }.bind(this), 3000)
+        }.bind(this), 5000)
     }
 
     buscarBrazosFrontEnd = () => {

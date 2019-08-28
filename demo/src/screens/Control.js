@@ -111,9 +111,9 @@ export default class Control extends Component{
             },
             body: JSON.stringify({
                 direction: direccion,
-                value: valor,
+                value: parseInt(valor),
             })
-        }, 500)
+        }, 5000)
             .then((response) => response.json())
                 .then((responseJson) => {
                     if(responseJson.msg === "Listo"){
