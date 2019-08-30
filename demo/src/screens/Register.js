@@ -1,44 +1,37 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, StatusBar } from 'react-native'
+import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, StatusBar } from 'react-native'
 
-export default class Inicio extends Component{
-
-    constructor(props){
-        super(props);
-        global.brazos = ["Null"];
-    }
+export default class Register extends Component{
 
     static navigationOptions = {
         //To hide the ActionBar/NavigationBar
-        header: null,
+        header: null,   
     };
 
     render(){
         return(
 
+                
                 <ImageBackground style={styles.container} source={require('../images/fondo.png')} imageStyle={{opacity: 1}}>
                   
-                <StatusBar barStyle='light-content' />
 
                     <View style={styles.titleView}>
                         <Text style={styles.title}>MYCROTECH</Text>
                         <Image style={styles.logo} source={require('../images/Micro2.png')} />
+
                     </View>
 
-                    <View style={styles.textView}>          
-                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Login')}>  
-                            <Text style = {styles.txtBtn}>Iniciar Sesión </Text>   
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Registro')}>  
-                            <Text style = {styles.txtBtn}>Registrarse </Text>   
-                        </TouchableOpacity>
+                    <View style={styles.textView}>  
+                            <Text style={styles.txtWelcome}>¡Bienvenido, Gustavo!</Text>     
+                            <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Conexion')}>  
+                            <Text style = {styles.txtBtn}>Continuar </Text>   
+                            </TouchableOpacity>
                     </View>
 
 
                     <View style={styles.buttonView}>  
-                            
-                        <TouchableOpacity style={styles.sobreNostrosView} onPress={() => this.props.navigation.navigate('SobreNosotros')}>  
-                                <Text style = {styles.txtSobreNosotros}>Sobre Nosotros</Text>   
+                        <TouchableOpacity style={styles.changeView} onPress={() => this.props.navigation.navigate('Bienvenida')}>  
+                            <Text style = {styles.txtChange}>Cambiar de usuario</Text>   
                         </TouchableOpacity>
                     </View>
 
@@ -59,12 +52,11 @@ const styles = StyleSheet.create({
     titleView: {
         flex: 3,
         alignItems: 'center',
-        justifyContent: 'flex-end', 
+        justifyContent: 'flex-end',
     },
  
     textView: {
         flex: 2,
-        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -77,12 +69,18 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 40,
         color: '#fff',
-    //    fontFamily: 'sans-serif'
+   //     fontFamily: 'sans-serif'
     },
     logo: {
         marginTop: 20,
         width: 130,
         height: 130
+    },
+    txtWelcome: {
+        fontSize: 25,
+        color: '#fff',
+        marginBottom: 20,
+    //    fontFamily: 'sans-serif'
     },
     btn: {
         height: 40,
@@ -97,17 +95,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         opacity: 0.85
     },
-    sobreNostrosView: {
-        marginBottom: 23,
-        backgroundColor: 'rgba(0,0,0,0)',
-    },
     txtBtn: {
         fontSize: 20,
-        color: '#fff',
+        color: '#fff'
     },
-    txtSobreNosotros: {
+    icons: {
+        width: 70,
+        height: 70
+    },
+    changeView: {
+        marginBottom: 23,
+        backgroundColor: 'rgba(0,0,0,0)',
+
+    },
+    txtChange: {
         fontSize: 17,
         color: '#fff',
+        textDecorationLine: 'underline',
         opacity: 0.85
     }
 });

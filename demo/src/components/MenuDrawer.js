@@ -20,6 +20,7 @@ export default class MenuDrawer extends React.Component {
                     {this.navLink('Bienvenida','Bienvenida')}
                     {this.navLink('Conexion','Conexion')}
                     {this.navLink('SobreNosotros','SobreNosotros')}
+                    {this.navLink('Tutorial','Tutorial')}
                 </View>
             )
         }
@@ -30,6 +31,7 @@ export default class MenuDrawer extends React.Component {
                     {this.navLink('Control','Control')}
                     {this.navLink('Conexion','Conexion')}
                     {this.navLink('SobreNosotros','SobreNosotros')}
+                    {this.navLink('Tutorial','Tutorial')}
                 </View>
             )
         }

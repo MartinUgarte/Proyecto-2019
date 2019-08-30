@@ -185,7 +185,7 @@ export default class Conexion extends Component{
         
         return(
 
-                <View style={styles.container} imageStyle={{opacity: 1}}>
+            <ImageBackground style={styles.container} source={require('../images/fondo2.png')} imageStyle={{opacity: 1}}>
 
                     <StatusBar hidden/>
 
@@ -205,7 +205,7 @@ export default class Conexion extends Component{
                         <AntDesign 
                             name="wifi" 
                             size={150} 
-                            color="#d14ba6" 
+                            color="#F06CBD" 
                             onPress={this.conectar}
                         />
                    </View>
@@ -214,7 +214,7 @@ export default class Conexion extends Component{
                         { this.buscarBrazosFrontEnd()} 
                    </View>
              
-                </View>
+                </ImageBackground>
         );
     }
 }
@@ -277,11 +277,11 @@ const styles = StyleSheet.create({
     },
     conectividadTxt: {
         fontSize: 25,
-        color: 'black'
+        color: 'rgba(235,235,235,1)'
     },
     buscandoBrazosTxt: {
         fontSize: 20,
-        color: 'black',
+        color: 'rgba(235,235,235,1)',
         opacity: 0.7
     }
     

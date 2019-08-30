@@ -6,6 +6,10 @@ import Bienvenida from './src/screens/Bienvenida'
 import SobreNosotros from './src/screens/SobreNosotros'
 import Control from './src/screens/Control'
 import Conexion from './src/screens/Conexion'
+import Tutorial from './src/screens/Tutorial'
+import Login from './src/screens/Login'
+import Register from './src/screens/Register'
+
 
 
 import { createAppContainer, createDrawerNavigator } from 'react-navigation';
@@ -24,10 +28,13 @@ const DrawerConfig = {
 const RootStack = createDrawerNavigator({
  
   Inicio: {screen: Inicio},
+  Tutorial: {screen: Tutorial},
   Bienvenida: {screen: Bienvenida},
   SobreNosotros: {screen: SobreNosotros},
   Conexion: {screen: Conexion},
   Control: {screen: Control},
+  Login: {screen: Login},
+  Register: {screen: Register}
 
 },
   DrawerConfig

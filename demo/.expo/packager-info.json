@@ -1,10 +1,10 @@
 {
-  "packagerPort": 19001,
-  "packagerPid": 9172,
-  "expoServerNgrokUrl": "https://zg-9z4.anonymous.demo.exp.direct",
-  "packagerNgrokUrl": "https://packager.zg-9z4.anonymous.demo.exp.direct",
-  "ngrokPid": 596,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
+  "expoServerPort": null,
   "webpackServerPort": null
 }
