@@ -8,40 +8,58 @@ export default class Login extends Component{
         header: null,   
     };
 
+    constructor(props){
+
+        super( props );
+        this.state = {
+            username: "",
+            password: "",
+        };
+    }
+
     render(){
         return(
 
                 
-                <ImageBackground style={styles.container} source={require('../images/fondo.png')} imageStyle={{opacity: 1}}>
+                <View style={styles.container}>
                   
+                    <StatusBar barStyle="light-content" />
 
                     <View style={styles.titleView}>
-                        <Image style={styles.logo} source={require('../images/Micro2.png')} />
-                        <Text style={styles.title}>Iniciar sesión</Text>
+                        <Text style={styles.title}>Inicio</Text>
                     </View>
 
                     <View style={styles.formView}>  
-                            <Text style={styles.txtForm}>Dirección de correo electrónico</Text>     
                             <TextInput
-                                    placeholder="mycrotech@gmail.com" 
-                                    placeholderTextColor="black"
+                                    placeholder="Nombre" 
+                                    placeholderTextColor="rgba(0,0,0,0.4)"
                                     returnKeyType="next"
                                     autoCapitalize="none"
                                     autoCorrect={false}
                                     style={styles.formStyle}
                             />
 
+                            <TextInput
+                                    placeholder="Contraseña" 
+                                    placeholderTextColor="rgba(0,0,0,0.4)"
+                                    returnKeyType="next"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    style={styles.formStyle}
+                                    secureTextEntry
+                            />
+
                     </View>
 
 
                     <View style={styles.buttonView}>  
-                        <TouchableOpacity style={styles.changeView} onPress={() => this.props.navigation.navigate('Bienvenida')}>  
-                            <Text style = {styles.txtChange}>Cambiar de usuario</Text>   
+                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Conexion')}>  
+                            <Text style = {styles.txtBtn}>Iniciar Sesión</Text>   
                         </TouchableOpacity>
                     </View>
 
                 
-                </ImageBackground>
+                </View>
 
         );
     }
@@ -51,31 +69,33 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#000'
+        backgroundColor: '#fff'
 
     },
     titleView: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: 'center',
+        alignItems: 'flex-start',
+        marginLeft: 50,
         justifyContent: 'center',
         marginTop: 50
     },
  
     formView: {
         flex: 1,
+        flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
     },
     buttonView: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'flex-end',
+        alignItems: 'center',
     },
     title: {
         fontSize: 40,
-        color: '#fff',
+        color: '#A82574',
    //     fontFamily: 'sans-serif'
     },
     logo: {
@@ -85,13 +105,33 @@ const styles = StyleSheet.create({
     },
     txtForm: {
         fontSize: 20,
+        borderRadius: 20,
         color: '#fff',
         marginBottom: 20,
     //    fontFamily: 'sans-serif'
     },
     formStyle: {
         backgroundColor: '#fff',
-        width: 250
-    }
+        width: 250,
+        borderBottomWidth: 3,
+        borderBottomColor: '#A82574'
+    },
+    btn: {
+        height: 50,
+        width: 230,
+        marginTop: 16,
+        overflow: 'hidden',
+        borderColor: '#fff',
+        borderRadius: 50,
+        borderWidth: 1.8, 
+        backgroundColor: '#A82574',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.85
+    },
+    txtBtn: {
+        fontSize: 20,
+        color: '#fff',
+    },
    
 });

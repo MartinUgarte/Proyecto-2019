@@ -29,7 +29,7 @@ export default class Inicio extends Component{
                         <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Login')}>  
                             <Text style = {styles.txtBtn}>Iniciar Sesión</Text>   
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Registro')}>  
+                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Register')}>  
                             <Text style = {styles.txtBtn}>Registrarse </Text>   
                         </TouchableOpacity>
                     </View>
