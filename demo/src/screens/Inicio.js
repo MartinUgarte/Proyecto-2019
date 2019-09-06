@@ -13,6 +13,7 @@ export default class Inicio extends Component{
         header: null,
     };
 
+    
     render(){
         return(
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, StatusBar, TextInput } from 'react-native'
+import { StyleSheet, View, Alert, Text, TouchableOpacity, StatusBar, TextInput, KeyboardAvoidingView } from 'react-native'
 
 export default class Login extends Component{
 
@@ -17,11 +17,19 @@ export default class Login extends Component{
         };
     }
 
+    onChangeUsername = (username) => {
+        this.setState({ username });
+    }
+
+    onChangePassword = (password) => {
+        this.setState({ password });
+    }
+
     render(){
         return(
 
                 
-                <View style={styles.container}>
+                <KeyboardAvoidingView style={styles.container}>
                   
                     <StatusBar barStyle="light-content" />
 
@@ -37,6 +45,8 @@ export default class Login extends Component{
                                     autoCapitalize="none"
                                     autoCorrect={false}
                                     style={styles.formStyle}
+                                    username={this.state.username}
+                                    onChangeText={this.onChangeUsername}
                             />
 
                             <TextInput
@@ -47,6 +57,8 @@ export default class Login extends Component{
                                     autoCorrect={false}
                                     style={styles.formStyle}
                                     secureTextEntry
+                                    password={this.state.password}
+                                    onChangeText={this.onChangePassword}
                             />
 
                     </View>
@@ -59,7 +71,7 @@ export default class Login extends Component{
                     </View>
 
                 
-                </View>
+                </KeyboardAvoidingView>
 
         );
     }

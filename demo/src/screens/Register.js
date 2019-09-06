@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, StatusBar, TextInput, Alert} from 'react-native'
+import { StyleSheet, View, Image, Text, TouchableOpacity, KeyboardAvoidingView, StatusBar, TextInput, Alert} from 'react-native'
 
 export default class Register extends Component{
 
@@ -15,16 +15,31 @@ export default class Register extends Component{
             email: "",
             username: "",
             password: "",
+            validatePassword: "",
         };
     }
 
+    onChangeEmail = (email) => {
+        this.setState({ email });
+    }
 
+    onChangeUsername = (username) => {
+        this.setState({ username });
+    }
+
+    onChangePassword = (password) => {
+        this.setState({ password });
+    }
+
+    onChangeValidatePassword = (validatePassword) => {
+        this.setState({ validatePassword });
+    }
 
     render(){
         return(
 
                 
-                <View style={styles.container}>
+                <KeyboardAvoidingView style={styles.container}>
                   
                     <StatusBar barStyle="light-content" />
 
@@ -41,7 +56,8 @@ export default class Register extends Component{
                                     autoCorrect={false}
                                     style={styles.formStyle}
                                     keyboardType={"email-address"}
-                                    value={this.state.email}
+                                    email={this.state.email}
+                                    onChangeText={this.onChangeEmail}
 
                             />
 
@@ -52,7 +68,8 @@ export default class Register extends Component{
                                     autoCapitalize="none"
                                     autoCorrect={false}
                                     style={styles.formStyle}
-                                    value={this.state.username}
+                                    username={this.state.username}
+                                    onChangeText={this.onChangeUsername}
 
                             />
 
@@ -64,7 +81,20 @@ export default class Register extends Component{
                                     autoCorrect={false}
                                     style={styles.formStyle}
                                     secureTextEntry
-                                    value={this.state.password}
+                                    password={this.state.password}
+                                    onChangeText={this.onChangePassword}
+                            />
+
+                            <TextInput
+                                    placeholder="Validar Contraseña" 
+                                    placeholderTextColor="rgba(0,0,0,0.4)"
+                                    returnKeyType="next"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    style={styles.formStyle}
+                                    secureTextEntry
+                                    password={this.state.validatePassword}
+                                    onChangeText={this.onChangeValidatePassword}
                             />
 
                     </View>
@@ -72,12 +102,12 @@ export default class Register extends Component{
 
                     <View style={styles.buttonView}>  
                         <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Conexion')}>  
-                            <Text style = {styles.txtBtn}>Iniciar Sesión</Text>   
+                            <Text style = {styles.txtBtn}>Registrarse</Text>   
                         </TouchableOpacity>
                     </View>
 
                 
-                </View>
+                </KeyboardAvoidingView>
 
         );
     }
