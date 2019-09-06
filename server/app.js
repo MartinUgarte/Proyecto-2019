@@ -71,9 +71,9 @@ app.post('/move', function (req, res){
 app.post('/register', function (req, res) {
 	let repetido = false;
 	// Recibe la info
-	let nombreR = req.body.nombre;
+	let nombreR = req.body.username;
 	let emailR = req.body.email;
-	let contraR = req.body.contra;
+	let contraR = req.body.password;
 	// Crea un documento en la collección Usuarios
 	var usuario = db.collection("Usuarios").doc(nombreR);
 	usuario.get()
@@ -86,7 +86,7 @@ app.post('/register', function (req, res) {
 				res.end(JSON.stringify(reply));
 			} else {
 				// Verifica si el email ya fue usado
-				db.collection("Users").where('Email', '==', emailR).get()
+				db.collection("Usuarios").where('Email', '==', emailR).get()
 					.then(snapshot => {
 						snapshot.forEach(doc => {
 							repetido = true;
@@ -134,7 +134,7 @@ app.post('/register', function (req, res) {
                                     })
                                     
 									reply = {
-										msg: 'Registro existoso'
+										msg: 'Listo'
 									};
 									res.end(JSON.stringify(reply));
                                 })
@@ -152,9 +152,9 @@ app.post('/register', function (req, res) {
 // Inicio de Sesión
 app.post('/login', function (req, res) {
 	// Recibe la info
-	let nombreL = req.body.usuario;
-	let contraL = req.body.contra;
-	var usuario = db.collection("Users").doc(nombreL);
+	let nombreL = req.body.username;
+	let contraL = req.body.password;
+	var usuario = db.collection("Usuarios").doc(nombreL);
 	usuario.get()
 		.then(doc => {
 			// Verifica si el usuario existe
@@ -162,7 +162,7 @@ app.post('/login', function (req, res) {
 				// Verifica si la contraseña es correcta
 				if (doc.data().Contraseña === contraL) {
 					reply = {
-						msg: 'Usuario Encontrado'
+						msg: 'Listo'
 					};
 					res.end(JSON.stringify(reply));
 				} else {

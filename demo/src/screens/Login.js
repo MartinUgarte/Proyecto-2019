@@ -17,6 +17,36 @@ export default class Login extends Component{
         };
     }
 
+    loginUser = () => {        
+        fetch('http://10.8.17.11:3000/login', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+            })
+        })
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    if(responseJson.msg === "Listo"){
+                        Alert.alert("Inicio de sesión existoso");
+                        this.props.navigation.navigate('Conexion');
+                    }
+                    else if(responseJson.msg === "Error, contra"){
+                        Alert.alert("ERROR", "Contraseña incorrecta");
+                    }
+                    else if(responseJson.msg === "Error, usuario"){
+                        Alert.alert("ERROR", "El usuario no existe");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });            
+    }
+
     onChangeUsername = (username) => {
         this.setState({ username });
     }
@@ -65,7 +95,7 @@ export default class Login extends Component{
 
 
                     <View style={styles.buttonView}>  
-                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Conexion')}>  
+                        <TouchableOpacity style={styles.btn} onPress={this.loginUser}>  
                             <Text style = {styles.txtBtn}>Iniciar Sesión</Text>   
                         </TouchableOpacity>
                     </View>

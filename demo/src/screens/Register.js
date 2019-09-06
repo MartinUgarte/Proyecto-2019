@@ -19,6 +19,48 @@ export default class Register extends Component{
         };
     }
 
+    registerUser = () => {
+        if (this.state.password === this.state.validatePassword){
+            const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (reg.test(this.state.email)){
+                fetch('http://10.8.17.11:3000/register', {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: this.state.username,
+                        password: this.state.password,
+                        email: this.state.email,
+                    })
+                })
+                    .then((response) => response.json())
+                        .then((responseJson) => {
+                            if(responseJson.msg === "Listo"){
+                                Alert.alert("Registro realizado correctamente");
+                                this.props.navigation.navigate('Conexion');
+                            }
+                            else if(responseJson.msg === "Error"){
+                                Alert.alert("ERROR", "El de nombre de usuario ya fue utilizado");
+                            }
+                            else if(responseJson.msg === "Error, mail"){
+                                Alert.alert("ERROR", "El email ya fue utilizado");
+                            }
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+            }
+            else{
+                Alert.alert("Email no válido");
+            }
+        }        
+        else{
+            Alert.alert("Las contraseñas no son iguales");
+        }
+    }
+
     onChangeEmail = (email) => {
         this.setState({ email });
     }
@@ -101,7 +143,7 @@ export default class Register extends Component{
 
 
                     <View style={styles.buttonView}>  
-                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Conexion')}>  
+                        <TouchableOpacity style={styles.btn} onPress={this.registerUser}>  
                             <Text style = {styles.txtBtn}>Registrarse</Text>   
                         </TouchableOpacity>
                     </View>
