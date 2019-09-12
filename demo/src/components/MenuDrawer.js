@@ -19,7 +19,7 @@ export default class MenuDrawer extends React.Component {
                 <View>
                     {this.navLink('Bienvenida','Bienvenida')}
                     {this.navLink('Conexion','Conexion')}
-                    {this.navLink('SobreNosotros','SobreNosotros')}
+                    {this.navLink('SobreNosotros','Sobre Nosotros')}
                     {this.navLink('Tutorial','Tutorial')}
                 </View>
             )
@@ -30,7 +30,7 @@ export default class MenuDrawer extends React.Component {
                     {this.navLink('Bienvenida','Bienvenida')}
                     {this.navLink('Control','Control')}
                     {this.navLink('Conexion','Conexion')}
-                    {this.navLink('SobreNosotros','SobreNosotros')}
+                    {this.navLink('SobreNosotros','Sobre Nosotros')}
                     {this.navLink('Tutorial','Tutorial')}
                 </View>
             )
@@ -46,7 +46,7 @@ export default class MenuDrawer extends React.Component {
                             <Image style={styles.img} source={require('../images/perfil.jpg')} />
                         </View>
                         <View style={styles.profileText}>
-                            <Text style={styles.name}>Gustavo Yankelevich</Text>
+                            <Text style={styles.name}>{global.nombre}</Text>
                         </View>
                     </View>
                 </View>

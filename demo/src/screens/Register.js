@@ -23,7 +23,7 @@ export default class Register extends Component{
         if (this.state.password === this.state.validatePassword){
             const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             if (reg.test(this.state.email)){
-                fetch('http://10.8.17.11:3000/register', {
+                fetch('http://192.168.100.16:3000/register', {
                     method: 'POST',
                     headers: {
                         Accept: 'application/json',
@@ -38,6 +38,7 @@ export default class Register extends Component{
                     .then((response) => response.json())
                         .then((responseJson) => {
                             if(responseJson.msg === "Listo"){
+                                global.nombre = this.state.username;
                                 Alert.alert("Registro realizado correctamente");
                                 this.props.navigation.navigate('Conexion');
                             }

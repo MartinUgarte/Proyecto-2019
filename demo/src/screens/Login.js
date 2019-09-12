@@ -18,7 +18,7 @@ export default class Login extends Component{
     }
 
     loginUser = () => {        
-        fetch('http://10.8.17.11:3000/login', {
+        fetch('http://192.168.100.16:3000/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -32,6 +32,7 @@ export default class Login extends Component{
             .then((response) => response.json())
                 .then((responseJson) => {
                     if(responseJson.msg === "Listo"){
+                        global.nombre = this.state.username;
                         Alert.alert("Inicio de sesión existoso");
                         this.props.navigation.navigate('Conexion');
                     }

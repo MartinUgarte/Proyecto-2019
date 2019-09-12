@@ -122,7 +122,7 @@ app.post('/register', function (req, res) {
 										from: 'El equipo MycroTech <mycrotech2019@gmail.com>',
 										to: emailR,
 										subject: 'Registro Exitoso',
-										text: 'Buenos Dias, \r\n gracias por registrarse a MycroTech. A partir de ahora usted podrá tener la mejor experiencia con nuestros brazos robóticos. \r\n El equipo de MycroTech.'
+										text: 'Buenos Dias,\r\nGracias por registrarse a MycroTech. A partir de ahora usted podrá tener la mejor experiencia con nuestros brazos robóticos.\r\nEl equipo de MycroTech.'
 									}
 
 									transporter.sendMail(mailOptions, function (err, res) {
