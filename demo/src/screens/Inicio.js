@@ -28,7 +28,7 @@ export default class Inicio extends Component{
                     </View>
 
                     <View style={styles.textView}>          
-                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Login')}>  
+                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Control')}>  
                             <Text style = {styles.txtBtn}>Iniciar Sesión</Text>   
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Register')}>  

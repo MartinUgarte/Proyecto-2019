@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
         marginLeft: 25
     },
     header: {
-        flex: 0.7,
+        flex: 0.6,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -338,8 +338,9 @@ const styles = StyleSheet.create({
     },
     titulo: {
         fontSize: 30,
-        marginLeft: 72,
-        marginTop: 10
+        marginLeft: 80,
+        marginTop: 10,
+        fontWeight: '300'
         
     },
     axelito: {

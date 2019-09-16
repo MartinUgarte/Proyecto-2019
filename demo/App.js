@@ -21,7 +21,8 @@ const DrawerConfig = {
   drawerWidth: WIDTH*0.80,
   contentComponent: ({ navigation}) => {
     return(<MenuDrawer navigation={navigation} />)
-  }
+  },
+  drawerPosition: 'right'
 }
 
 const RootStack = createDrawerNavigator({
