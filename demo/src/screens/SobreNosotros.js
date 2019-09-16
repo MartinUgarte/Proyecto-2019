@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, StatusBar } from 'react-native'
+import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, StatusBar, Alert } from 'react-native'
 
 import MenuButton from '../components/MenuButton';
+import ArrowLeft from '../components/ArrowLeft';
 import Carousel from 'react-native-snap-carousel';
 
+import { AntDesign } from '@expo/vector-icons';
 
 
-export default class Bienvenida extends Component{
+export default class Tutorial extends Component{
 
     static navigationOptions = {
         header: null,   
@@ -17,61 +19,121 @@ export default class Bienvenida extends Component{
         this.state = {
             carouselItems: [
                 {
-                    title: "Item 1"
+                    image: require('../images/carrusel1/1.jpg')
                 },
                 {
-                    title: "item 2"
+                    image: require('../images/carrusel1/2.jpg')
                 },
                 {
-                    title: "Item 3"
+                    image: require('../images/carrusel1/3.jpg')
                 },
-                {
-                    title: "Item 4"
-                },
-                {
-                    title: "Item 5"
-                }
-            ]
+            ],
+            currentIndex: 0
         }
     }
 
+    txtInteractivo = () => {
+        if(this.state.currentIndex == 0  ){
+            //Item 1;
+            return( 
+                    <Text style = {styles.interactivoStyle}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt, velit sed sollicitudin tincidunt, nisi lorem faucibus sapien, quis placerat.</Text>   
+            )
+        }
+        else if(this.state.currentIndex == 1){
+            return( 
+                    <Text style = {styles.interactivoStyle}>Maecenas tincidunt, velit sed sollicitudin tincidunt, nisi lorem faucibus sapien, quis placerat. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>   
+            )
+        }else{
+            return( 
+                    <Text style = {styles.interactivoStyle}>Sed sollicitudin tincidunt, Maecenas tincidunt, velit  nisi lorem faucibus sapien, quis placerat. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>   
+            )
+        }
+    
+    }
+
+    checkRightArrow = () => {
+        if(this.state.currentIndex == 0 || this.state.currentIndex == 1){
+            return (
+                <AntDesign name="right" color='#A82574' size={40} style={styles.menuIcon} onPress={() => this.carousel._snapToItem(this.state.currentIndex+1)}/>
+            )
+        }else{
+            return (
+                <AntDesign name="right" color='#fff' size={40} style={styles.menuIcon}/>  
+            )
+        }
+    }
+
+    checkLeftArrow = () => {
+        if(this.state.currentIndex == 1 || this.state.currentIndex == 2){
+            return (
+                <AntDesign name="left" color='#A82574' size={40} style={styles.menuIcon} onPress={() => this.carousel._snapToItem(this.state.currentIndex-1)}/>
+            )
+        }else{
+            return (
+                <AntDesign name="left" color='#fff' size={40} style={styles.menuIcon}/>  
+            )
+        }
+    }
+
+    changeIndex = (currentIndex) => {
+        this.setState({ currentIndex });
+      }
+
+    
     _renderItem({item,index}){
-        return (
-            <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
-                <Image style={styles.ImageStyle} source={require('../images/jaja_xd.png')} />
-                <Text style={{color:'#fff'}} >{item.title}</Text> 
-            </View>
-        )
+            return (
+                <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
+                    <Image style={styles.imageStyle} source={item.image} />
+                    <Text style={{color:'#000'}} >{item.title}</Text>
+                    {/* this.cambiarInteractivo*/}                        
+                </View>    
+            )    
     }
 
     render(){
+
+        const {goBack} = this.props.navigation;
+
         return(
 
-                <ImageBackground style={styles.container} source={require('../images/fondo.png')} imageStyle={{opacity: 1}}>
+                <View style={styles.container} source={require('../images/fondo.png')} imageStyle={{opacity: 1}}>
 
                         <StatusBar hidden />
 
-                        <View style={styles.header}>
-                                <MenuButton navigation={this.props.navigation} />
-                                <Text style={styles.titulo}>Sobre Nosotros</Text>
-                        </View>
-                        <MenuButton navigation={this.props.navigation} />
+                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{width: 40, height: 40}}>
+                            <ArrowLeft/>
+                        </TouchableOpacity>
 
                         <View style={styles.carouselContainer}>
-                            <Carousel
-                                ref = { ref => this.carousel = ref}
-                                data={this.state.carouselItems}
-                                sliderWidth={260}
-                                itemWidth={180}
-                                renderItem={this._renderItem}
-                            />
+
+                            <View>
+                                {this.checkLeftArrow()}
+                            </View>
+                            
+                            <View style={styles.carouselContainerPosta}>
+                                <Carousel
+                                    ref = { ref => this.carousel = ref}
+                                    data={this.state.carouselItems}
+                                    sliderWidth={300}
+                                    itemWidth={300}
+                                    renderItem={this._renderItem}
+                                    onSnapToItem={this.changeIndex}
+                                    style={styles.carouselStyle}
+                                    containerCustomStyle={ {flexGrow: 2} }
+                                />
+                            </View>
+                            <View>
+                                {this.checkRightArrow()}
+                            </View>
+
                         </View>
     
-                        <TouchableOpacity style={styles.sobreNostrosView} onPress={() => this.props.navigation.navigate('Inicio')}>  
-                            <Text style = {styles.txtSobreNosotros}>Volver al inicio</Text>   
+                        <TouchableOpacity style={styles.footerView}>  
+                            {this.txtInteractivo()}
+                                      
                          </TouchableOpacity>
 
-                </ImageBackground>
+                </View>
 
         );
     }
@@ -81,7 +143,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#000'
+        backgroundColor: '#fff'
 
     },
     header: {
@@ -100,26 +162,54 @@ const styles = StyleSheet.create({
     },
     carouselContainer: {
         flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
     },
-    
-    imageStyle: {
-        width: 100,
-        height: 100
+    carouselContainerPosta: {
     },  
-    sobreNostrosView: {
-        position: 'absolute',
-        top: 595,
-        left: 120,
+    titleContainer: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    titleStyle: {
+        fontSize: 30,
+        color: '#A82574',
+        marginTop: 30
+    },
+    imageStyle: {
+        width: 250,
+        height: 350,
+        borderWidth: 2,
+        borderColor: "rgba(112,112,112,0.5)",
+        borderRadius: 30
+    },  
+    carouselStyle: {
+
+    },
+    footerView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
         backgroundColor: 'rgba(0,0,0,0)',
 
     },
-    txtSobreNosotros: {
+    interactivoStyle: {
         fontSize: 19,
-        color: '#fff',
-        opacity: 0.8
+        color: '#000',
+        textAlign: 'center'
+    },
+    siguienteBtn: {
+        height: 50,
+        width: 230,
+        overflow: 'hidden',
+        borderColor: '#000',
+        borderRadius: 50,
+        borderWidth: 1, 
+        backgroundColor: '#A82574',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.85 
     }
 
 });

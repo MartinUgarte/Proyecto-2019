@@ -27,9 +27,9 @@ const DrawerConfig = {
 const RootStack = createDrawerNavigator({
  
   Inicio: {screen: Inicio},
+  SobreNosotros: {screen: SobreNosotros},
   Tutorial: {screen: Tutorial},
   Bienvenida: {screen: Bienvenida},
-  SobreNosotros: {screen: SobreNosotros},
   Conexion: {screen: Conexion},
   Control: {screen: Control},
   Login: {screen: Login},

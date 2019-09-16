@@ -9,6 +9,7 @@ import CircularSlider from 'rn-circular-slider'
 
 
 import MenuButton from '../components/MenuButton'
+import ArrowLeft from '../components/ArrowLeft'
 import AddButton from '../components/AddButton'
 
 
@@ -135,13 +136,15 @@ export default class Control extends Component{
 
         return(
 
-                <ImageBackground style={styles.container} source={require('../images/fondo2.png')} imageStyle={{opacity: 0.6}}>
+            <View style={styles.container}>
 
                 <StatusBar hidden/>
 
                 <View style={styles.header}>
-                        <MenuButton navigation={this.props.navigation} />
-                        <Text style={styles.titulo}>Control </Text>
+                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{width: 40, height: 40}}>
+                            <ArrowLeft/>
+                        </TouchableOpacity>
+                        <Text style={styles.titulo}>{global.nombre}</Text>
                 </View>
                 <MenuButton navigation={this.props.navigation} />
                 
@@ -151,14 +154,14 @@ export default class Control extends Component{
                         <AntDesign 
                             name="caretleft" 
                             size={30} 
-                            color="#d14ba6" 
+                            color="#000" 
                             onPress={this.buttonVerticalSliderN}  
                         />
 
                         <Slider
                             trackStyle={customStyles4.track}
                             thumbStyle={customStyles4.thumb}
-                            minimumTrackTintColor='#d14ba6'
+                            minimumTrackTintColor='#000'
                             minimumValue={-100}
                             maximumValue={100}
                             step={1}
@@ -171,28 +174,23 @@ export default class Control extends Component{
                         <AntDesign 
                             name="caretright" 
                             size={30} 
-                            color="#d14ba6" 
+                            color="#000" 
                             onPress={this.buttonVerticalSliderP} 
                         />
 
                 </View>
 
                 <View style={styles.sliderXContainer}>
-                        <View style={styles.numeros}>
-                            <Text style={styles.axelito}> ValueX: {this.state.valueX} </Text>
-                            <Text style={styles.axelito}> ValueZ: {this.state.valueZ} </Text>
-                            <Text style={styles.axelito}> ValueR: {this.state.valueR} </Text>
-                        </View>
                         <AntDesign 
                             name="caretleft" 
                             size={30} 
-                            color="#d14ba6" 
+                            color="#000" 
                             onPress={this.buttonSliderN}  
                         />
                         <Slider
                             trackStyle={customStyles4.track}
                             thumbStyle={customStyles4.thumb}
-                            minimumTrackTintColor='#d14ba6'
+                            minimumTrackTintColor='#000'
                             minimumValue={-100}
                             maximumValue={100}
                             step={1}
@@ -205,7 +203,7 @@ export default class Control extends Component{
                         <AntDesign 
                             name="caretright" 
                             size={30} 
-                            color="#d14ba6" 
+                            color="#000" 
                             onPress={this.buttonSliderP} 
                         />
                 </View>
@@ -214,29 +212,29 @@ export default class Control extends Component{
                 <View style={styles.sliderRContainer}>
 
                 
-                <CircularSlider
+                    <CircularSlider
                         style={styles.halfCircleSlider}
                         step={1}
                         min={-45}
                         max={45}
                         value={this.state.valueR}
                         onChange={this.sendCircleSlider}
-                        strokeWidth={10}
-                        buttonBorderColor="#a4126e"
-                        buttonFillColor="#f8a1d6"
+                        strokeWidth={4}
+                        buttonBorderColor="#A82574"
+                        buttonFillColor="#A82574"
                         buttonStrokeWidth={5}
                         openingRadian={Math.PI / 2}
                         buttonRadius={11}
                         radius={70}
-                        backgroundTrackColor={'#a4126e'}
-                        linearGradient={[{ stop: '0%', color: '#d14ba6' }, { stop: '100%', color: '#d14ba6' }]}
+                        backgroundTrackColor={'#000'}
+                        linearGradient={[{ stop: '0%', color: '#000' }, { stop: '100%', color: '#000' }]}
 
                         >
                     </CircularSlider>
 
                 </View>
 
-
+                {/*
                 <View style={styles.dropdown}> 
                         
                         <Picker
@@ -250,8 +248,9 @@ export default class Control extends Component{
                         <AddButton/>
                         
                     </View> 
-            
-                </ImageBackground>
+                */}
+
+            </View>
 
         );
     }
@@ -262,7 +261,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#000'
+        backgroundColor: '#fff'
 
     },
     sliderZContainer: {
@@ -288,6 +287,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
+
     sliderZ: {
         width: 150,
     },
@@ -326,8 +326,8 @@ const styles = StyleSheet.create({
         marginLeft: 25
     },
     header: {
-        flex: 0.55,
-        backgroundColor: 'rgba(147,53,117,0.8)',
+        flex: 0.7,
+        backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -337,8 +337,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.6,
     },
     titulo: {
-        fontSize: 20,
-        marginLeft: 67,
+        fontSize: 30,
+        marginLeft: 72,
         marginTop: 10
         
     },
@@ -363,9 +363,9 @@ const styles = StyleSheet.create({
 
 var customStyles4 = StyleSheet.create({
     track: {
-      height: 10,
+      height: 4,
       borderRadius: 4,
-      backgroundColor: '#a4126e',
+      backgroundColor: '#000',
       shadowColor: 'black',
       shadowOffset: {width: 0, height: 1},
       shadowRadius: 1,
@@ -374,10 +374,10 @@ var customStyles4 = StyleSheet.create({
     thumb: {
       width: 25,
       height: 25,
-      backgroundColor: '#f8a1d6',
-      borderColor: '#a4126e',
+      backgroundColor: '#A82574',
+      borderColor: '#A82574',
       borderWidth: 5,
-      borderRadius: 10,
+      borderRadius: 15,
       shadowColor: 'black',
       shadowOffset: {width: 0, height: 2},
       shadowRadius: 2,

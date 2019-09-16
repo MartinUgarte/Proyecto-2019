@@ -24,16 +24,6 @@ export default class Conexion extends Component{
         };
     }
 
-    comprobarConectividad = () => {
-        if(this.state.conectado){
-            //Alert.alert("Se ha conectado a la red");
-            return <Text style={styles.conectividadTxt}>Se ha conectado a la red</Text>
-        }else{
-            //Alert.alert("Se ha desconectado de la red");
-            return <Text style={styles.conectividadTxt}>Sin conexión</Text>
-        }
-    }
-
     conectar = () => {
         this.setState({ 
             conectado: !this.state.conectado,
@@ -178,6 +168,38 @@ export default class Conexion extends Component{
                     <ActivityIndicator size="large" color="#d14ba6" />
                 </View>
             )
+        }else{
+            return( 
+                <TouchableOpacity style={styles.buscarBtn} onPress={() => this.conectar()}>  
+                    <Text style = {styles.buscarTxt}>Buscar</Text>   
+                </TouchableOpacity>
+            )
+        }
+    }
+
+    comprobarConectividad = () => {
+        if(this.state.conectado){
+            //Alert.alert("Se ha conectado a la red");
+            return <Text style={styles.conectividadTxt}>Se ha conectado a la red</Text>
+        }else{
+            //Alert.alert("Se ha desconectado de la red");
+            return <Text style={styles.conectividadTxt}>Asegurate de estar conectado a tu red WIFI</Text>
+        }
+    }
+
+    comprobarWifi = () => {
+        if(!this.state.conectado){
+            return <Image source={require('../images/nowifi.png')} style={styles.wifiImage}/>
+        }else{
+            return <Image source={require('../images/yeswifi.png')} style={styles.wifiImage}/>
+        }
+    }
+
+    comprobarConf = () => {
+        if(!this.state.conectado){
+            return <Text style={styles.confTxt}>Ir a configuración</Text>
+        }else{
+            return <Text style={{color: '#fff', fontSize: 30}}>Ir a configuración</Text>
         }
     }
 
@@ -185,36 +207,28 @@ export default class Conexion extends Component{
         
         return(
 
-            <ImageBackground style={styles.container} source={require('../images/fondo2.png')} imageStyle={{opacity: 1}}>
+            <View style={styles.container}>
 
                     <StatusBar hidden/>
-
-                  <View style={styles.header}>
-                        <MenuButton navigation={this.props.navigation} />
-                        <Text style={styles.titulo}>Conexión</Text>
-                  </View>
-                  <MenuButton navigation={this.props.navigation} />
-                  
-                
+               
                 
                    <View style={styles.textContainer}>    
                         { this.comprobarConectividad()}                        
                    </View>
 
                    <View style={styles.wifiContainer}>
-                        <AntDesign 
-                            name="wifi" 
-                            size={150} 
-                            color="#F06CBD" 
-                            onPress={this.conectar}
-                        />
+                        { this.comprobarWifi()}
                    </View>
-                         
+
+                   <View style={styles.confContainer}>
+                        { this.comprobarConf()}
+                   </View>
+
                    <View style={styles.footer}>
                         { this.buscarBrazosFrontEnd()} 
                    </View>
              
-                </ImageBackground>
+                </View>
         );
     }
 }
@@ -238,10 +252,15 @@ const styles = StyleSheet.create({
         
     },
     wifiContainer: {
-        flex: 1,
+        flex: 1.2,
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'center',
+    },
+    confContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     header: {
         flex: 0.46,
@@ -249,8 +268,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        
- 
     },
     titulo: {
         fontSize: 20,
@@ -261,11 +278,9 @@ const styles = StyleSheet.create({
     numeros: {
         position: 'absolute'
     }, 
-    wifiIcon: {
-        zIndex: 9,
-        position: 'absolute',
-        top: 33,
-        left: 20,
+    wifiImage: {
+        width: 130,
+        height: 100
     },
     footer: {
         flex: 1,
@@ -276,14 +291,37 @@ const styles = StyleSheet.create({
         marginBottom: 70
     },
     conectividadTxt: {
-        fontSize: 25,
-        color: 'rgba(235,235,235,1)'
+        fontSize: 30,
+        color: '#A82574',
+        textAlign: 'center'
+    },
+    confTxt: {
+        fontSize: 30,
+        color: '#000',
+        textDecorationLine: 'underline'
     },
     buscandoBrazosTxt: {
         fontSize: 20,
-        color: 'rgba(235,235,235,1)',
+        color: 'rgba(0,0,0,0.8)',
         opacity: 0.7
-    }
+    },
+    buscarBtn: {
+        height: 50,
+        width: 230,
+        marginTop: 16,
+        overflow: 'hidden',
+        borderColor: '#fff',
+        borderRadius: 50,
+        borderWidth: 1.8, 
+        backgroundColor: '#A82574',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.85
+    },
+    buscarTxt: {
+        fontSize: 20,
+        color: '#fff',
+    },
     
 
 });
