@@ -17,21 +17,63 @@ export default class MenuDrawer extends React.Component {
         if (global.brazos[0] == "Null" || global.brazos[0] == "Empty"){
             return (
                 <View>
-                    {this.navLink('Bienvenida','Bienvenida')}
-                    {this.navLink('Conexion','Conexion')}
-                    {this.navLink('SobreNosotros','Sobre Nosotros')}
-                    {this.navLink('Tutorial','Tutorial')}
+                    <View style={styles.menuIconsContrainer}>
+                        <Image source={require('../images/icons/menuIcon.png')} style={styles.img} />
+                        {this.navLink('Bienvenida','Menú')}
+                    </View>
+                    <View style={styles.menuIconsContrainer}>
+                        <Image source={require('../images/icons/controlIcon.png')} style={styles.img} />
+                        {this.navLink('Conexion','Control')}
+                    </View>
+                    <View style={styles.menuIconsContrainer}>
+                        <Image source={require('../images/icons/sesionesIcon.png')} style={styles.img} />
+                        {this.navLink('Conexion','Sesiones')}
+                    </View>
+                    <View style={styles.menuIconsContrainer}>
+                        <Image source={require('../images/icons/notaIcon.png')} style={styles.img} />
+                        {this.navLink('SobreNosotros','Canciones')}
+                    </View>
+                    <View style={styles.menuIconsContrainer}>
+                        <Image source={require('../images/icons/colorIcon.png')} style={styles.img} />
+                        {this.navLink('Tutorial','Color')}
+                    </View>
+                    
+                    <View style={styles.cerrarBtnContainer}>
+                        <TouchableOpacity style={styles.siguienteBtn} onPress={() => this.props.navigation.navigate('Conexion')}>  
+                            <Text style = {styles.interactivoStyle}>Cerrar sesión</Text>   
+                        </TouchableOpacity>
+                    </View>
                 </View>
             )
         }
         else {
             return(
                 <View>
-                    {this.navLink('Bienvenida','Bienvenida')}
-                    {this.navLink('Control','Control')}
-                    {this.navLink('Conexion','Conexion')}
-                    {this.navLink('SobreNosotros','Sobre Nosotros')}
-                    {this.navLink('Tutorial','Tutorial')}
+                    <View style={styles.menuIconsContrainer}>
+                        <Image source={require('../images/icons/menuIcon.png')} style={styles.img} />
+                        {this.navLink('Tutorial','Menú')}
+                    </View>
+                    <View style={styles.menuIconsContrainer}>
+                        <Image source={require('../images/icons/controlIcon.png')} style={styles.img} />
+                        {this.navLink('Control','Control')}
+                    </View>
+                    <View style={styles.menuIconsContrainer}>
+                        <Image source={require('../images/icons/sesionesIcon.png')} style={styles.img} />
+                        {this.navLink('Conexion','Sesiones')}
+                    </View>
+                    <View style={styles.menuIconsContrainer}>
+                        <Image source={require('../images/icons/notaIcon.png')} style={styles.img} />
+                        {this.navLink('SobreNosotros','Canciones')}
+                    </View>
+                    <View style={styles.menuIconsContrainer}>
+                        <Image source={require('../images/icons/colorIcon.png')} style={styles.img} />
+                        {this.navLink('Tutorial','Color')}
+                    </View>
+                    <View style={styles.cerrarBtnContainer}>
+                        <TouchableOpacity style={styles.siguienteBtn} onPress={() => this.props.navigation.navigate('Conexion')}>  
+                            <Text style = {styles.interactivoStyle}>Cerrar sesión</Text>   
+                        </TouchableOpacity>
+                    </View>
                 </View>
             )
         }
@@ -54,10 +96,12 @@ export default class MenuDrawer extends React.Component {
 
                     {this.brazosConectados()}
                 </View>
+                {/*
                 <View style={styles.footer}>
                     <Text style={styles.description}>Mycrotech</Text>
                     <Text style={styles.version}>v1.0</Text>
                 </View>
+                */}
             </View>
         );
     }
@@ -67,6 +111,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#EBEBEB',
+    },
+    menuIconsContrainer: {
+        flexDirection: 'row',
+        borderBottomWidth: 2,
+        borderColor: 'rgba(0,0,0,0.2)',
+        marginTop: 10,
+        marginLeft: 10,
+        marginBottom: 10
+    },
+    cerrarBtnContainer: {
+        height: 150,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'center'
     },
     profile: {
         flex: 1,
@@ -84,7 +142,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 20,
         paddingBottom: 5,
-        color: 'white',
+        color: 'black',
         textAlign: 'left'    
     },
     imgView: {
@@ -93,13 +151,13 @@ const styles = StyleSheet.create({
         paddingRight: 30,
     },
     img: {
-        height: 70,
-        width: 70,
-        borderRadius: 50  
+        height: 40,
+        width: 40,
+        borderRadius: 50,  
     },
     topLinks: {
-        height: 160,
-        backgroundColor: 'black'
+        height: 85,
+        backgroundColor: '#EBEBEB'
     },
     bottomLinks: {
         flex: 1,
@@ -140,5 +198,21 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 20,
         fontSize: 16
-    } 
+    },
+    interactivoStyle: {
+        fontSize: 19,
+        color: '#fff',
+    },
+    siguienteBtn: {
+        height: 50,
+        width: 180,
+        overflow: 'hidden',
+        borderColor: 'rgba(0,0,0,0.2)',
+        borderRadius: 20,
+        borderBottomWidth: 5, 
+        backgroundColor: '#A82574',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.85 
+    }
 })
