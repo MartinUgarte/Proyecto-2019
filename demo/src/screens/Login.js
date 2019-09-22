@@ -34,7 +34,7 @@ export default class Login extends Component{
                     if(responseJson.msg === "Listo"){
                         global.nombre = this.state.username;
                         Alert.alert("Inicio de sesión existoso");
-                        this.props.navigation.navigate('Conexion');
+                        this.props.navigation.navigate('Menu');
                     }
                     else if(responseJson.msg === "Error, contra"){
                         Alert.alert("ERROR", "Contraseña incorrecta");

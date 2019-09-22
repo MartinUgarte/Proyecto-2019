@@ -1,5 +1,6 @@
 import React from 'react';
 import { Platform, Dimensions, StyleSheet, Text, View, TouchableOpacity, Image, Alert} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -19,7 +20,7 @@ export default class MenuDrawer extends React.Component {
                 <View>
                     <View style={styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/menuIcon.png')} style={styles.img} />
-                        {this.navLink('Bienvenida','Menú')}
+                        {this.navLink('Menu','Menú')}
                     </View>
                     <View style={styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/controlIcon.png')} style={styles.img} />
@@ -27,7 +28,7 @@ export default class MenuDrawer extends React.Component {
                     </View>
                     <View style={styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/sesionesIcon.png')} style={styles.img} />
-                        {this.navLink('Conexion','Sesiones')}
+                        {this.navLink('Bandas','Sesiones')}
                     </View>
                     <View style={styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/notaIcon.png')} style={styles.img} />
@@ -51,7 +52,7 @@ export default class MenuDrawer extends React.Component {
                 <View>
                     <View style={styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/menuIcon.png')} style={styles.img} />
-                        {this.navLink('Tutorial','Menú')}
+                        {this.navLink('Menu','Menú')}
                     </View>
                     <View style={styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/controlIcon.png')} style={styles.img} />
@@ -59,7 +60,7 @@ export default class MenuDrawer extends React.Component {
                     </View>
                     <View style={styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/sesionesIcon.png')} style={styles.img} />
-                        {this.navLink('Conexion','Sesiones')}
+                        {this.navLink('Bandas','Sesiones')}
                     </View>
                     <View style={styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/notaIcon.png')} style={styles.img} />
@@ -140,23 +141,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     name: {
-        fontSize: 20,
+        fontSize: 22,
         paddingBottom: 5,
         color: 'black',
-        textAlign: 'left'    
+        textAlign: 'left',
+        fontWeight: '300'    
     },
     imgView: {
         flex: 1,
-        paddingLeft: 20,
-        paddingRight: 30,
+        paddingLeft: 10,
     },
     img: {
         height: 40,
         width: 40,
-        borderRadius: 50,  
     },
     topLinks: {
-        height: 85,
+        height: 77,
         backgroundColor: '#EBEBEB'
     },
     bottomLinks: {

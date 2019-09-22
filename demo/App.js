@@ -9,6 +9,9 @@ import Conexion from './src/screens/Conexion'
 import Tutorial from './src/screens/Tutorial'
 import Login from './src/screens/Login'
 import Register from './src/screens/Register'
+import Menu from './src/screens/Menu'
+import Bandas from './src/screens/Bandas'
+import NuevaBanda from './src/screens/NuevaBanda'
 
 
 import { createAppContainer, createDrawerNavigator } from 'react-navigation';
@@ -34,7 +37,10 @@ const RootStack = createDrawerNavigator({
   Conexion: {screen: Conexion},
   Control: {screen: Control},
   Login: {screen: Login},
-  Register: {screen: Register}
+  Register: {screen: Register},
+  Menu: {screen: Menu},
+  Bandas: {screen: Bandas},
+  NuevaBanda: {screen: NuevaBanda}
 
 },
   DrawerConfig
