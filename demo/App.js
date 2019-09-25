@@ -12,6 +12,7 @@ import Register from './src/screens/Register'
 import Menu from './src/screens/Menu'
 import Bandas from './src/screens/Bandas'
 import NuevaBanda from './src/screens/NuevaBanda'
+import Canciones from './src/screens/Canciones'
 
 
 import { createAppContainer, createDrawerNavigator } from 'react-navigation';
@@ -40,7 +41,8 @@ const RootStack = createDrawerNavigator({
   Register: {screen: Register},
   Menu: {screen: Menu},
   Bandas: {screen: Bandas},
-  NuevaBanda: {screen: NuevaBanda}
+  NuevaBanda: {screen: NuevaBanda},
+  Canciones: {screen: Canciones}
 
 },
   DrawerConfig

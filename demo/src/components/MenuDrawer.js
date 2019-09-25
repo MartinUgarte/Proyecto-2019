@@ -32,7 +32,7 @@ export default class MenuDrawer extends React.Component {
                     </View>
                     <View style={styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/notaIcon.png')} style={styles.img} />
-                        {this.navLink('SobreNosotros','Canciones')}
+                        {this.navLink('Canciones','Canciones')}
                     </View>
                     <View style={styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/colorIcon.png')} style={styles.img} />

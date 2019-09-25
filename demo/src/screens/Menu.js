@@ -51,7 +51,7 @@ export default class Menu extends Component{
                         </TouchableOpacity>
                     </View>
                     <View style={styles.duoContainer}>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Login')}>
+                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Canciones')}>
                             <Image source={require('../images/icons/notaIcon.png')} style={styles.iconsStyle}/>
                             <Text style={styles.txtStyle}>Canciones</Text>    
                         </TouchableOpacity>
@@ -105,13 +105,13 @@ const styles = StyleSheet.create({
         
     },
     fondoEstudio: {
-        flex: .8,
+        flex: .7,
         backgroundColor: '#A82574',
         alignItems: 'center',
         justifyContent: 'center'
     },
     fondoBlanco: {
-        flex: 1,
+        flex: 1.1,
         backgroundColor: 'white'
     },
     header: {
@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
     },  
     estudioImg: {
         width: 365,
-        height: 250,
-        opacity: .6
+        height: 220,
+        opacity: .55
     },
     iconsStyle: {
         height: 55,

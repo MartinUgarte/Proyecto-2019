@@ -3,12 +3,17 @@ import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Butto
 
 import MenuButton from '../components/MenuButton'
 import ArrowLeft from '../components/ArrowLeft'
-import { ScrollView } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-navigation';
 
 
 export default class Bandas extends Component{
 
+    constructor(props){
+        super(props)
+
+        this.state = {
+            bandasList: []
+        }
+    } 
    
     render(){
         
