@@ -1,9 +1,9 @@
 {
   "packagerPort": 19001,
-  "packagerPid": 5924,
-  "expoServerNgrokUrl": "https://ep-xhw.anonymous.demo.exp.direct",
-  "packagerNgrokUrl": "https://packager.ep-xhw.anonymous.demo.exp.direct",
-  "ngrokPid": 5228,
+  "packagerPid": 1156,
+  "expoServerNgrokUrl": "https://b5-yyr.anonymous.demo.exp.direct",
+  "packagerNgrokUrl": "https://packager.b5-yyr.anonymous.demo.exp.direct",
+  "ngrokPid": 7732,
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "webpackServerPort": null

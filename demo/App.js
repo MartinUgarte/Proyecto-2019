@@ -13,6 +13,7 @@ import Menu from './src/screens/Menu'
 import Bandas from './src/screens/Bandas'
 import NuevaBanda from './src/screens/NuevaBanda'
 import Canciones from './src/screens/Canciones'
+import NuevaCancion from './src/screens/NuevaCancion'
 
 
 import { createAppContainer, createDrawerNavigator } from 'react-navigation';
@@ -42,8 +43,8 @@ const RootStack = createDrawerNavigator({
   Menu: {screen: Menu},
   Bandas: {screen: Bandas},
   NuevaBanda: {screen: NuevaBanda},
-  Canciones: {screen: Canciones}
-
+  Canciones: {screen: Canciones},
+  NuevaCancion: {screen: NuevaCancion},
 },
   DrawerConfig
 );

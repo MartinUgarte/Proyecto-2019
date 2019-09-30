@@ -11,10 +11,24 @@ export default class Bandas extends Component{
         super(props)
 
         this.state = {
-            bandasList: []
+            bandasList: [
+                {
+                    id: 0,
+                    nombre: 'ola'
+                },
+                {
+                    id: 1 ,
+                    nombre: 'chau'
+                },
+                {
+                    id: 2 ,
+                    nombre: 'chau'
+                },
+
+            ]
         }
-    } 
-   
+    }
+
     render(){
         
         return(
@@ -32,22 +46,16 @@ export default class Bandas extends Component{
                 <MenuButton navigation={this.props.navigation} />
                 
                 <View style={styles.bandasContainer}>
-                    <View style={styles.duoContainer}>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
-                            <Text style={styles.txtStyle}>Tan Biónica</Text>    
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Login')}>
-                            <Text style={styles.txtStyle}>CNCO</Text>    
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.duoContainer}>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Login')}>
-                            <Text style={styles.txtStyle}>One Direction</Text>    
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Login')}  >
-                            <Text style={styles.txtStyle}>Hola</Text>    
-                        </TouchableOpacity>
-                    </View>
+                    {this.state.bandasList.map(nombre => (
+                        <View style={styles.duoContainer}>
+                            <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
+                            <Text style={styles.txtStyle}>{this.state.bandasList[0].nombre}</Text>    
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
+                            <Text style={styles.txtStyle}>{this.state.bandasList[1].nombre}</Text>    
+                            </TouchableOpacity>
+                        </View>
+                    ))}
                 </View>
 
                 <View style={styles.addBtnContainer} >
@@ -81,7 +89,7 @@ const styles = StyleSheet.create({
     duoContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     cartContainer: {
         flexDirection: 'column',
