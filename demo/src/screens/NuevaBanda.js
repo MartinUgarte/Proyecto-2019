@@ -6,6 +6,53 @@ import ArrowLeft from '../components/ArrowLeft'
 
 export default class NuevaBanda extends Component{
 
+    constructor(props){
+
+        super( props );
+        this.state = {
+            band: "",
+        };
+    }
+
+    newBand = () => {
+        if (this.state.band === ""){
+            Alert.alert("Error", "No se indicó el nombre de la banda");
+        }
+        else{
+            fetch('http://192.168.100.16:3000/newBand', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: global.nombre,
+                    band: this.state.band,
+                })
+            })
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    if(responseJson.msg === "Listo"){
+                        global.bandas.push(this.state.band);
+                        Alert.alert("Banda agregada existosamente");
+                    }
+                    else if(responseJson.msg === "Banda ya existente"){
+                        Alert.alert("ERROR", "Ya existe una banda con ese nombre");
+                    }
+                    else if(responseJson.msg === "Error, usuario"){
+                        Alert.alert("ERROR", "El usuario no existe");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });  
+        }
+    }
+
+    onChangeBand = (band) => {
+        this.setState({ band });
+    }
+
     render(){
         
         return(
@@ -30,13 +77,15 @@ export default class NuevaBanda extends Component{
                         autoCapitalize="none"
                         autoCorrect={false}
                         style={styles.formStyle}
+                        band={this.state.band}
+                        onChangeText={this.onChangeBand}
                     />
                 </View>
                 <View style={styles.noseContainer}>
 
                 </View>
                 <View style={styles.hechoContainer}>
-                        <TouchableOpacity style={styles.btn}>  
+                        <TouchableOpacity style={styles.btn} onPress={this.newBand}>  
                             <Text style = {styles.txtBtn}>Hecho</Text>   
                         </TouchableOpacity>
                 </View>

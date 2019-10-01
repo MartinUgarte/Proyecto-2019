@@ -7,6 +7,7 @@ export default class Inicio extends Component{
         super(props);
         global.brazos = ["Null"];
         global.nombre = "Anonimo";
+        global.bandas = [];
     }
 
     static navigationOptions = {

@@ -154,6 +154,7 @@ app.post('/login', function (req, res) {
 	// Recibe la info
 	let nombreL = req.body.username;
 	let contraL = req.body.password;
+	let bandaL = [];
 	var usuario = db.collection("Usuarios").doc(nombreL);
 	usuario.get()
 		.then(doc => {
@@ -161,10 +162,18 @@ app.post('/login', function (req, res) {
 			if (doc.exists) {
 				// Verifica si la contraseña es correcta
 				if (doc.data().Contraseña === contraL) {
-					reply = {
-						msg: 'Listo'
-					};
-					res.end(JSON.stringify(reply));
+					usuario.collection("Bandas").get().then(function (querySnapshot) {
+						querySnapshot.forEach(function (doc) {
+							bandaL.push(doc.data().Nombre_de_Banda);
+						})
+					})
+					.then(function(){
+						reply = {
+							msg: 'Listo',
+							bandasList: bandaL,
+						};
+						res.end(JSON.stringify(reply));
+					})
 				} else {
 					reply = {
 						msg: 'Error, contra'
@@ -179,3 +188,44 @@ app.post('/login', function (req, res) {
 			}
 		})
 });
+
+
+// Agregar Bandas
+app.post('/newBand', function(req, res){
+	//Recibe la info
+	let nombreB = req.body.username;
+	let bandaB = req.body.band;
+	var usuario = db.collection("Usuarios").doc(nombreB);
+	usuario.get()
+		.then(doc => {
+			// Verifica si el usuario existe
+			if (doc.exists) {
+				var banda = usuario.collection("Bandas").doc(bandaB);
+				banda.get()
+					.then(doc => {
+						if (doc.exists){
+							reply = {
+								msg: 'Banda ya existente'
+							}
+							res.end(JSON.stringify(reply));
+						}
+						else{
+							usuario.collection("Bandas").doc(bandaB).set({
+								Nombre_de_Banda: bandaB,
+							})
+								.then(function(){
+									reply = {
+										msg: 'Listo'
+									};
+									res.end(JSON.stringify(reply));
+								})
+						}
+					}) 
+			} else {
+				reply = {
+					msg: 'Error, usuario'
+				};
+				res.end(JSON.stringify(reply));
+			}
+		})
+})
