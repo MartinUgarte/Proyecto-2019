@@ -18,7 +18,7 @@ export default class Login extends Component{
     }
 
     loginUser = () => {        
-        fetch('http://192.168.100.16:3000/login', {
+        fetch('http://192.168.0.11:3000/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

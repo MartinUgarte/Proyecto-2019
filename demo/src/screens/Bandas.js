@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, StatusBar } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, FlatList, StatusBar } from 'react-native';
 
 import MenuButton from '../components/MenuButton'
 import ArrowLeft from '../components/ArrowLeft'
@@ -9,24 +9,6 @@ export default class Bandas extends Component{
 
     constructor(props){
         super(props)
-
-        this.state = {
-            bandasList: [
-                {
-                    id: 0,
-                    nombre: 'ola'
-                },
-                {
-                    id: 1 ,
-                    nombre: 'chau'
-                },
-                {
-                    id: 2 ,
-                    nombre: 'chau'
-                },
-
-            ]
-        }
     }
 
     render(){
@@ -46,16 +28,35 @@ export default class Bandas extends Component{
                 <MenuButton navigation={this.props.navigation} />
                 
                 <View style={styles.bandasContainer}>
-                    {this.state.bandasList.map(nombre => (
+                    <FlatList
+                        data={global.bandas}
+                        renderItem={({item}) =>
+                            <View style={styles.duoContainer}>
+                                    <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
+                                        <Text style={styles.txtStyle}>{item}</Text>     
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
+                                        <Text style={styles.txtStyle}>{item}</Text>     
+                                    </TouchableOpacity>
+                            </View>
+                        }
+                        ListEmptyComponent={
+                                <Text style={styles.vacioTxt}>Actualmente no tienes bandas.</Text>
+                        }
+                        />
+                    
+                    {/*
+                    {global.bandas.map(nombre => (
                         <View style={styles.duoContainer}>
                             <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
-                            <Text style={styles.txtStyle}>{this.state.bandasList[0].nombre}</Text>    
+                            <Text style={styles.txtStyle}>{global.bandas}</Text>    
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
-                            <Text style={styles.txtStyle}>{this.state.bandasList[1].nombre}</Text>    
+                            <Text style={styles.txtStyle}>{global.bandas}</Text>    
                             </TouchableOpacity>
                         </View>
                     ))}
+                    */}
                 </View>
 
                 <View style={styles.addBtnContainer} >
@@ -80,16 +81,17 @@ const styles = StyleSheet.create({
 
     },
     bandasContainer: {
-        marginTop: 10,
+        marginTop: 15,
         width: 350,
-        height: 350,
+        height: 450,
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
     },
     duoContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
+        marginTop: 5
     },
     cartContainer: {
         flexDirection: 'column',
@@ -105,8 +107,17 @@ const styles = StyleSheet.create({
         borderRadius: 90
         
     },
+    vacioContainer: {
+        backgroundColor: 'grey',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    vacioTxt: {
+        fontSize: 20,
+        textAlign: 'center'
+    },
     header: {
-        flex: 0.280,
+        flex: 0.42,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -120,7 +131,8 @@ const styles = StyleSheet.create({
     },  
     txtStyle: {
         fontSize: 20,
-        color: 'white'
+        color: 'white',
+        textAlign: 'center'
     },
     addBtn: {
         width: 70,
