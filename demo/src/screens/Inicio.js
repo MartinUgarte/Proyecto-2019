@@ -8,6 +8,7 @@ export default class Inicio extends Component{
         global.brazos = ["Null"];
         global.nombre = "Anonimo";
         global.bandas = [];
+        global.bandaActual = "";
     }
 
     static navigationOptions = {

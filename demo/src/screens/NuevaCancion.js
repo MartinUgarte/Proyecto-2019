@@ -14,10 +14,8 @@ export default class NuevaCancion extends Component{
 
                 <StatusBar hidden/>
 
+                <ArrowLeft onPress={() => this.props.navigation.goback()}/>
                 <View style={styles.header}>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{width: 40, height: 40}}>
-                            <ArrowLeft/>
-                        </TouchableOpacity>
                         <Text style={styles.titulo}>Canciones</Text>
                 </View>
                 <MenuButton navigation={this.props.navigation} />
@@ -74,12 +72,11 @@ const styles = StyleSheet.create({
         flex: 0.4,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     titulo: {
         fontSize: 30,
-        marginLeft: 80,
         marginTop: 10,
         fontWeight: '400'
     },  

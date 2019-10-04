@@ -23,15 +23,9 @@ export default class Canciones extends Component{
 
                 <StatusBar hidden/>
 
+                <ArrowLeft/>
                 <View style={styles.header}>
-                        <View>
-                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{width: 40, height: 40}}>
-                                <ArrowLeft/>
-                            </TouchableOpacity>
-                        </View>
-                        <View>
                             <Text style={styles.titulo}>Canciones</Text>
-                        </View>
                 </View>
                 <MenuButton navigation={this.props.navigation} />
                 
@@ -57,7 +51,7 @@ export default class Canciones extends Component{
                 </View>
 
                 <View style={styles.addBtnContainer}>
-                    <TouchableOpacity style={styles.btn}>  
+                    <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('NuevaCancion')}>  
                             <Text style = {styles.txtBtn}>Agregar</Text>   
                     </TouchableOpacity>
                 </View>
@@ -114,12 +108,11 @@ const styles = StyleSheet.create({
         flex: 0.4,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     titulo: {
         fontSize: 30,
-        marginLeft: 80,
         marginTop: 10,
         fontWeight: '400'
     },  

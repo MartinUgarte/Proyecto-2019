@@ -13,20 +13,31 @@ import ArrowLeft from '../components/ArrowLeft'
 
 
 export default class Menu extends Component{
+    constructor(props){
 
-   
+        super( props );
+        this.state = {
+            bandaSelect: ""
+
+        };
+    }
+
+
+    chequearBandaActual(){
+        this.setState({
+            bandaSelect: global.bandaActual
+        })
+    }
+
     render(){
         
         return(
-
             <View style={styles.container}>
 
                 <StatusBar hidden/>
 
+                <ArrowLeft/>
                 <View style={styles.header}>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{width: 40, height: 40}}>
-                            <ArrowLeft/>
-                        </TouchableOpacity>
                         <Text style={styles.titulo}>{global.nombre}</Text>
                 </View>
                 <MenuButton navigation={this.props.navigation} />
@@ -41,7 +52,7 @@ export default class Menu extends Component{
 
                 <View style={styles.btnsContainer}>
                     <View style={styles.duoContainer}>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
+                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.chequearBandaActual()}>
                             <Image source={require('../images/icons/controlIcon.png')} style={styles.iconsStyle}/>
                             <Text style={styles.txtStyle}>Control</Text>    
                         </TouchableOpacity>
@@ -60,6 +71,11 @@ export default class Menu extends Component{
                             <Text style={styles.txtStyle}>Color</Text>    
                         </TouchableOpacity>
                     </View>
+                </View>
+
+                
+                <View style={styles.bandaActualContainer}>
+                    <Text style={styles.bandaTxt}>{this.state.bandaSelect}</Text>
                 </View>
               
 
@@ -95,8 +111,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        width: 138,
-        height: 138,
+        width: 150,
+        height: 150,
         borderBottomWidth: 4,
         borderLeftWidth: 2,
         borderRightWidth: 2,
@@ -118,12 +134,11 @@ const styles = StyleSheet.create({
         flex: 0.248,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     titulo: {
         fontSize: 30,
-        marginLeft: 80,
         marginTop: 10,
         fontWeight: '400'
     },  
@@ -139,6 +154,21 @@ const styles = StyleSheet.create({
     txtStyle: {
         fontSize: 20,
         color: '#A2A2A2'
+    },
+    bandaActualContainer: {
+        position: 'absolute',
+        top: 380,
+        left: 185,
+        width: 150,
+        alignItems: 'center',
+        justifyContent: 'center'
+        
+    },
+    bandaTxt: {
+        fontSize: 15,
+        color: 'rgb(168,37,116)',
+        textAlign: 'center'
     }
+
 });
 
