@@ -155,6 +155,7 @@ app.post('/login', function (req, res) {
 	let nombreL = req.body.username;
 	let contraL = req.body.password;
 	let bandaL = [];
+	let cancionL = [];
 	var usuario = db.collection("Usuarios").doc(nombreL);
 	usuario.get()
 		.then(doc => {
@@ -162,18 +163,36 @@ app.post('/login', function (req, res) {
 			if (doc.exists) {
 				// Verifica si la contraseña es correcta
 				if (doc.data().Contraseña === contraL) {
-					usuario.collection("Bandas").get().then(function (querySnapshot) {
-						querySnapshot.forEach(function (doc) {
-							bandaL.push(doc.data().Nombre_de_Banda);
-						})
+					usuario.collection("Bandas").get().then(sub => {
+						if (sub.docs.length > 0) {
+							console.log("Hola");
+							usuario.collection("Bandas").get().then(function (querySnapshot) {
+								querySnapshot.forEach(function (doc) {
+									bandaL.push(doc.id);
+								})
+							})
+							.then(function(){
+								for(i = 0; i < bandaL.length; i++){
+									usuario.collection("Bandas").doc(bandaL[i]).collection("Canciones").get().then(function (querySnapshot) {
+										querySnapshot.forEach(function (doc) {
+											if (doc.data().Nombre_de_la_Cancion != "Plantilla"){
+												cancionL.push(i.toString() + "." + doc.data().Nombre_de_la_Cancion);
+											}
+										})
+									})	
+								}
+							})
+						}
 					})
-					.then(function(){
+					setTimeout(function(){
+						console.log("Chau");
 						reply = {
 							msg: 'Listo',
 							bandasList: bandaL,
+							cancionesList: cancionL,
 						};
 						res.end(JSON.stringify(reply));
-					})
+					}, 3000);
 				} else {
 					reply = {
 						msg: 'Error, contra'
@@ -203,6 +222,7 @@ app.post('/newBand', function(req, res){
 				var banda = usuario.collection("Bandas").doc(bandaB);
 				banda.get()
 					.then(doc => {
+						// Verifica si la banda existe
 						if (doc.exists){
 							reply = {
 								msg: 'Banda ya existente'
@@ -210,8 +230,57 @@ app.post('/newBand', function(req, res){
 							res.end(JSON.stringify(reply));
 						}
 						else{
+							// Agrega la banda
 							usuario.collection("Bandas").doc(bandaB).set({
 								Nombre_de_Banda: bandaB,
+							})
+							.then(function(){
+								banda.collection("Canciones").doc("Plantilla").set({
+									Nombre_de_la_Cancion: "Plantilla",
+								})
+							})
+							.then(function(){
+								reply = {
+									msg: 'Listo'
+								};
+								res.end(JSON.stringify(reply));
+							})
+						}
+					}) 
+			} else {
+				reply = {
+					msg: 'Error, usuario'
+				};
+				res.end(JSON.stringify(reply));
+			}
+		})
+})
+
+// Agregar Canciones
+app.post('/newSong', function(req, res){
+	//Recibe la info
+	let nombreS = req.body.username;
+	let bandaS = req.body.band;
+	let cancionS = req.body.song;
+	var usuario = db.collection("Usuarios").doc(nombreS);
+	usuario.get()
+		.then(doc => {
+			// Verifica si el usuario existe
+			if (doc.exists) {
+				var cancion = usuario.collection("Bandas").doc(bandaS).collection("Canciones").doc(cancionS);
+				cancion.get()
+					.then(doc => {
+						// Verifica si la cancion existe
+						if (doc.exists){
+							reply = {
+								msg: 'Cancion ya existente'
+							}
+							res.end(JSON.stringify(reply));
+						}
+						else{
+							// Agrega la nueva canción
+							cancion.set({
+								Nombre_de_la_Cancion: cancionS,
 							})
 								.then(function(){
 									reply = {

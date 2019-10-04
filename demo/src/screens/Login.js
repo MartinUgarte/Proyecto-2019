@@ -18,7 +18,7 @@ export default class Login extends Component{
     }
 
     loginUser = () => {        
-        fetch('http://192.168.0.11:3000/login', {
+        fetch('http://'+ global.IP + ':3000/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -34,6 +34,9 @@ export default class Login extends Component{
                     if(responseJson.msg === "Listo"){
                         global.nombre = this.state.username;
                         global.bandas = responseJson.bandasList;
+                        global.canciones = responseJson.cancionesList;
+                        console.log(global.bandas);
+                        console.log(global.canciones);
                         Alert.alert("Inicio de sesión existoso");
                         this.props.navigation.navigate('Menu');
                     }

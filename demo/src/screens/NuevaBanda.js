@@ -19,7 +19,7 @@ export default class NuevaBanda extends Component{
             Alert.alert("Error", "No se indicó el nombre de la banda");
         }
         else{
-            fetch('http://192.168.0.11:3000/newBand', {
+            fetch('http://'+ global.IP + ':3000/newBand', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

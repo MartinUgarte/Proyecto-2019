@@ -6,6 +6,63 @@ import ArrowLeft from '../components/ArrowLeft'
 
 export default class NuevaCancion extends Component{
 
+    constructor(props){
+        super(props);
+
+        this.state = {
+            cancion: "",
+        };
+    } 
+   
+    agregarCancion = () => {
+        if (global.bandaActual == ""){
+            Alert.alert("Error", "No se indicó la banda, por favor seleccione una");
+        }
+        else if (this.state.cancion === ""){
+            Alert.alert("Error", "No se indicó el nombre de la canción");
+        }
+        else{
+            let nuevaCancion = this.state.cancion; 
+            fetch('http://'+ global.IP + ':3000/newSong', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: global.nombre,
+                    band: global.bandaActual,
+                    song: nuevaCancion,
+                })
+            })
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    if(responseJson.msg === "Listo"){
+                        global.bandas.forEach(function(item, index){
+                            if (item === global.bandaActual){
+                                nuevaCancion = index.toString() + "." + nuevaCancion;
+                                global.canciones.push(nuevaCancion);
+                            }
+                        })
+                        Alert.alert("Cancion agregada existosamente");
+                    }
+                    else if(responseJson.msg === "Cancion ya existente"){
+                        Alert.alert("ERROR", "Ya existe una cancion con ese nombre");
+                    }
+                    else if(responseJson.msg === "Error, usuario"){
+                        Alert.alert("ERROR", "El usuario no existe");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });  
+        }
+    }
+
+    onChangeCancion = (cancion) => {
+        this.setState({ cancion });
+    }
+    
     render(){
         
         return(
@@ -28,13 +85,15 @@ export default class NuevaCancion extends Component{
                         autoCapitalize="none"
                         autoCorrect={false}
                         style={styles.formStyle}
+                        cancion={this.state.cancion}
+                        onChangeText={this.onChangeCancion}
                     />
                 </View>
                 <View style={styles.noseContainer}>
 
                 </View>
                 <View style={styles.hechoContainer}>
-                        <TouchableOpacity style={styles.btn}>  
+                        <TouchableOpacity style={styles.btn} onPress={this.agregarCancion}>  
                             <Text style = {styles.txtBtn}>Hecho</Text>   
                         </TouchableOpacity>
                 </View>

@@ -9,6 +9,8 @@ export default class Inicio extends Component{
         global.nombre = "Anonimo";
         global.bandas = [];
         global.bandaActual = "";
+        global.IP = "192.168.100.16";
+        global.canciones = [];
     }
 
     static navigationOptions = {
