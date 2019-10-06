@@ -11,6 +11,7 @@ export default class NuevaBanda extends Component{
         super( props );
         this.state = {
             band: "",
+            wrongBandName: false
         };
     }
 
@@ -32,11 +33,15 @@ export default class NuevaBanda extends Component{
             })
             .then((response) => response.json())
                 .then((responseJson) => {
+
+                    this.setState({ wrongBandName: true });
+
                     if(responseJson.msg === "Listo"){
                         global.bandas.push(this.state.band);
                         Alert.alert("Banda agregada existosamente");
                     }
                     else if(responseJson.msg === "Banda ya existente"){
+                        this.setState({ wrongBandName: true });
                         Alert.alert("ERROR", "Ya existe una banda con ese nombre");
                     }
                     else if(responseJson.msg === "Error, usuario"){
@@ -53,6 +58,11 @@ export default class NuevaBanda extends Component{
         this.setState({ band });
     }
 
+    checkWrongBandName(){
+        if(this.state.wrongBandName){
+            return true
+        }
+    }
     render(){
         
         return(
@@ -78,7 +88,7 @@ export default class NuevaBanda extends Component{
                         returnKeyType="next"
                         autoCapitalize="none"
                         autoCorrect={false}
-                        style={styles.formStyle}
+                        style={this.checkWrongBandName() ? styles.formStyle2 : styles.formStyle1}                    
                         band={this.state.band}
                         onChangeText={this.onChangeBand}
                     />
@@ -146,11 +156,21 @@ const styles = StyleSheet.create({
         top: 560,
         left: 150,
     },
-    formStyle: {
+    formStyle1: {
         backgroundColor: '#fff',
         width: 250,
         borderBottomWidth: 3,
-        borderBottomColor: '#A82574'
+        borderBottomColor: '#A82574',
+        padding: 2,
+        fontSize: 18
+    },
+    formStyle2: {
+        backgroundColor: 'rgba(255,0,0,0.08)',
+        width: 250,
+        borderBottomWidth: 3,
+        borderBottomColor: 'red',
+        padding: 2,
+        fontSize: 18
     },
     btn: {
         height: 50,

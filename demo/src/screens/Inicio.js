@@ -24,7 +24,8 @@ export default class Inicio extends Component{
 
                 <ImageBackground style={styles.container} source={require('../images/fondo.png')} imageStyle={{opacity: 1}}>
                   
-                <StatusBar barStyle='light-content' />
+                <StatusBar barStyle="light-content" />
+
 
                     <View style={styles.titleView}>
                         <Text style={styles.title}>MYCROTECH</Text>

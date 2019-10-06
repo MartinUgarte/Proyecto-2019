@@ -16,6 +16,10 @@ export default class Register extends Component{
             username: "",
             password: "",
             validatePassword: "",
+
+            wrongEmail: false,
+            wrongUsername: false,
+            wrongPassword: false,
         };
     }
 
@@ -37,15 +41,22 @@ export default class Register extends Component{
                 })
                     .then((response) => response.json())
                         .then((responseJson) => {
+
+                            this.setState({ wrongEmail: false});
+                            this.setState({ wrongPassword: false });
+                            this.setState({ wrongUsername: false });
+
                             if(responseJson.msg === "Listo"){
                                 global.nombre = this.state.username;
                                 Alert.alert("Registro realizado correctamente");
-                                this.props.navigation.navigate('Conexion');
+                                this.props.navigation.navigate('Menu');
                             }
                             else if(responseJson.msg === "Error"){
+                                this.setState({ wrongUsername: true });
                                 Alert.alert("ERROR", "El de nombre de usuario ya fue utilizado");
                             }
                             else if(responseJson.msg === "Error, mail"){
+                                this.setState({ wrongEmail: true });
                                 Alert.alert("ERROR", "El email ya fue utilizado");
                             }
                         })
@@ -55,9 +66,11 @@ export default class Register extends Component{
             }
             else{
                 Alert.alert("Email no válido");
+                this.setState({ wrongEmail: true });
             }
         }        
         else{
+            this.setState({ wrongPassword: true });
             Alert.alert("Las contraseñas no son iguales");
         }
     }
@@ -76,6 +89,24 @@ export default class Register extends Component{
 
     onChangeValidatePassword = (validatePassword) => {
         this.setState({ validatePassword });
+    }
+
+    checkWrongEmail(){
+        if(this.state.wrongEmail){
+            return true
+        }
+    }
+
+    checkWrongUsername(){
+        if(this.state.wrongUsername){
+            return true
+        }
+    }
+
+    checkWrongPassword(){
+        if(this.state.wrongPassword){
+            return true
+        }
     }
 
     render(){
@@ -97,7 +128,7 @@ export default class Register extends Component{
                                     returnKeyType="next"
                                     autoCapitalize="none"
                                     autoCorrect={false}
-                                    style={styles.formStyle}
+                                    style={this.checkWrongEmail() ? styles.formStyle2 : styles.formStyle1}
                                     keyboardType={"email-address"}
                                     email={this.state.email}
                                     onChangeText={this.onChangeEmail}
@@ -110,7 +141,7 @@ export default class Register extends Component{
                                     returnKeyType="next"
                                     autoCapitalize="none"
                                     autoCorrect={false}
-                                    style={styles.formStyle}
+                                    style={this.checkWrongUsername() ? styles.formStyle2 : styles.formStyle1}
                                     username={this.state.username}
                                     onChangeText={this.onChangeUsername}
 
@@ -122,7 +153,7 @@ export default class Register extends Component{
                                     returnKeyType="next"
                                     autoCapitalize="none"
                                     autoCorrect={false}
-                                    style={styles.formStyle}
+                                    style={this.checkWrongPassword() ? styles.formStyle2 : styles.formStyle1}
                                     secureTextEntry
                                     password={this.state.password}
                                     onChangeText={this.onChangePassword}
@@ -134,7 +165,7 @@ export default class Register extends Component{
                                     returnKeyType="next"
                                     autoCapitalize="none"
                                     autoCorrect={false}
-                                    style={styles.formStyle}
+                                    style={this.checkWrongPassword() ? styles.formStyle2 : styles.formStyle1}
                                     secureTextEntry
                                     password={this.state.validatePassword}
                                     onChangeText={this.onChangeValidatePassword}
@@ -174,7 +205,7 @@ const styles = StyleSheet.create({
     },
  
     formView: {
-        flex: 1,
+        flex: 1.5,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around',
@@ -203,11 +234,21 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     //    fontFamily: 'sans-serif'
     },
-    formStyle: {
+    formStyle1: {
         backgroundColor: '#fff',
         width: 250,
         borderBottomWidth: 3,
-        borderBottomColor: '#A82574'
+        borderBottomColor: '#A82574',
+        padding: 2,
+        fontSize: 18
+    },
+    formStyle2: {
+        backgroundColor: 'rgba(255,0,0,0.08)',
+        width: 250,
+        borderBottomWidth: 3,
+        borderBottomColor: 'red',
+        padding: 2,
+        fontSize: 18
     },
     btn: {
         height: 50,

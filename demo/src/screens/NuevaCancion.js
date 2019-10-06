@@ -11,6 +11,8 @@ export default class NuevaCancion extends Component{
 
         this.state = {
             cancion: "",
+
+            wrongSongName: false
         };
     } 
    
@@ -47,6 +49,7 @@ export default class NuevaCancion extends Component{
                         Alert.alert("Cancion agregada existosamente");
                     }
                     else if(responseJson.msg === "Cancion ya existente"){
+                        this.setState({ wrongSongName: true });
                         Alert.alert("ERROR", "Ya existe una cancion con ese nombre");
                     }
                     else if(responseJson.msg === "Error, usuario"){
@@ -61,6 +64,12 @@ export default class NuevaCancion extends Component{
 
     onChangeCancion = (cancion) => {
         this.setState({ cancion });
+    }
+
+    checkWrongSongName(){
+        if(this.state.wrongSongName){
+            return true
+        }
     }
     
     render(){
@@ -88,7 +97,7 @@ export default class NuevaCancion extends Component{
                         returnKeyType="next"
                         autoCapitalize="none"
                         autoCorrect={false}
-                        style={styles.formStyle}
+                        style={this.checkWrongSongName() ? styles.formStyle2 : styles.formStyle1}
                         cancion={this.state.cancion}
                         onChangeText={this.onChangeCancion}
                     />
@@ -156,11 +165,21 @@ const styles = StyleSheet.create({
         top: 560,
         left: 150,
     },
-    formStyle: {
+    formStyle1: {
         backgroundColor: '#fff',
         width: 250,
         borderBottomWidth: 3,
-        borderBottomColor: '#A82574'
+        borderBottomColor: '#A82574',
+        padding: 2,
+        fontSize: 18
+    },
+    formStyle2: {
+        backgroundColor: 'rgba(255,0,0,0.08)',
+        width: 250,
+        borderBottomWidth: 3,
+        borderBottomColor: 'red',
+        padding: 2,
+        fontSize: 18
     },
     btn: {
         height: 50,

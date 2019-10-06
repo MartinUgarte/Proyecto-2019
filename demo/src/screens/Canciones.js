@@ -11,7 +11,9 @@ export default class Canciones extends Component{
         super(props)
 
         this.state = {
-            bandasList: []
+            bandasList: [],
+
+            cancionesList: global.canciones
         }
     } 
    
@@ -41,7 +43,7 @@ export default class Canciones extends Component{
 
                 <View style={styles.cancionesContainer}>
                     <FlatList
-                        data={global.canciones}
+                        data={this.state.cancionesList}
                         contentContainerStyle={{
                             flexDirection: 'column',
                             flexWrap: 'wrap'

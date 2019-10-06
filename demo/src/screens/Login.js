@@ -14,6 +14,9 @@ export default class Login extends Component{
         this.state = {
             username: "",
             password: "",
+
+            wrongPassword: false,
+            wrongUsername: false
         };
     }
 
@@ -31,6 +34,10 @@ export default class Login extends Component{
         })
             .then((response) => response.json())
                 .then((responseJson) => {
+                    
+                    this.setState({ wrongPassword: false });
+                    this.setState({ wrongUsername: false });
+
                     if(responseJson.msg === "Listo"){
                         global.nombre = this.state.username;
                         global.bandas = responseJson.bandasList;
@@ -41,9 +48,12 @@ export default class Login extends Component{
                         this.props.navigation.navigate('Menu');
                     }
                     else if(responseJson.msg === "Error, contra"){
+                        this.setState({ wrongPassword: true });
                         Alert.alert("ERROR", "Contraseña incorrecta");
                     }
+        
                     else if(responseJson.msg === "Error, usuario"){
+                        this.setState({ wrongUsername: true });
                         Alert.alert("ERROR", "El usuario no existe");
                     }
                 })
@@ -58,6 +68,18 @@ export default class Login extends Component{
 
     onChangePassword = (password) => {
         this.setState({ password });
+    }
+
+    checkWrongUsername(){
+        if(this.state.wrongUsername){
+            return true
+        }
+    }
+
+    checkWrongPassword(){
+        if(this.state.wrongPassword){
+            return true
+        }
     }
 
     render(){
@@ -79,7 +101,7 @@ export default class Login extends Component{
                                     returnKeyType="next"
                                     autoCapitalize="none"
                                     autoCorrect={false}
-                                    style={styles.formStyle}
+                                    style={this.checkWrongUsername() ? styles.formStyle2 : styles.formStyle1}
                                     username={this.state.username}
                                     onChangeText={this.onChangeUsername}
                             />
@@ -90,12 +112,18 @@ export default class Login extends Component{
                                     returnKeyType="next"
                                     autoCapitalize="none"
                                     autoCorrect={false}
-                                    style={styles.formStyle}
+                                    style={this.checkWrongPassword() ? styles.formStyle2 : styles.formStyle1}
                                     secureTextEntry
                                     password={this.state.password}
                                     onChangeText={this.onChangePassword}
                             />
 
+                    </View>
+
+                    <View style={styles.olvidoContainer}>
+                        <TouchableOpacity>
+                            <Text style={styles.olvidoTxt}>Olvidé mi contraseña</Text>
+                        </TouchableOpacity>
                     </View>
 
 
@@ -140,6 +168,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    olvidoContainer: {
+        position: 'absolute',
+        left: 175,
+        top: 430
+    },
+    olvidoTxt: {
+        opacity: .6,
+        textDecorationLine: 'underline'
+    },
     title: {
         fontSize: 40,
         color: '#A82574',
@@ -157,11 +194,21 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     //    fontFamily: 'sans-serif'
     },
-    formStyle: {
+    formStyle1: {
         backgroundColor: '#fff',
         width: 250,
         borderBottomWidth: 3,
-        borderBottomColor: '#A82574'
+        borderBottomColor: '#A82574',
+        padding: 2,
+        fontSize: 18
+    },
+    formStyle2: {
+        backgroundColor: 'rgba(255,0,0,0.08)',
+        width: 250,
+        borderBottomWidth: 3,
+        borderBottomColor: 'red',
+        padding: 2,
+        fontSize: 18
     },
     btn: {
         height: 50,

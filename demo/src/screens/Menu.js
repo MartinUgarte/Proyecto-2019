@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, StatusBar } from 'react-native';
-import Slider from "react-native-slider";
-import { AntDesign } from '@expo/vector-icons';
+import { NavigationEvents } from 'react-navigation'
 
-import fetchTimeout from 'fetch-timeout';
-
-import CircularSlider from 'rn-circular-slider'
 
 
 import MenuButton from '../components/MenuButton'
-import ArrowLeft from '../components/ArrowLeft'
 
 
 export default class Menu extends Component{
@@ -22,21 +17,18 @@ export default class Menu extends Component{
         };
     }
 
-
-    chequearBandaActual(){
-        this.setState({
-            bandaSelect: global.bandaActual
-        })
-    }
-
     render(){
         
         return(
             <View style={styles.container}>
+                <NavigationEvents
+                    onDidFocus={() => this.setState({
+                        bandaSelect: global.bandaActual
+                    })}
+                />
 
                 <StatusBar hidden/>
 
-                <ArrowLeft/>
                 <View style={styles.header}>
                         <Text style={styles.titulo}>{global.nombre}</Text>
                 </View>
@@ -52,7 +44,7 @@ export default class Menu extends Component{
 
                 <View style={styles.btnsContainer}>
                     <View style={styles.duoContainer}>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.chequearBandaActual()}>
+                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
                             <Image source={require('../images/icons/controlIcon.png')} style={styles.iconsStyle}/>
                             <Text style={styles.txtStyle}>Control</Text>    
                         </TouchableOpacity>

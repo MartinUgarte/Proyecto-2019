@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, FlatList, StatusBar, Alert } from 'react-native';
+import { NavigationEvents } from 'react-navigation'
 
 import MenuButton from '../components/MenuButton'
-import ArrowLeft from '../components/ArrowLeft'
 
 
 export default class Bandas extends Component{
@@ -11,7 +11,8 @@ export default class Bandas extends Component{
         super(props)
 
         this.state = {
-            bordered: "" 
+            bordered: "",
+            bandasList: global.bandas 
         }
     }
 
@@ -26,7 +27,6 @@ export default class Bandas extends Component{
             bordered: banda
         });
         global.bandaActual = banda;
-        console.log(global.bandaActual);
     }
 
     render(){
@@ -34,7 +34,7 @@ export default class Bandas extends Component{
         return(
 
             <View style={styles.container}>
-
+                
                 <StatusBar hidden/>
 
                 <View style={styles.menuIcon}>
@@ -50,7 +50,7 @@ export default class Bandas extends Component{
                 
                 <View style={styles.bandasContainer}>
                     <FlatList
-                        data={global.bandas}
+                        data={this.state.bandasList}
                         contentContainerStyle={{
                             flexDirection: 'row',
                             justifyContent: 'space-around',
