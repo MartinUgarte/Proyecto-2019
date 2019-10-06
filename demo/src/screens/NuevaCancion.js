@@ -71,7 +71,11 @@ export default class NuevaCancion extends Component{
 
                 <StatusBar hidden/>
 
-                <ArrowLeft onPress={() => this.props.navigation.goback()}/>
+                <View style={styles.menuIcon}>
+                    <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack()} >
+                        <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.header}>
                         <Text style={styles.titulo}>Canciones</Text>
                 </View>
@@ -175,5 +179,21 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#fff',
     },
+    menuIcon: {
+        zIndex: 9,
+        position: 'absolute',
+        left: 13,
+        top: 9,
+        width: 50,
+        height: 50
+    },
+    imageStyle: {
+        width: 50,
+        height: 50
+    },
+    btnStyle: {
+        width: 50,
+        height: 50
+    }
 });
 

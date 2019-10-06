@@ -37,7 +37,11 @@ export default class Bandas extends Component{
 
                 <StatusBar hidden/>
 
-                <ArrowLeft onPress={() => this.props.navigation.goback(null)}/>
+                <View style={styles.menuIcon}>
+                    <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack(null)} >
+                        <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.header}>
                         
                         <Text style={styles.titulo}>Bandas</Text>
@@ -47,34 +51,22 @@ export default class Bandas extends Component{
                 <View style={styles.bandasContainer}>
                     <FlatList
                         data={global.bandas}
-                        renderItem={({item}) =>
-                            <View style={styles.duoContainer}>
-                                    
+                        contentContainerStyle={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            flexWrap: 'wrap'
+                        }}
+                        renderItem={({item}) =>                 
                                     <TouchableOpacity style={this.checkActual(item) ? styles.cartContainerSelected : styles.cartContainer} onPress={() => this.seleccionBanda(item)}>
                                         <Text style={styles.txtStyle}>{item}</Text>     
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={this.checkActual(item) ? styles.cartContainerSelected : styles.cartContainer} onPress={() => this.seleccionBanda(item)}>
-                                        <Text style={styles.txtStyle}>{item}</Text>     
-                                    </TouchableOpacity>
-                            </View>
                         }
                         ListEmptyComponent={
                                 <Text style={styles.vacioTxt}>Actualmente no tienes bandas.</Text>
                         }
                         />
                     
-                    {/*
-                    {global.bandas.map(nombre => (
-                        <View style={styles.duoContainer}>
-                            <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
-                            <Text style={styles.txtStyle}>{global.bandas}</Text>    
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
-                            <Text style={styles.txtStyle}>{global.bandas}</Text>    
-                            </TouchableOpacity>
-                        </View>
-                    ))}
-                    */}
+                  
                 </View>
 
                 <View style={styles.addBtnContainer} >
@@ -122,7 +114,8 @@ const styles = StyleSheet.create({
         borderLeftWidth: 2,
         borderRightWidth: 2,
         borderColor: 'rgba(0,0,0,0.14)',
-        borderRadius: 90
+        borderRadius: 90,
+        marginBottom: 20,
     },
     cartContainerSelected: {
         flexDirection: 'column',
@@ -133,7 +126,8 @@ const styles = StyleSheet.create({
         height: 138,
         borderWidth: 5,
         borderColor: 'rgba(0,0,0,1)',
-        borderRadius: 90
+        borderRadius: 90,
+        marginBottom: 20,
     },
     vacioContainer: {
         backgroundColor: 'grey',
@@ -150,6 +144,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        marginBottom: 10
     },
     titulo: {
         fontSize: 30,
@@ -169,6 +164,22 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 560,
         left: 150,
+    },
+    menuIcon: {
+        zIndex: 9,
+        position: 'absolute',
+        left: 13,
+        top: 9,
+        width: 50,
+        height: 50
+    },
+    imageStyle: {
+        width: 50,
+        height: 50
+    },
+    btnStyle: {
+        width: 50,
+        height: 50
     }
 });
 

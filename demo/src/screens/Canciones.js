@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, StatusBar } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, FlatList, StatusBar } from 'react-native';
 
 import MenuButton from '../components/MenuButton'
 import ArrowLeft from '../components/ArrowLeft'
@@ -23,7 +23,11 @@ export default class Canciones extends Component{
 
                 <StatusBar hidden/>
 
-                <ArrowLeft/>
+                <View style={styles.menuIcon}>
+                    <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack()} >
+                        <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.header}>
                             <Text style={styles.titulo}>Canciones</Text>
                 </View>
@@ -32,23 +36,27 @@ export default class Canciones extends Component{
                 <View style={styles.bandaContainer}>
                         <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
                         </TouchableOpacity>
-                        <Text style={styles.bandaTxt}>Cuarteto de nos</Text>
+                        <Text style={styles.bandaTxt}>{global.bandaActual}</Text>
                 </View>
 
                 <View style={styles.cancionesContainer}>
-                    <View style={styles.temaContainer}>
-                        <Text style={styles.temaTxt}>No llora</Text>
-                        <Image style={styles.arrowImg} source={require('../images/icons/expandIcon.png')}/>
-                    </View>
-                    <View style={styles.temaContainer}>
-                        <Text style={styles.temaTxt}>Lo malo de ser bueno</Text>
-                        <Image style={styles.arrowImg} source={require('../images/icons/expandIcon.png')}/>
-                    </View>
-                    <View style={styles.temaContainer}>
-                        <Text style={styles.temaTxt}>Me amo</Text>
-                        <Image style={styles.arrowImg} source={require('../images/icons/expandIcon.png')}/>
-                    </View>
-                </View>
+                    <FlatList
+                        data={global.canciones}
+                        contentContainerStyle={{
+                            flexDirection: 'column',
+                            flexWrap: 'wrap'
+                        }}
+                        renderItem={({item}) =>                 
+                            <View style={styles.temaContainer}>
+                                <Text style={styles.temaTxt}>{item}</Text>
+                                <Image style={styles.arrowImg} source={require('../images/icons/expandIcon.png')}/>
+                            </View>
+                        }
+                        ListEmptyComponent={
+                                <Text style={styles.vacioTxt}>Actualmente no tienes canciones.</Text>
+                        }
+                    />
+                </View> 
 
                 <View style={styles.addBtnContainer}>
                     <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('NuevaCancion')}>  
@@ -134,13 +142,12 @@ const styles = StyleSheet.create({
         width: 230,
         marginTop: 16,
         overflow: 'hidden',
-        borderColor: '#fff',
-        borderRadius: 50,
-        borderWidth: 1.8, 
         backgroundColor: '#A82574',
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 0.85
+        borderColor: 'rgba(0,0,0,0.2)',
+        borderRadius: 20,
+        borderBottomWidth: 5, 
     },
     txtBtn: {
         fontSize: 20,
@@ -159,6 +166,22 @@ const styles = StyleSheet.create({
     arrowImg: {
         width: 30,
         height: 30,
+    },
+    menuIcon: {
+        zIndex: 9,
+        position: 'absolute',
+        left: 13,
+        top: 9,
+        width: 50,
+        height: 50
+    },
+    imageStyle: {
+        width: 50,
+        height: 50
+    },
+    btnStyle: {
+        width: 50,
+        height: 50
     }
 });
 

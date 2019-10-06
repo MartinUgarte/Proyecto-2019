@@ -100,9 +100,11 @@ export default class Tutorial extends Component{
 
                         <StatusBar hidden />
 
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{width: 40, height: 40}}>
-                            <ArrowLeft/>
-                        </TouchableOpacity>
+                        <View style={styles.menuIcon}>
+                            <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack()} >
+                                <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
+                            </TouchableOpacity>
+                        </View>
 
                         <View style={styles.carouselContainer}>
 
@@ -210,6 +212,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.85 
+    },
+    menuIcon: {
+        zIndex: 9,
+        position: 'absolute',
+        left: 13,
+        top: 9,
+        width: 50,
+        height: 50
+    },
+    imageStyle: {
+        width: 50,
+        height: 50
+    },
+    btnStyle: {
+        width: 50,
+        height: 50
     }
 
 });

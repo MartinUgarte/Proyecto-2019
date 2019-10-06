@@ -61,7 +61,11 @@ export default class NuevaBanda extends Component{
 
                 <StatusBar hidden/>
 
-                <ArrowLeft onPress={() => this.props.navigation.goback()}/>
+                <View style={styles.menuIcon}>
+                    <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack()} >
+                        <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.header}>
                         <Text style={styles.titulo}>Bandas</Text>
                 </View>
@@ -153,17 +157,32 @@ const styles = StyleSheet.create({
         width: 230,
         marginTop: 16,
         overflow: 'hidden',
-        borderColor: '#fff',
-        borderRadius: 50,
-        borderWidth: 1.8, 
         backgroundColor: '#A82574',
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 0.85
+        borderColor: 'rgba(0,0,0,0.2)',
+        borderRadius: 20,
+        borderBottomWidth: 5, 
     },
     txtBtn: {
         fontSize: 20,
         color: '#fff',
+    },
+    menuIcon: {
+        zIndex: 9,
+        position: 'absolute',
+        left: 13,
+        top: 9,
+        width: 50,
+        height: 50
+    },
+    imageStyle: {
+        width: 50,
+        height: 50
+    },
+    btnStyle: {
+        width: 50,
+        height: 50
     },
 });
 

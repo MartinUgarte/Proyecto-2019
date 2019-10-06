@@ -16,7 +16,7 @@ import Canciones from './src/screens/Canciones'
 import NuevaCancion from './src/screens/NuevaCancion'
 
 
-import { createAppContainer, createDrawerNavigator } from 'react-navigation';
+import { createAppContainer, createDrawerNavigator, createStackNavigator, } from 'react-navigation';
 
 import MenuDrawer from './src/components/MenuDrawer'
 
@@ -27,11 +27,11 @@ const DrawerConfig = {
   contentComponent: ({ navigation}) => {
     return(<MenuDrawer navigation={navigation} />)
   },
-  drawerPosition: 'right'
+  drawerPosition: 'right',
 }
 
-const RootStack = createDrawerNavigator({
- 
+const AppStackNavigator = createStackNavigator({
+  
   Inicio: {screen: Inicio},
   SobreNosotros: {screen: SobreNosotros},
   Tutorial: {screen: Tutorial},
@@ -46,9 +46,23 @@ const RootStack = createDrawerNavigator({
   Canciones: {screen: Canciones},
   NuevaCancion: {screen: NuevaCancion},
 },
-  DrawerConfig
+  {
+    headerMode: 'none',
+  navigationOptions: {
+    headerVisible: false,
+  }
+  }
+)
+
+const AppDrawerNavigator = createDrawerNavigator({
+ 
+  Inicio: {
+    screen: AppStackNavigator,
+  }
+},
+  DrawerConfig,
 );
 
-const App = createAppContainer(RootStack);
+const App = createAppContainer(AppDrawerNavigator);
 
 export default App;

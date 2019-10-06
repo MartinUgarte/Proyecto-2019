@@ -214,13 +214,13 @@ const styles = StyleSheet.create({
         width: 230,
         marginTop: 16,
         overflow: 'hidden',
-        borderColor: '#fff',
-        borderRadius: 50,
-        borderWidth: 1.8, 
         backgroundColor: '#A82574',
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 0.85
+        opacity: 0.85,
+        borderColor: 'rgba(0,0,0,0.2)',
+        borderRadius: 20,
+        borderBottomWidth: 5, 
     },
     txtBtn: {
         fontSize: 20,
