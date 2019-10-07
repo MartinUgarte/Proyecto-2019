@@ -150,12 +150,12 @@ app.post('/register', function (req, res) {
 
 
 // Inicio de Sesión
+var cancionL = [];
 app.post('/login', function (req, res) {
 	// Recibe la info
 	let nombreL = req.body.username;
 	let contraL = req.body.password;
 	let bandaL = [];
-	let cancionL = [];
 	var usuario = db.collection("Usuarios").doc(nombreL);
 	usuario.get()
 		.then(doc => {
@@ -171,28 +171,20 @@ app.post('/login', function (req, res) {
 									bandaL.push(doc.id);
 								})
 							})
-							.then(function(){
-								for(i = 0; i < bandaL.length; i++){
-									usuario.collection("Bandas").doc(bandaL[i]).collection("Canciones").get().then(function (querySnapshot) {
-										querySnapshot.forEach(function (doc) {
-											if (doc.data().Nombre_de_la_Cancion != "Plantilla"){
-												cancionL.push(i.toString() + "." + doc.data().Nombre_de_la_Cancion);
-											}
-										})
-									})	
+							.then(async function(){
+								let canciones = await devolverCanciones(usuario, bandaL, cancionL);
+								if (canciones.length > 0){
+									console.log("Chau");
+									reply = {
+										msg: 'Listo',
+										bandasList: bandaL,
+										cancionesList: canciones,
+									};
+									res.end(JSON.stringify(reply));
 								}
 							})
 						}
 					})
-					setTimeout(function(){
-						console.log("Chau");
-						reply = {
-							msg: 'Listo',
-							bandasList: bandaL,
-							cancionesList: cancionL,
-						};
-						res.end(JSON.stringify(reply));
-					}, 3000);
 				} else {
 					reply = {
 						msg: 'Error, contra'
@@ -207,6 +199,25 @@ app.post('/login', function (req, res) {
 			}
 		})
 });
+
+
+function devolverCanciones(usuario, bandaL, cancionL){
+	return new Promise(resolve => {
+		for(i = 0; i < bandaL.length; i++){
+			let bandaActual = bandaL[i];
+			usuario.collection("Bandas").doc(bandaActual).collection("Canciones").get().then(function (querySnapshot) {
+				querySnapshot.forEach(function (doc) {
+					if (doc.data().Nombre_de_la_Cancion != "Plantilla"){
+						cancionL.push(bandaActual + "." + doc.data().Nombre_de_la_Cancion);
+					}
+				})
+			}).then(function(){
+				console.log(cancionL.length);
+				resolve(cancionL);
+			})	
+		}
+	})
+}
 
 
 // Agregar Bandas
