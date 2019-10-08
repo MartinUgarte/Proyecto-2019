@@ -150,12 +150,12 @@ app.post('/register', function (req, res) {
 
 
 // Inicio de Sesión
-var cancionL = [];
 app.post('/login', function (req, res) {
 	// Recibe la info
 	let nombreL = req.body.username;
 	let contraL = req.body.password;
 	let bandaL = [];
+	let cancionL = [];
 	var usuario = db.collection("Usuarios").doc(nombreL);
 	usuario.get()
 		.then(doc => {
@@ -165,22 +165,33 @@ app.post('/login', function (req, res) {
 				if (doc.data().Contraseña === contraL) {
 					usuario.collection("Bandas").get().then(sub => {
 						if (sub.docs.length > 0) {
-							console.log("Hola");
 							usuario.collection("Bandas").get().then(function (querySnapshot) {
 								querySnapshot.forEach(function (doc) {
 									bandaL.push(doc.id);
 								})
 							})
-							.then(async function(){
-								let canciones = await devolverCanciones(usuario, bandaL, cancionL);
-								if (canciones.length > 0){
-									console.log("Chau");
-									reply = {
-										msg: 'Listo',
-										bandasList: bandaL,
-										cancionesList: canciones,
-									};
-									res.end(JSON.stringify(reply));
+							.then(function(){
+								let cantBandas = bandaL.length;
+								let indexBanda = 0;
+								for(i = 0; i < bandaL.length; i++){
+									let bandaActual = bandaL[i];
+									usuario.collection("Bandas").doc(bandaActual).collection("Canciones").get().then(function (querySnapshot) {
+										querySnapshot.forEach(function (doc) {
+											if (doc.data().Nombre_de_la_Cancion != "Plantilla"){
+												cancionL.push(bandaActual + "." + doc.data().Nombre_de_la_Cancion);
+											}
+										})
+									}).then(function(){
+										indexBanda++;
+										if (indexBanda === cantBandas){
+											reply = {
+												msg: 'Listo',
+												bandasList: bandaL,
+												cancionesList: cancionL,
+											};
+											res.end(JSON.stringify(reply));
+										}
+									})	
 								}
 							})
 						}
@@ -199,25 +210,6 @@ app.post('/login', function (req, res) {
 			}
 		})
 });
-
-
-function devolverCanciones(usuario, bandaL, cancionL){
-	return new Promise(resolve => {
-		for(i = 0; i < bandaL.length; i++){
-			let bandaActual = bandaL[i];
-			usuario.collection("Bandas").doc(bandaActual).collection("Canciones").get().then(function (querySnapshot) {
-				querySnapshot.forEach(function (doc) {
-					if (doc.data().Nombre_de_la_Cancion != "Plantilla"){
-						cancionL.push(bandaActual + "." + doc.data().Nombre_de_la_Cancion);
-					}
-				})
-			}).then(function(){
-				console.log(cancionL.length);
-				resolve(cancionL);
-			})	
-		}
-	})
-}
 
 
 // Agregar Bandas
