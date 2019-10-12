@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, FlatList, StatusBar } from 'react-native';
 
+import { NavigationEvents } from 'react-navigation'
+
 import MenuButton from '../components/MenuButton'
 import ArrowLeft from '../components/ArrowLeft'
 
@@ -13,15 +15,33 @@ export default class Canciones extends Component{
         this.state = {
             bandasList: [],
 
-            cancionesList: global.canciones
+            cancionesList: global.canciones,
+            cancionesBandaActual: []
         }
     } 
    
+    chequearCanciones(){
+        this.setState({
+            cancionesList: global.canciones,
+        })
+        for(let i = 0; i < this.state.cancionesList.length; i++){
+            const res = this.state.cancionesList[i].split('.');
+
+            if(res[0] == global.bandaActual){
+                this.state.cancionesBandaActual.push(res[1])
+            }
+        }
+    }
+
     render(){
         
         return(
 
             <View style={styles.container}>
+                
+                <NavigationEvents 
+                    onDidFocus={() => this.chequearCanciones()}
+                />
 
                 <StatusBar hidden/>
 
@@ -43,7 +63,7 @@ export default class Canciones extends Component{
 
                 <View style={styles.cancionesContainer}>
                     <FlatList
-                        data={this.state.cancionesList}
+                        data={this.state.cancionesBandaActual}
                         contentContainerStyle={{
                             flexDirection: 'column',
                             flexWrap: 'wrap'

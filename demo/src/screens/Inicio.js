@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, StatusBar } from 'react-native'
 
+import { NavigationEvents } from 'react-navigation'
+
 export default class Inicio extends Component{
 
     constructor(props){
@@ -9,7 +11,7 @@ export default class Inicio extends Component{
         global.nombre = "Anonimo";
         global.bandas = [];
         global.bandaActual = "";
-        global.IP = "10.8.17.11";
+        global.IP = "192.168.0.11";
         global.canciones = [];
     }
 
@@ -23,7 +25,7 @@ export default class Inicio extends Component{
         return(
 
                 <ImageBackground style={styles.container} source={require('../images/fondo.png')} imageStyle={{opacity: 1}}>
-                  
+
                 <StatusBar barStyle="light-content" />
 
 

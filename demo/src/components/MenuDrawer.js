@@ -14,6 +14,9 @@ export default class MenuDrawer extends React.Component {
         );
     }
 
+    cerrarSesion(){
+        this.props.navigation.navigate('Login')
+    }
     brazosConectados = () => {
         if (global.brazos[0] == "Null" || global.brazos[0] == "Empty"){
             return (
@@ -40,7 +43,7 @@ export default class MenuDrawer extends React.Component {
                     </View>
                     
                     <View style={styles.cerrarBtnContainer}>
-                        <TouchableOpacity style={styles.siguienteBtn} onPress={() => this.props.navigation.navigate('Conexion')}>  
+                        <TouchableOpacity style={styles.siguienteBtn} onPress={() => this.cerrarSesion()}>  
                             <Text style = {styles.interactivoStyle}>Cerrar sesión</Text>   
                         </TouchableOpacity>
                     </View>
@@ -71,7 +74,7 @@ export default class MenuDrawer extends React.Component {
                         {this.navLink('Tutorial','Color')}
                     </View>
                     <View style={styles.cerrarBtnContainer}>
-                        <TouchableOpacity style={styles.siguienteBtn} onPress={() => this.props.navigation.navigate('Conexion')}>  
+                        <TouchableOpacity style={styles.siguienteBtn} onPress={() => this.cerrarSesion()}>  
                             <Text style = {styles.interactivoStyle}>Cerrar sesión</Text>   
                         </TouchableOpacity>
                     </View>
