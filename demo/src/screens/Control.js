@@ -144,9 +144,19 @@ export default class Control extends Component{
                         <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{width: 40, height: 40}}>
                             <ArrowLeft/>
                         </TouchableOpacity>
-                        <Text style={styles.titulo}>{global.nombre}</Text>
+                        <View style={styles.circleButtonsContainer}>
+                            <TouchableOpacity style={styles.circleButton}>
+                                <Text style={styles.txtStyle}>1</Text>     
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.circleButton}>
+                                <Text style={styles.txtStyle}>2</Text>     
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.circleButton}>
+                                <Text style={styles.txtStyle}>3</Text>     
+                            </TouchableOpacity>
+                        </View>
+                        <MenuButton navigation={this.props.navigation} />
                 </View>
-                <MenuButton navigation={this.props.navigation} />
                 
                 
                 <View style={styles.sliderZContainer}>
@@ -212,7 +222,7 @@ export default class Control extends Component{
                 <View style={styles.sliderRContainer}>
 
                 
-                    <CircularSlider
+                    {/* <CircularSlider
                         style={styles.halfCircleSlider}
                         step={1}
                         min={-45}
@@ -230,7 +240,7 @@ export default class Control extends Component{
                         linearGradient={[{ stop: '0%', color: '#000' }, { stop: '100%', color: '#000' }]}
 
                         >
-                    </CircularSlider>
+                    </CircularSlider> */}
 
                 </View>
 
@@ -281,6 +291,32 @@ const styles = StyleSheet.create({
         marginBottom: 70
         
     },
+    circleButtonsContainer: {
+        top: 15,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    circleButton: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(168,37,116,0.55)',
+        width: 30,
+        height: 30,
+        borderBottomWidth: 4,
+        borderLeftWidth: 2,
+        borderRightWidth: 2,
+        borderColor: 'rgba(0,0,0,0.14)',
+        borderRadius: 90,
+        marginBottom: 20,
+        marginHorizontal: 5,
+    },
+    txtStyle: {
+        fontSize: 20,
+        color: 'white',
+        textAlign: 'center'
+    },
     sliderRContainer: {
         flex: 1,
         flexDirection: 'column',
@@ -329,7 +365,7 @@ const styles = StyleSheet.create({
         flex: 0.6,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-around',
         alignItems: 'center',
         shadowColor: 'black',
         shadowOffset: {width: 1, height: 2},

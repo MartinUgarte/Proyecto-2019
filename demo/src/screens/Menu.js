@@ -31,8 +31,8 @@ export default class Menu extends Component{
 
                 <View style={styles.header}>
                         <Text style={styles.titulo}>{global.nombre}</Text>
+                        <MenuButton navigation={this.props.navigation} />
                 </View>
-                <MenuButton navigation={this.props.navigation} />
                 
                 <View style={styles.fondoEstudio}>
                     <Image source={require('../images/fondoPerfil.png')} style={styles.estudioImg} />
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         flex: 0.248,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
     },
     titulo: {

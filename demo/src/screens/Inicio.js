@@ -11,7 +11,7 @@ export default class Inicio extends Component{
         global.nombre = "Anonimo";
         global.bandas = [];
         global.bandaActual = "";
-        global.IP = "192.168.0.11";
+        global.IP = "10.8.17.11";
         global.canciones = [];
     }
 

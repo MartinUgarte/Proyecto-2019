@@ -18,7 +18,7 @@ export default class Conexion extends Component{
             llamados: 0,
 
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
-            valueIP: global.IP,
+            valueIP: "10.10.32.151",
             valueMask: "255.255.255.0",
 
         };
@@ -94,7 +94,7 @@ export default class Conexion extends Component{
                                 msg: 'Sos el servidor?',
                                 ipEnviado: primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString()
                             })
-                        }, 3000)
+                        }, 6000)
                             .then((response) => response.json())
                                 .then((responseJson) => {
                                     if(responseJson.msg === "Si"){

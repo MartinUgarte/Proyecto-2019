@@ -52,8 +52,8 @@ export default class Canciones extends Component{
                 </View>
                 <View style={styles.header}>
                             <Text style={styles.titulo}>Canciones</Text>
+                            <MenuButton navigation={this.props.navigation} />
                 </View>
-                <MenuButton navigation={this.props.navigation} />
                 
                 <View style={styles.bandaContainer}>
                         <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
         flex: 0.4,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
     },
     titulo: {

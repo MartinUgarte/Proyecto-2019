@@ -78,8 +78,8 @@ export default class NuevaBanda extends Component{
                 </View>
                 <View style={styles.header}>
                         <Text style={styles.titulo}>Bandas</Text>
+                        <MenuButton navigation={this.props.navigation} />
                 </View>
-                <MenuButton navigation={this.props.navigation} />
                 
                 <View style={styles.inputContainer}>
                     <TextInput

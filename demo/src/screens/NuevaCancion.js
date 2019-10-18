@@ -87,8 +87,8 @@ export default class NuevaCancion extends Component{
                 </View>
                 <View style={styles.header}>
                         <Text style={styles.titulo}>Canciones</Text>
+                        <MenuButton navigation={this.props.navigation} />
                 </View>
-                <MenuButton navigation={this.props.navigation} />
                 
                 <View style={styles.inputContainer}>
                     <TextInput

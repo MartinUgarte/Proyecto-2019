@@ -18,9 +18,6 @@ export default class ArrowLeft extends React.Component{
 const styles = StyleSheet.create({
     menuIcon: {
         zIndex: 9,
-        position: 'absolute',
-        left: 13,
-        top: 9,
         width: 50,
         height: 50
     },

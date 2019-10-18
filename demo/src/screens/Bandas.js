@@ -37,16 +37,13 @@ export default class Bandas extends Component{
                 
                 <StatusBar hidden/>
 
-                <View style={styles.menuIcon}>
-                    <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack(null)} >
-                        <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
-                    </TouchableOpacity>
-                </View>
                 <View style={styles.header}>
-                        
+                        <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack(null)} >
+                            <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
+                        </TouchableOpacity>
                         <Text style={styles.titulo}>Bandas</Text>
+                        <MenuButton navigation={this.props.navigation} />
                 </View>
-                <MenuButton navigation={this.props.navigation} />
                 
                 <View style={styles.bandasContainer}>
                     <FlatList
@@ -142,7 +139,7 @@ const styles = StyleSheet.create({
         flex: 0.42,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
         marginBottom: 10
     },
