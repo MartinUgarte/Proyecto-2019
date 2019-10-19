@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, StatusBar } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, Alert, Picker, StatusBar } from 'react-native';
 import Slider from "react-native-slider";
 import { AntDesign } from '@expo/vector-icons';
 
@@ -144,7 +144,7 @@ export default class Control extends Component{
         const newPresetZ = this.state.presetZ
         const newPresetX = this.state.presetX
         const newPresetR = this.state.presetR
-        
+
         this.setState({
             actualPreset: n,
 
@@ -155,6 +155,8 @@ export default class Control extends Component{
     }
 
     saveActualPreset(p){
+
+        Alert.alert("Preset guardado!")
 
         const newPresetZ = this.state.presetZ
         const newPresetX = this.state.presetX
