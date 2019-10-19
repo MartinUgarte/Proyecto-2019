@@ -117,15 +117,14 @@ export default class Login extends Component{
                                     password={this.state.password}
                                     onChangeText={this.onChangePassword}
                             />
+                            
+                        <View style={styles.olvidoContainer}>
+                            <TouchableOpacity>
+                                <Text style={styles.olvidoTxt}>Olvidé mi contraseña</Text>
+                            </TouchableOpacity>
+                        </View>
 
                     </View>
-
-                    <View style={styles.olvidoContainer}>
-                        <TouchableOpacity>
-                            <Text style={styles.olvidoTxt}>Olvidé mi contraseña</Text>
-                        </TouchableOpacity>
-                    </View>
-
 
                     <View style={styles.buttonView}>  
                         <TouchableOpacity style={styles.btn} onPress={this.loginUser}>  
@@ -169,9 +168,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     olvidoContainer: {
-        position: 'absolute',
-        left: 175,
-        top: 430
+        width: 240,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
     },
     olvidoTxt: {
         opacity: .6,

@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     header: {
-        flex: 0.42,
+        flex: 0.26,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
         justifyContent: 'space-around',

@@ -13,6 +13,7 @@ import ArrowLeft from '../components/ArrowLeft'
 import AddButton from '../components/AddButton'
 
 
+
 export default class Control extends Component{
 
    
@@ -30,6 +31,11 @@ export default class Control extends Component{
             timer: null,
             brazos: [],
             pickerValue: global.brazos[0],
+
+            actualPreset: 0,
+            presetZ: [0, 0, 0], //ej: presetZ[0] es la posicion Z del primer preset. PresetZ[1] es la posicion Z del segundo preset, y asi.
+            presetX: [0, 0, 0], //ej: presetX[1] es la posicion X del segundo preset
+            presetR: [0, 0, 0], //ej: presetR[2] es la posicion R del tercer preset
         } 
     
     }    
@@ -126,6 +132,48 @@ export default class Control extends Component{
                     Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
                 });
     }
+
+    checkActualPreset(n){
+        if(n == this.state.actualPreset){
+            return true
+        }
+    }
+
+    changePreset(n){
+
+        const newPresetZ = this.state.presetZ
+        const newPresetX = this.state.presetX
+        const newPresetR = this.state.presetR
+        
+        this.setState({
+            actualPreset: n,
+
+            valueZ: newPresetZ[n],
+            valueX: newPresetX[n],
+            valueR: newPresetR[n]
+        })
+    }
+
+    saveActualPreset(p){
+
+        const newPresetZ = this.state.presetZ
+        const newPresetX = this.state.presetX
+        const newPresetR = this.state.presetR
+      
+        newPresetZ[p] = this.state.valueZ, //Como no se puede poner this.state.presetZ[1] por ejemplo, creo una const, le cargo los valores del array y accedo a un index
+        newPresetX[p] = this.state.valueX,
+        newPresetR[p] = this.state.valueR,
+
+        console.log(newPresetX)
+
+        this.setState({
+            presetZ: newPresetZ,
+            presetX: newPresetX,
+            presetR: newPresetR,
+
+            
+        })
+    }
     
     render(){
         
@@ -145,13 +193,13 @@ export default class Control extends Component{
                             <ArrowLeft/>
                         </TouchableOpacity>
                         <View style={styles.circleButtonsContainer}>
-                            <TouchableOpacity style={styles.circleButton}>
+                            <TouchableOpacity onPress={() => this.changePreset(0)} style={this.checkActualPreset(0) ? styles.circleButtonSelected : styles.circleButton}>
                                 <Text style={styles.txtStyle}>1</Text>     
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.circleButton}>
+                            <TouchableOpacity onPress={() => this.changePreset(1)} style={this.checkActualPreset(1) ? styles.circleButtonSelected : styles.circleButton}>
                                 <Text style={styles.txtStyle}>2</Text>     
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.circleButton}>
+                            <TouchableOpacity onPress={() => this.changePreset(2)} style={this.checkActualPreset(2) ? styles.circleButtonSelected : styles.circleButton}>
                                 <Text style={styles.txtStyle}>3</Text>     
                             </TouchableOpacity>
                         </View>
@@ -221,7 +269,10 @@ export default class Control extends Component{
 
                 <View style={styles.sliderRContainer}>
 
-                
+                    <TouchableOpacity style={styles.btnStyle} onPress={() => this.saveActualPreset(this.state.actualPreset)}>
+                        <Image source={require('../images/icons/saveIcon.png')} style={styles.saveIcon}/>
+                    </TouchableOpacity>
+
                     {/* <CircularSlider
                         style={styles.halfCircleSlider}
                         step={1}
@@ -280,7 +331,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 60,        
         alignItems: 'center',
-        transform: [{ rotate: '90deg' }]
+        transform: [{ rotate: '-90deg' }]
     },
     sliderXContainer: {
         flex: 0.5,
@@ -312,6 +363,21 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         marginHorizontal: 5,
     },
+    circleButtonSelected: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(168,37,116,1)',
+        width: 30,
+        height: 30,
+        borderBottomWidth: 4,
+        borderLeftWidth: 2,
+        borderRightWidth: 2,
+        borderColor: 'rgba(0,0,0,0.14)',
+        borderRadius: 90,
+        marginBottom: 20,
+        marginHorizontal: 5,
+    },
     txtStyle: {
         fontSize: 20,
         color: 'white',
@@ -321,7 +387,9 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        alignItems: 'center',
+        alignItems: 'flex-end',
+        marginRight: 20,
+        marginBottom: 20
     },
 
     sliderZ: {
@@ -393,6 +461,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 33,
         left: 25,
+    },
+    saveIcon: {
+        width: 60,
+        height: 60
     }
     
 

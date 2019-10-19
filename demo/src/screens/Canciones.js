@@ -45,12 +45,10 @@ export default class Canciones extends Component{
 
                 <StatusBar hidden/>
 
-                <View style={styles.menuIcon}>
-                    <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack()} >
-                        <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
-                    </TouchableOpacity>
-                </View>
                 <View style={styles.header}>
+                            <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack()} >
+                                <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
+                            </TouchableOpacity>
                             <Text style={styles.titulo}>Canciones</Text>
                             <MenuButton navigation={this.props.navigation} />
                 </View>
