@@ -33,9 +33,6 @@ export default class Control extends Component{
             pickerValue: global.brazos[0],
 
             actualPreset: 0,
-            presetZ: [0, 0, 0], //ej: presetZ[0] es la posicion Z del primer preset. PresetZ[1] es la posicion Z del segundo preset, y asi.
-            presetX: [0, 0, 0], //ej: presetX[1] es la posicion X del segundo preset
-            presetR: [0, 0, 0], //ej: presetR[2] es la posicion R del tercer preset
         } 
     
     }    
@@ -54,7 +51,7 @@ export default class Control extends Component{
     sendVerticalSlider = (lastValueZ) => {
         if (this.state.valueZ !== this.state.lastValueZ){
             this.setState({ lastValueZ });
-            this.sendData("Z", this.state.valueZ);
+            this.sendData("Z", this.state.valueZ, false, null);
         }
     }
 
@@ -62,7 +59,7 @@ export default class Control extends Component{
         this.setState({valueZ: this.state.valueZ-1});
         this.setState({lastValueZ: this.state.valueZ});
         setTimeout(function(){
-            this.sendData("Z", this.state.valueZ);
+            this.sendData("Z", this.state.valueZ, false, null);
         }.bind(this), 1);        
     }
 
@@ -70,14 +67,14 @@ export default class Control extends Component{
         this.setState({valueZ: this.state.valueZ+1});
         this.setState({lastValueZ: this.state.valueZ});
         setTimeout(function(){
-            this.sendData("Z", this.state.valueZ);
+            this.sendData("Z", this.state.valueZ, false, null);
         }.bind(this), 1);  
     }
 
     sendSlider = (lastValueX) => {
         if (this.state.valueX !== this.state.lastValueX){
             this.setState({ lastValueX });
-            this.sendData("X", this.state.valueX);
+            this.sendData("X", this.state.valueX, false, null);
         }
     }
 
@@ -85,7 +82,7 @@ export default class Control extends Component{
         this.setState({valueX: this.state.valueX-1});
         this.setState({lastValueX: this.state.valueX});
         setTimeout(function(){
-            this.sendData("X", this.state.valueX);
+            this.sendData("X", this.state.valueX, false, null);
         }.bind(this), 1); 
     }
 
@@ -93,7 +90,7 @@ export default class Control extends Component{
         this.setState({valueX: this.state.valueX+1});
         this.setState({lastValueX: this.state.valueX});
         setTimeout(function(){
-            this.sendData("X", this.state.valueX);
+            this.sendData("X", this.state.valueX, false, null);
         }.bind(this), 1);        
     }
 
@@ -103,12 +100,12 @@ export default class Control extends Component{
             this.setState({ valueR });
             if (this.state.valueR !== this.state.lastValueR){
                 this.setState({ lastValueR });
-                this.sendData("R", this.state.valueR);
+                this.sendData("R", this.state.valueR, false, null);
             }
         }.bind(this), 1);        
     }
 
-    sendData = (direccion, valor) => {
+    sendData = (direccion, valor, preset, nroPreset) => {
         let IP = this.state.pickerValue;
         fetchTimeout('http://' + IP + ':80/move', {
             method: 'POST',
@@ -124,7 +121,12 @@ export default class Control extends Component{
             .then((response) => response.json())
                 .then((responseJson) => {
                     if(responseJson.msg === "Listo"){
-                        Alert.alert("Posicion cambiada al brazo " + IP, direccion + " -> " + valor);
+                        if (preset){
+                            Alert.alert("Posicion cambiada al brazo " + IP, "Se movió a las coordenadas del preset" + nroPreset);
+                        }
+                        else if (!preset){
+                            Alert.alert("Posicion cambiada al brazo " + IP, direccion + " -> " + valor);
+                        }
                     }
                 })
                 .catch((error) => {
@@ -141,40 +143,75 @@ export default class Control extends Component{
 
     changePreset(n){
 
-        const newPresetZ = this.state.presetZ
-        const newPresetX = this.state.presetX
-        const newPresetR = this.state.presetR
+        const newPresetZ = global.presetZ
+        const newPresetX = global.presetX
+        const newPresetR = global.presetR
 
         this.setState({
             actualPreset: n,
-
             valueZ: newPresetZ[n],
             valueX: newPresetX[n],
             valueR: newPresetR[n]
-        })
+        });
+
+        console.log("X: " + this.state.valueX);
+        console.log("Z: " + this.state.valueZ);
+        console.log("R: " + this.state.valueR);
+
+        setTimeout(function(){
+            this.sendData("X", this.state.valueX, "Preset", null);
+        }.bind(this), 1); 
+        setTimeout(function(){
+            this.sendData("Z", this.state.valueZ, "Preset", null);
+        }.bind(this), 1); 
+        setTimeout(function(){
+            this.sendData("R", this.state.valueR, true, this.state.actualPreset);
+        }.bind(this), 1); 
     }
 
     saveActualPreset(p){
 
-        Alert.alert("Preset guardado!")
-
-        const newPresetZ = this.state.presetZ
-        const newPresetX = this.state.presetX
-        const newPresetR = this.state.presetR
+        const newPresetZ = global.presetZ;
+        const newPresetX = global.presetX;
+        const newPresetR = global.presetR;
       
-        newPresetZ[p] = this.state.valueZ, //Como no se puede poner this.state.presetZ[1] por ejemplo, creo una const, le cargo los valores del array y accedo a un index
-        newPresetX[p] = this.state.valueX,
-        newPresetR[p] = this.state.valueR,
+        newPresetZ[p] = this.state.valueZ; //Como no se puede poner this.state.presetZ[1] por ejemplo, creo una const, le cargo los valores del array y accedo a un index
+        newPresetX[p] = this.state.valueX;
+        newPresetR[p] = this.state.valueR;
 
-        console.log(newPresetX)
+        global.presetZ = newPresetZ;
+        global.presetX = newPresetX;
+        global.presetR = newPresetR;
 
-        this.setState({
-            presetZ: newPresetZ,
-            presetX: newPresetX,
-            presetR: newPresetR,
-
-            
+        fetch('http://'+ global.IP + ':3000/saveNewPreset', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: global.nombre,
+                nroPreset: p,
+                valueX: this.state.valueX,
+                valueZ: this.state.valueZ,
+                valueR: this.state.valueR,
+            })
         })
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    if(responseJson.msg === "Listo"){
+                        Alert.alert("Preset guardado!");
+                    }
+                    else if(responseJson.msg === "Error, funcionamiento"){
+                        Alert.alert("ERROR", "Hubo un fallo en la aplicación");
+                    }        
+                    else if(responseJson.msg === "Error, usuario"){
+                        Alert.alert("ERROR", "El usuario no existe");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
     }
     
     render(){

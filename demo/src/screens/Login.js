@@ -42,8 +42,12 @@ export default class Login extends Component{
                         global.nombre = this.state.username;
                         global.bandas = responseJson.bandasList;
                         global.canciones = responseJson.cancionesList;
-                        console.log(global.bandas);
-                        console.log(global.canciones);
+                        global.presetZ = responseJson.presetZList;
+                        global.presetX = responseJson.presetXList;
+                        global.presetR = responseJson.presetRList;
+                        console.log(global.presetZ);
+                        console.log(global.presetX);
+                        console.log(global.presetR);
                         Alert.alert("Inicio de sesión existoso");
                         this.props.navigation.navigate('Menu');
                     }

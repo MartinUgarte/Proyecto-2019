@@ -101,9 +101,26 @@ app.post('/register', function (req, res) {
 								Nombre_de_Usuario: nombreR,
 								Email: emailR,
 								Contraseña: contraR,
+								Codigo_de_Seguridad: null,
 								Verificado: false
-                            })
-                                // Luego, envia un mail al usuario
+							})
+							usuario.collection("Presets").doc("Preset 1").set({
+								EjeX: 0,
+								EjeZ: 0,
+								EjeR: 0,
+							})
+							usuario.collection("Presets").doc("Preset 2").set({
+								EjeX: 0,
+								EjeZ: 0,
+								EjeR: 0,
+							})
+							usuario.collection("Presets").doc("Preset 3").set({
+								EjeX: 0,
+								EjeZ: 0,
+								EjeR: 0,
+							})
+								
+								// Luego, envia un mail al usuario
 								.then(function (docRef) {
 									var transporter = nodemailer.createTransport(({
 										service: 'gmail',
@@ -156,6 +173,9 @@ app.post('/login', function (req, res) {
 	let contraL = req.body.password;
 	let bandaL = [];
 	let cancionL = [];
+	let presetXL = [];
+	let presetZL = [];
+	let presetRL = [];
 	var usuario = db.collection("Usuarios").doc(nombreL);
 	usuario.get()
 		.then(doc => {
@@ -173,6 +193,7 @@ app.post('/login', function (req, res) {
 							.then(function(){
 								let cantBandas = bandaL.length;
 								let indexBanda = 0;
+								let indexPreset = 0;
 								for(i = 0; i < bandaL.length; i++){
 									let bandaActual = bandaL[i];
 									usuario.collection("Bandas").doc(bandaActual).collection("Canciones").get().then(function (querySnapshot) {
@@ -184,15 +205,45 @@ app.post('/login', function (req, res) {
 									}).then(function(){
 										indexBanda++;
 										if (indexBanda === cantBandas){
-											reply = {
-												msg: 'Listo',
-												bandasList: bandaL,
-												cancionesList: cancionL,
-											};
-											res.end(JSON.stringify(reply));
+											usuario.collection("Presets").get().then(function (querySnapshot) {
+												querySnapshot.forEach(function (doc) {
+													presetXL.push(doc.data().EjeX);
+													presetZL.push(doc.data().EjeZ);
+													presetRL.push(doc.data().EjeR);
+												})
+											}).then(function(){
+												reply = {
+													msg: 'Listo',
+													bandasList: bandaL,
+													cancionesList: cancionL,
+													presetXList: presetXL,
+													presetZList: presetZL,
+													presetRList: presetRL,
+												};
+												res.end(JSON.stringify(reply));
+											})
 										}
 									})	
 								}
+							})
+						}
+						else {
+							usuario.collection("Presets").get().then(function (querySnapshot) {
+								querySnapshot.forEach(function (doc) {
+									presetXL.push(doc.data().EjeX);
+									presetZL.push(doc.data().EjeZ);
+									presetRL.push(doc.data().EjeR);
+								})
+							}).then(function(){
+								reply = {
+									msg: 'Listo',
+									bandasList: bandaL,
+									cancionesList: cancionL,
+									presetXList: presetXL,
+									presetZList: presetZL,
+									presetRList: presetRL,
+								};
+								res.end(JSON.stringify(reply));
 							})
 						}
 					})
@@ -210,6 +261,158 @@ app.post('/login', function (req, res) {
 			}
 		})
 });
+
+
+// Cambio de Contraseña (Request)
+app.post('/newPasswordRequest', function(req, res){
+	let userData = req.body.userData;
+	let cantUsuarios;
+	let userEmail;
+	db.collection('Usuarios').get().then(snap => {
+		cantUsuarios = snap.size; 									// Will return the collection size
+	});
+	db.collection("Usuarios").get().then(function (querySnapshot) {
+		querySnapshot.forEach(function (doc) {
+			if (userData === doc.id){
+				usuarioEncontrado = true;
+				securityCode = Math.floor(100000 + Math.random() * 900000);
+				userEmail = doc.data().Email;
+				db.collection("Usuarios").doc(doc).set({
+					Codigo_de_Seguridad: securityCode
+				})
+					.then(function (docRef) {
+						var transporter = nodemailer.createTransport(({
+							service: 'gmail',
+							auth: {
+								type: 'OAuth2',
+								user: 'mycrotech2019@gmail.com',
+								password: 'MycroTechProyecto',
+								clientId: '610628515023-rmhl07nacbrguu44v6tbcmksoatdi4lf.apps.googleusercontent.com',
+								clientSecret: 'NJRUfYXTNoRXZEoDDYm9kf0R',
+								refreshToken: '1/s6tlQw3Pui36G9Ioyg-uOc5kGHKOisjMtADK4HoVq_ErwSRFC1TaVSU2OmqfyLx2',
+								accessToken: 'ya29.Glt1Bz0T3kJYIWPMrjwE2NZ4mRiMt_qozuVQHa828etEQCZVaV1ZllnescavrIVb9P5W_-HnkKs_a_ZlGqN2gC5RYVBYpOmPshG9ydRrK5kyubVwUgITIb0RyieE'
+							}
+						}));
+
+						var mailOptions = {
+							from: 'El equipo MycroTech <mycrotech2019@gmail.com>',
+							to: userEmail,
+							subject: 'Cambio de Contraseña solcitado',
+							text: 'Buenos Dias,\r\nUsted ha solicitado un cambio en su contraseña. Para ello, se le va a solicitar un codigo de seguridad.\r\nSu codigo de seguridad es: ' + securityCode + '\r\nEl equipo de MycroTech.'
+						}
+
+						transporter.sendMail(mailOptions, function (err, res) {
+							if (err) {
+								console.log('Error: ' + err);
+							} else {
+								console.log('Email sent');
+							}
+						})
+						
+						reply = {
+							msg: 'Listo'
+						};
+						res.end(JSON.stringify(reply));
+					})
+			}
+			else if (userData === doc.data().Email){
+				usuarioEncontrado = true;
+				securityCode = Math.floor(100000 + Math.random() * 900000);
+				db.collection("Usuarios").doc(doc).set({
+					Codigo_de_Seguridad: securityCode
+				})
+					.then(function (docRef) {
+						var transporter = nodemailer.createTransport(({
+							service: 'gmail',
+							auth: {
+								type: 'OAuth2',
+								user: 'mycrotech2019@gmail.com',
+								password: 'MycroTechProyecto',
+								clientId: '610628515023-rmhl07nacbrguu44v6tbcmksoatdi4lf.apps.googleusercontent.com',
+								clientSecret: 'NJRUfYXTNoRXZEoDDYm9kf0R',
+								refreshToken: '1/s6tlQw3Pui36G9Ioyg-uOc5kGHKOisjMtADK4HoVq_ErwSRFC1TaVSU2OmqfyLx2',
+								accessToken: 'ya29.Glt1Bz0T3kJYIWPMrjwE2NZ4mRiMt_qozuVQHa828etEQCZVaV1ZllnescavrIVb9P5W_-HnkKs_a_ZlGqN2gC5RYVBYpOmPshG9ydRrK5kyubVwUgITIb0RyieE'
+							}
+						}));
+
+						var mailOptions = {
+							from: 'El equipo MycroTech <mycrotech2019@gmail.com>',
+							to: userData,
+							subject: 'Cambio de Contraseña solcitado',
+							text: 'Buenos Dias,\r\nUsted ha solicitado un cambio en su contraseña. Para ello, se le va a solicitar un codigo de seguridad.\r\nSu codigo de seguridad es: ' + securityCode + '\r\nEl equipo de MycroTech.'
+						}
+
+						transporter.sendMail(mailOptions, function (err, res) {
+							if (err) {
+								console.log('Error: ' + err);
+							} else {
+								console.log('Email sent');
+							}
+						})
+						
+						reply = {
+							msg: 'Listo'
+						};
+						res.end(JSON.stringify(reply));
+					})
+			}
+			else{
+				cantUsuarios--;
+			}
+			if (cantUsuarios === 0){
+				reply = {
+					msg: 'Error, usuario'
+				};
+				res.end(JSON.stringify(reply));
+			}
+		})
+	})
+})
+
+
+// Cambio de Contraseña
+app.post('/newPassword', function(req, res){
+	let nombreN = req.body.username;
+	let passwordN = req.body.password;
+	let codeN = req.body.securityCode;
+	usuario = db.collection("Usuarios").doc(nombreN);
+	usuario.get()
+		.then(doc => {
+			// Verifica si el usuario existe
+			if (doc.exists) {
+				if (doc.data().Codigo_de_Seguridad === codeN){
+					usuario.set({
+						Codigo_de_Seguridad: null,
+						Contraseña: passwordN
+					})
+						.then(function(){
+							reply = {
+								msg: 'Listo'
+							}
+							res.end(JSON.stringify(reply));
+						})
+				}
+				else if (doc.data().Codigo_de_Seguridad === null){
+					reply = {
+						msg: 'Error, no solicitado'
+					}
+					res.end(JSON.stringify(reply));
+				}
+				else{
+					reply = {
+						msg: 'Error, codigo'
+					}
+					res.end(JSON.stringify(reply));
+				}
+			}
+			else {
+				reply = {
+					msg: 'Error, usuario'
+				}
+				res.end(JSON.stringify(reply));
+			}
+		})
+})
 
 
 // Agregar Bandas
@@ -292,6 +495,58 @@ app.post('/newSong', function(req, res){
 									res.end(JSON.stringify(reply));
 								})
 						}
+					}) 
+			} else {
+				reply = {
+					msg: 'Error, usuario'
+				};
+				res.end(JSON.stringify(reply));
+			}
+		})
+})
+
+
+// Modificar Preset
+app.post('/saveNewPreset', function(req, res){
+	//Recibe la info
+	let nombreP = req.body.username;
+	let nroPreset = req.body.nroPreset;
+	let valueX = req.body.valueX;
+	let valueZ = req.body.valueZ;
+	let valueR = req.body.valueR;
+	let presetDoc;
+	var usuario = db.collection("Usuarios").doc(nombreP);
+	switch (nroPreset){
+		case 0:
+			presetDoc = usuario.collection("Presets").doc("Preset 1");
+			break;
+		case 1:
+			presetDoc = usuario.collection("Presets").doc("Preset 2");
+			break;
+		case 2:
+			presetDoc = usuario.collection("Presets").doc("Preset 3")
+			break;
+		default:
+			reply = {
+				msg: 'Error, funcionamiento'
+			}
+			res.end(JSON.stringify(reply));
+			break;
+	}
+	usuario.get()
+		.then(doc => {
+			// Verifica si el usuario existe
+			if (doc.exists) {
+				presetDoc.set({
+					EjeX: valueX,
+					EjeZ: valueZ,
+					EjeR: valueR,
+				})
+					.then(function(){
+						reply = {
+							msg: 'Listo'
+						}
+						res.end(JSON.stringify(reply));
 					}) 
 			} else {
 				reply = {

@@ -11,8 +11,11 @@ export default class Inicio extends Component{
         global.nombre = "Anonimo";
         global.bandas = [];
         global.bandaActual = "";
-        global.IP = "192.168.0.11";
+        global.IP = "192.168.1.3";
         global.canciones = [];
+        global.presetZ = [0, 0, 0]; //ej: presetZ[0] es la posicion Z del primer preset. PresetZ[1] es la posicion Z del segundo preset, y asi.
+        global.presetX = [0, 0, 0]; //ej: presetX[1] es la posicion X del segundo preset
+        global.presetR = [0, 0, 0]; //ej: presetR[2] es la posicion R del tercer preset
     }
 
     static navigationOptions = {
