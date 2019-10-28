@@ -25,7 +25,7 @@ export default class NuevaCancion extends Component{
         }
         else{
             let nuevaCancion = this.state.cancion; 
-            fetch('http://'+ global.IP + ':3000/newSong', {
+            fetch('http://'+ global.IP + '/newSong', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

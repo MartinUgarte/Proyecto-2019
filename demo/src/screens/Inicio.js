@@ -11,7 +11,7 @@ export default class Inicio extends Component{
         global.nombre = "Anonimo";
         global.bandas = [];
         global.bandaActual = "";
-        global.IP = "192.168.1.3";
+        global.IP = "mycrotech-2019.herokuapp.com";
         global.canciones = [];
         global.presetZ = [0, 0, 0]; //ej: presetZ[0] es la posicion Z del primer preset. PresetZ[1] es la posicion Z del segundo preset, y asi.
         global.presetX = [0, 0, 0]; //ej: presetX[1] es la posicion X del segundo preset

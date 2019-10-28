@@ -183,7 +183,7 @@ export default class Control extends Component{
         global.presetX = newPresetX;
         global.presetR = newPresetR;
 
-        fetch('http://'+ global.IP + ':3000/saveNewPreset', {
+        fetch('http://'+ global.IP + '/saveNewPreset', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

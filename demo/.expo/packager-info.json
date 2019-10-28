@@ -1,9 +1,9 @@
 {
   "packagerPort": 19001,
-  "packagerPid": 504,
+  "packagerPid": 7552,
   "expoServerNgrokUrl": "https://uh-uu6.anonymous.demo.exp.direct",
   "packagerNgrokUrl": "https://packager.uh-uu6.anonymous.demo.exp.direct",
-  "ngrokPid": 6556,
+  "ngrokPid": 1492,
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "webpackServerPort": null

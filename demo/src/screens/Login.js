@@ -21,7 +21,7 @@ export default class Login extends Component{
     }
 
     loginUser = () => {        
-        fetch('http://'+ global.IP + ':3000/login', {
+        fetch('http://'+ global.IP + '/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

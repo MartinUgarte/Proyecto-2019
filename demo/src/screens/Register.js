@@ -27,7 +27,7 @@ export default class Register extends Component{
         if (this.state.password === this.state.validatePassword){
             const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             if (reg.test(this.state.email)){
-                fetch('http://'+ global.IP + ':3000/register', {
+                fetch('http://'+ global.IP + '/register', {
                     method: 'POST',
                     headers: {
                         Accept: 'application/json',
