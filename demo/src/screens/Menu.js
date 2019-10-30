@@ -58,9 +58,9 @@ export default class Menu extends Component{
                             <Image source={require('../images/icons/notaIcon.png')} style={styles.iconsStyle}/>
                             <Text style={styles.txtStyle}>Canciones</Text>    
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Login')}  >
+                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Tema')}  >
                             <Image source={require('../images/icons/colorIcon.png')} style={styles.iconsStyle}/>
-                            <Text style={styles.txtStyle}>Color</Text>    
+                            <Text style={styles.txtStyle}>Tema</Text>    
                         </TouchableOpacity>
                     </View>
                 </View>

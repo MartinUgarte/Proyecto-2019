@@ -39,7 +39,7 @@ export default class MenuDrawer extends React.Component {
                     </View>
                     <View style={styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/colorIcon.png')} style={styles.img} />
-                        {this.navLink('Tutorial','Color')}
+                        {this.navLink('Tema','Tema')}
                     </View>
                     
                     <View style={styles.cerrarBtnContainer}>

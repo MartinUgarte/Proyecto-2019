@@ -14,6 +14,9 @@ import Bandas from './src/screens/Bandas'
 import NuevaBanda from './src/screens/NuevaBanda'
 import Canciones from './src/screens/Canciones'
 import NuevaCancion from './src/screens/NuevaCancion'
+import Tema from './src/screens/Tema'
+
+
 
 
 import { createAppContainer, createDrawerNavigator, createStackNavigator, } from 'react-navigation';
@@ -45,6 +48,7 @@ const AppStackNavigator = createStackNavigator({
   NuevaBanda: {screen: NuevaBanda},
   Canciones: {screen: Canciones},
   NuevaCancion: {screen: NuevaCancion},
+  Tema: {screen: Tema}
 },
   {
     headerMode: 'none',

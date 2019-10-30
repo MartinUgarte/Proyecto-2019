@@ -16,6 +16,7 @@ export default class Inicio extends Component{
         global.presetZ = [0, 0, 0]; //ej: presetZ[0] es la posicion Z del primer preset. PresetZ[1] es la posicion Z del segundo preset, y asi.
         global.presetX = [0, 0, 0]; //ej: presetX[1] es la posicion X del segundo preset
         global.presetR = [0, 0, 0]; //ej: presetR[2] es la posicion R del tercer preset
+        global.temaNegro = false;
     }
 
     static navigationOptions = {
