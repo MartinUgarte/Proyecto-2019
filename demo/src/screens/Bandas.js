@@ -12,7 +12,8 @@ export default class Bandas extends Component{
 
         this.state = {
             bordered: "",
-            bandasList: global.bandas 
+            bandasList: global.bandas, 
+            temaNegro: false 
         }
     }
 
@@ -33,7 +34,14 @@ export default class Bandas extends Component{
         
         return(
 
-            <View style={styles.container}>
+            <View style={this.state.temaNegro ? styles.darkContainer : styles.container}>
+
+                <NavigationEvents
+                    onDidFocus={() => this.setState({
+                        bandaSelect: global.bandaActual,
+                        temaNegro: global.temaNegro
+                    })}
+                />
                 
                 <StatusBar hidden/>
 
@@ -85,6 +93,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#fff'
+
+    },
+    darkContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#000'
 
     },
     bandasContainer: {

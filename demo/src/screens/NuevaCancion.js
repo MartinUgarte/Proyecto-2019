@@ -12,7 +12,8 @@ export default class NuevaCancion extends Component{
         this.state = {
             cancion: "",
 
-            wrongSongName: false
+            wrongSongName: false,
+            temaNegro: false,
         };
     } 
    
@@ -76,7 +77,14 @@ export default class NuevaCancion extends Component{
         
         return(
 
-            <View style={styles.container}>
+            <View style={this.state.temaNegro ? styles.darkContainer : styles.container}>
+
+                <NavigationEvents
+                    onDidFocus={() => this.setState({
+                        temaNegro: global.temaNegro
+
+                    })}
+                />
 
                 <StatusBar hidden/>
 
@@ -122,6 +130,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#fff'
+
+    },
+    darkContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#000'
 
     },
     inputContainer: {

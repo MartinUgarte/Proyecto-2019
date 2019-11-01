@@ -33,6 +33,7 @@ export default class Control extends Component{
             pickerValue: global.brazos[0],
 
             actualPreset: 0,
+            temaNegro: false,
         } 
     
     }    
@@ -223,7 +224,13 @@ export default class Control extends Component{
 
         return(
 
-            <View style={styles.container}>
+            <View style={this.state.temaNegro ? styles.darkContainer : styles.container}>
+                
+                <NavigationEvents
+                    onDidFocus={() => this.setState({
+                        temaNegro: global.temaNegro
+                    })}
+                />
 
                 <StatusBar hidden/>
 
@@ -256,7 +263,7 @@ export default class Control extends Component{
                         />
 
                         <Slider
-                            trackStyle={customStyles4.track}
+                            trackStyle={this.state.temaNegro ? customStyles4.darkTrack : customStyles4.track}
                             thumbStyle={customStyles4.thumb}
                             minimumTrackTintColor='#000'
                             minimumValue={-100}
@@ -285,7 +292,7 @@ export default class Control extends Component{
                             onPress={this.buttonSliderN}  
                         />
                         <Slider
-                            trackStyle={customStyles4.track}
+                            trackStyle={this.state.temaNegro ? customStyles4.darkTrack : customStyles4.track}
                             thumbStyle={customStyles4.thumb}
                             minimumTrackTintColor='#000'
                             minimumValue={-100}
@@ -362,6 +369,11 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#fff'
+    },
+    darkContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#000'
 
     },
     sliderZContainer: {
@@ -515,10 +527,13 @@ var customStyles4 = StyleSheet.create({
       borderRadius: 4,
       backgroundColor: '#000',
       shadowColor: 'black',
-      shadowOffset: {width: 0, height: 1},
-      shadowRadius: 1,
-      shadowOpacity: 0.15,
     },
+    darkTrack: {
+        height: 4,
+        borderRadius: 4,
+        backgroundColor: '#fff',
+  
+      },
     thumb: {
       width: 25,
       height: 25,

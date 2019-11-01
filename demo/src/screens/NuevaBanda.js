@@ -11,7 +11,8 @@ export default class NuevaBanda extends Component{
         super( props );
         this.state = {
             band: "",
-            wrongBandName: false
+            wrongBandName: false,
+            temaNegro: false 
         };
     }
 
@@ -67,7 +68,13 @@ export default class NuevaBanda extends Component{
         
         return(
 
-            <View style={styles.container}>
+            <View style={this.state.temaNegro ? styles.darkContainer : styles.container}>
+                
+                <NavigationEvents
+                    onDidFocus={() => this.setState({
+                        temaNegro: global.temaNegro
+                    })}
+                />
 
                 <StatusBar hidden/>
 
