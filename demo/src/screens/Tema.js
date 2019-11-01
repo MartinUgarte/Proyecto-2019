@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, FlatList, StatusBar, Alert } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, StatusBar, Alert } from 'react-native';
 import { NavigationEvents } from 'react-navigation'
 
 import MenuButton from '../components/MenuButton'
@@ -11,26 +11,19 @@ export default class Tema extends Component{
         super(props)
 
         this.state = {
-            bordered: "",
-            bandasList: global.bandas 
+            temaNegroActual: false
         }
     }
 
-    checkActual(banda){
-        if(banda == this.state.bordered){
-            return true
-        }
-    }
+    chequearTema(){
+       this.setState({
+           temaNegroActual: global.temaNegro
+       })
 
-    seleccionBanda(banda){
-        this.setState({
-            bordered: banda
-        });
-        global.bandaActual = banda;
     }
 
     mostrarImg(){
-        if (global.temaNegro){
+        if (this.state.temaNegroActual == true){
             return <Image source={require('../images/temaNegro.jpg')} style={styles.temaImage}/>
         }else{
             return <Image source={require('../images/temaBlanco.jpg')} style={styles.temaImage}/>
@@ -38,19 +31,30 @@ export default class Tema extends Component{
     }
 
     cambiarTemaABlanco(){
+        this.setState({
+            temaNegroActual: false
+        });
         global.temaNegro = false
     }
 
     cambiarTemaANegro(){
+        this.setState({
+            temaNegroActual: true
+        });
         global.temaNegro = true
+        console.log(this.state.temaNegroActual)
     }
 
     render(){
         
         return(
 
-            <View style={styles.container}>
+            <View style={global.temaNegro ? styles.darkContainer : styles.container}>
                 
+                <NavigationEvents 
+                    onDidFocus={() => this.chequearTema()}
+                />
+
                 <StatusBar hidden/>
 
                 <View style={styles.header}>
@@ -67,11 +71,11 @@ export default class Tema extends Component{
                 </View>
 
                 <View style={styles.changeContainer}>
-                <TouchableOpacity onPress={() => this.cambiarTemaABlanco()} >
-                        <Image source={require('../images/icons/addIcon.png')} style={styles.changeImg}/>
+                    <TouchableOpacity onPress={() => this.cambiarTemaABlanco()} >
+                        <Image source={require('../images/icons/colorIcon.png')} style={styles.changeImg}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.cambiarTemaANegro()} >
-                        <Image source={require('../images/icons/addIcon.png')} style={styles.changeImg}/>
+                        <Image source={require('../images/icons/colorIcon.png')} style={styles.changeImg}/>
                     </TouchableOpacity>
                 </View>
               
@@ -90,6 +94,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
 
     },
+    darkContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#000'
+
+    },
     bandasContainer: {
         marginTop: 15,
         width: 350,
@@ -98,6 +108,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     imgContainer: {
+        marginTop: 10,
         flex: 2,
         justifyContent: 'center',
         alignItems: 'center',
@@ -110,7 +121,7 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 0.4,
-        backgroundColor: 'rgba(235,235,235,1)',
+        backgroundColor: 'rgba(200,200,200,1)',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -152,7 +163,7 @@ const styles = StyleSheet.create({
         height: 50
     },
     temaImage: {
-        width: 300,
+        width: 350,
         height: 450
         
     }

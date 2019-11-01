@@ -1,11 +1,21 @@
 import React from 'react';
 import { Platform, Dimensions, StyleSheet, Text, View, TouchableOpacity, Image, Alert} from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { NavigationEvents } from 'react-navigation'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 export default class MenuDrawer extends React.Component {
+
+    constructor(props){
+        super(props)
+
+        this.state = {
+           temaNegro: false
+        }
+    }
+
+
     navLink(nav, text){
         return(
             <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate(nav)}>
@@ -21,23 +31,23 @@ export default class MenuDrawer extends React.Component {
         if (global.brazos[0] == "Null" || global.brazos[0] == "Empty"){
             return (
                 <View>
-                    <View style={styles.menuIconsContrainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/menuIcon.png')} style={styles.img} />
                         {this.navLink('Menu','Menú')}
                     </View>
-                    <View style={styles.menuIconsContrainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/controlIcon.png')} style={styles.img} />
                         {this.navLink('Conexion','Control')}
                     </View>
-                    <View style={styles.menuIconsContrainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/sesionesIcon.png')} style={styles.img} />
                         {this.navLink('Bandas','Sesiones')}
                     </View>
-                    <View style={styles.menuIconsContrainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/notaIcon.png')} style={styles.img} />
                         {this.navLink('Canciones','Canciones')}
                     </View>
-                    <View style={styles.menuIconsContrainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/colorIcon.png')} style={styles.img} />
                         {this.navLink('Tema','Tema')}
                     </View>
@@ -53,27 +63,27 @@ export default class MenuDrawer extends React.Component {
         else {
             return(
                 <View>
-                    <View style={styles.menuIconsContrainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/menuIcon.png')} style={styles.img} />
                         {this.navLink('Menu','Menú')}
                     </View>
-                    <View style={styles.menuIconsContrainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer }>
                         <Image source={require('../images/icons/controlIcon.png')} style={styles.img} />
                         {this.navLink('Control','Control')}
                     </View>
-                    <View style={styles.menuIconsContrainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/sesionesIcon.png')} style={styles.img} />
                         {this.navLink('Bandas','Sesiones')}
                     </View>
-                    <View style={styles.menuIconsContrainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/notaIcon.png')} style={styles.img} />
                         {this.navLink('SobreNosotros','Canciones')}
                     </View>
-                    <View style={styles.menuIconsContrainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/colorIcon.png')} style={styles.img} />
                         {this.navLink('Tutorial','Color')}
                     </View>
-                    <View style={styles.cerrarBtnContainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <TouchableOpacity style={styles.siguienteBtn} onPress={() => this.cerrarSesion()}>  
                             <Text style = {styles.interactivoStyle}>Cerrar sesión</Text>   
                         </TouchableOpacity>
@@ -86,6 +96,13 @@ export default class MenuDrawer extends React.Component {
     render(){
         return(
             <View style={styles.container}>
+
+                <NavigationEvents
+                    onDidFocus={() => this.setState({
+                        temaNegro: global.temaNegro
+                    })}
+                />
+
                 <View style={styles.topLinks}>
                     <View style={styles.profile}>
                         <View style={styles.imgView}>
@@ -96,7 +113,7 @@ export default class MenuDrawer extends React.Component {
                         </View>
                     </View>
                 </View>
-                <View style={styles.bottomLinks}>
+                <View style={this.state.temaNegro ? styles.darkBottomLinks : styles.bottomLinks}>
 
                     {this.brazosConectados()}
                 </View>
@@ -120,6 +137,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderBottomWidth: 2,
         borderColor: 'rgba(0,0,0,0.2)',
+        marginTop: 10,
+        marginLeft: 10,
+        marginBottom: 10
+    },
+    darkMenuIconsContrainer: {
+        flexDirection: 'row',
+        borderBottomWidth: 2,
+        borderColor: 'rgba(255,255,255,0.2)',
         marginTop: 10,
         marginLeft: 10,
         marginBottom: 10
@@ -159,12 +184,18 @@ const styles = StyleSheet.create({
         width: 40,
     },
     topLinks: {
-        height: 77,
+        height: 90,
         backgroundColor: '#EBEBEB'
     },
     bottomLinks: {
         flex: 1,
         backgroundColor: 'white',
+        paddingTop: 10,
+        paddingBottom: 50,
+    },
+    darkBottomLinks: {
+        flex: 1,
+        backgroundColor: 'black',
         paddingTop: 10,
         paddingBottom: 50,
     },

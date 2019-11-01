@@ -12,7 +12,8 @@ export default class Menu extends Component{
 
         super( props );
         this.state = {
-            bandaSelect: ""
+            bandaSelect: "",
+            temaNegro: false 
 
         };
     }
@@ -20,10 +21,12 @@ export default class Menu extends Component{
     render(){
         
         return(
-            <View style={styles.container}>
+            <View style={this.state.temaNegro ? styles.darkContainer : styles.container}>
+
                 <NavigationEvents
                     onDidFocus={() => this.setState({
-                        bandaSelect: global.bandaActual
+                        bandaSelect: global.bandaActual,
+                        temaNegro: global.temaNegro
                     })}
                 />
 
@@ -35,30 +38,30 @@ export default class Menu extends Component{
                 </View>
                 
                 <View style={styles.fondoEstudio}>
-                    <Image source={require('../images/fondoPerfil.png')} style={styles.estudioImg} />
+                    <Image source={require('../images/fondoPerfil.png')} style={this.state.temaNegro ? styles.darkEstudioImg : styles.estudioImg} />
                 </View>
 
-                <View style={styles.fondoBlanco}>
+                <View style={this.state.temaNegro ? styles.fondoNegro : styles.fondoBlanco}>
 
                 </View>
 
                 <View style={styles.btnsContainer}>
                     <View style={styles.duoContainer}>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
+                        <TouchableOpacity style={this.state.temaNegro ? styles.darkCartContainer : styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
                             <Image source={require('../images/icons/controlIcon.png')} style={styles.iconsStyle}/>
                             <Text style={styles.txtStyle}>Control</Text>    
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Bandas')}>
+                        <TouchableOpacity style={this.state.temaNegro ? styles.darkCartContainer : styles.cartContainer} onPress={() => this.props.navigation.navigate('Bandas')}>
                             <Image source={require('../images/icons/sesionesIcon.png')} style={styles.iconsStyle}/>
                             <Text style={styles.txtStyle}>Bandas</Text>    
                         </TouchableOpacity>
                     </View>
                     <View style={styles.duoContainer}>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Canciones')}>
+                        <TouchableOpacity style={this.state.temaNegro ? styles.darkCartContainer : styles.cartContainer} onPress={() => this.props.navigation.navigate('Canciones')}>
                             <Image source={require('../images/icons/notaIcon.png')} style={styles.iconsStyle}/>
                             <Text style={styles.txtStyle}>Canciones</Text>    
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Tema')}  >
+                        <TouchableOpacity style={this.state.temaNegro ? styles.darkCartContainer : styles.cartContainer} onPress={() => this.props.navigation.navigate('Tema')}  >
                             <Image source={require('../images/icons/colorIcon.png')} style={styles.iconsStyle}/>
                             <Text style={styles.txtStyle}>Tema</Text>    
                         </TouchableOpacity>
@@ -85,30 +88,50 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
 
     },
-    btnsContainer: {
-        width: 350,
-        height: 350,
+    darkContainer: {
+        flex: 1,
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        backgroundColor: '#000'
+
+    },
+    btnsContainer: {
+        width: 400,
+        height: 400,
+        flexDirection: 'column',
+        justifyContent: 'center',
         position: 'absolute',
-        top: 250,
+        top: 310,
     },
     duoContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 15
     },
     cartContainer: {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        width: 150,
-        height: 150,
+        width: 170,
+        height: 170,
         borderBottomWidth: 4,
         borderLeftWidth: 2,
         borderRightWidth: 2,
         borderColor: 'rgba(0,0,0,0.14)',
+        borderRadius: 10  
+    },
+    darkCartContainer: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'black',
+        width: 170,
+        height: 170,
+        borderBottomWidth: 8,
+        borderLeftWidth: 4,
+        borderRightWidth: 4,
+        borderColor: 'rgba(235,235,235,0.14)',
         borderRadius: 10
         
     },
@@ -122,9 +145,13 @@ const styles = StyleSheet.create({
         flex: 1.1,
         backgroundColor: 'white'
     },
+    fondoNegro: {
+        flex: 1.1,
+        backgroundColor: 'black'
+    },
     header: {
         flex: 0.248,
-        backgroundColor: 'rgba(235,235,235,1)',
+        backgroundColor: 'rgba(170,170,170,1)',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -135,13 +162,17 @@ const styles = StyleSheet.create({
         fontWeight: '400'
     },  
     estudioImg: {
-        width: 365,
-        height: 220,
+        width: 430,
+        height: 285,
         opacity: .55
     },
+    darkEstudioImg: {
+        width: 430,
+        height: 285,
+    },
     iconsStyle: {
-        height: 55,
-        width: 55,
+        height: 70,
+        width: 70,
     },
     txtStyle: {
         fontSize: 20,
