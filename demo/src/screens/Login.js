@@ -21,7 +21,7 @@ export default class Login extends Component{
     }
 
     loginUser = () => {        
-        fetch('http://'+ global.IP + '/login', {
+        fetch('http://' + global.IP + '/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -45,6 +45,7 @@ export default class Login extends Component{
                         global.presetZ = responseJson.presetZList;
                         global.presetX = responseJson.presetXList;
                         global.presetR = responseJson.presetRList;
+                        global.temaNegro = responseJson.temaNegro;
                         console.log(global.presetZ);
                         console.log(global.presetX);
                         console.log(global.presetR);

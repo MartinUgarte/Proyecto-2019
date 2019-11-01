@@ -101,6 +101,7 @@ app.post('/register', function (req, res) {
 								Nombre_de_Usuario: nombreR,
 								Email: emailR,
 								Contraseña: contraR,
+								Tema_Negro: false,
 								Codigo_de_Seguridad: null,
 								Verificado: false
 							})
@@ -176,6 +177,7 @@ app.post('/login', function (req, res) {
 	let presetXL = [];
 	let presetZL = [];
 	let presetRL = [];
+	let temaNegro;
 	var usuario = db.collection("Usuarios").doc(nombreL);
 	usuario.get()
 		.then(doc => {
@@ -183,6 +185,7 @@ app.post('/login', function (req, res) {
 			if (doc.exists) {
 				// Verifica si la contraseña es correcta
 				if (doc.data().Contraseña === contraL) {
+					temaNegro = doc.data().Tema_Negro;
 					usuario.collection("Bandas").get().then(sub => {
 						if (sub.docs.length > 0) {
 							usuario.collection("Bandas").get().then(function (querySnapshot) {
@@ -242,6 +245,7 @@ app.post('/login', function (req, res) {
 									presetXList: presetXL,
 									presetZList: presetZL,
 									presetRList: presetRL,
+									temaNegro: temaNegro,
 								};
 								res.end(JSON.stringify(reply));
 							})
@@ -277,7 +281,7 @@ app.post('/newPasswordRequest', function(req, res){
 				usuarioEncontrado = true;
 				securityCode = Math.floor(100000 + Math.random() * 900000);
 				userEmail = doc.data().Email;
-				db.collection("Usuarios").doc(doc).set({
+				db.collection("Usuarios").doc(doc).update({
 					Codigo_de_Seguridad: securityCode
 				})
 					.then(function (docRef) {
@@ -318,7 +322,7 @@ app.post('/newPasswordRequest', function(req, res){
 			else if (userData === doc.data().Email){
 				usuarioEncontrado = true;
 				securityCode = Math.floor(100000 + Math.random() * 900000);
-				db.collection("Usuarios").doc(doc).set({
+				db.collection("Usuarios").doc(doc).update({
 					Codigo_de_Seguridad: securityCode
 				})
 					.then(function (docRef) {
@@ -381,7 +385,7 @@ app.post('/newPassword', function(req, res){
 			// Verifica si el usuario existe
 			if (doc.exists) {
 				if (doc.data().Codigo_de_Seguridad === codeN){
-					usuario.set({
+					usuario.update({
 						Codigo_de_Seguridad: null,
 						Contraseña: passwordN
 					})
@@ -548,6 +552,35 @@ app.post('/saveNewPreset', function(req, res){
 						}
 						res.end(JSON.stringify(reply));
 					}) 
+			} else {
+				reply = {
+					msg: 'Error, usuario'
+				};
+				res.end(JSON.stringify(reply));
+			}
+		})
+})
+
+
+//Change color theme
+app.post('/tema', function(req, res){
+	//Recibe la info
+	let nombreT = req.body.username;
+	let temaNegro = req.body.temaNegro;
+	var usuario = db.collection("Usuarios").doc(nombreT);
+	usuario.get()
+		.then(doc => {
+			// Verifica si el usuario existe
+			if (doc.exists) {
+				usuario.update({
+					Tema_Negro: temaNegro
+				})
+				.then(function(){
+					reply = {
+						msg: 'Listo'
+					};
+					res.end(JSON.stringify(reply));
+				}) 
 			} else {
 				reply = {
 					msg: 'Error, usuario'
