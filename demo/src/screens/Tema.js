@@ -35,6 +35,26 @@ export default class Tema extends Component{
             temaNegroActual: false
         });
         global.temaNegro = false
+        fetch('http://10.8.17.11:3000/tema', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: global.nombre,
+                temaNegro: false,
+            })
+        })
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    if(responseJson.msg === "Listo"){
+                        console.log("Cambiado en el db")
+                    }        
+                    else if(responseJson.msg === "Error, usuario"){
+                        Alert.alert("ERROR", "El usuario no existe");
+                    }
+                })
     }
 
     cambiarTemaANegro(){
@@ -43,6 +63,26 @@ export default class Tema extends Component{
         });
         global.temaNegro = true
         console.log(this.state.temaNegroActual)
+        fetch('http://10.8.17.11:3000/tema', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: global.nombre,
+                temaNegro: true,
+            })
+        })
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    if(responseJson.msg === "Listo"){
+                        console.log("Cambiado en el db")
+                    }        
+                    else if(responseJson.msg === "Error, usuario"){
+                        Alert.alert("ERROR", "El usuario no existe");
+                    }
+                })
     }
 
     render(){
