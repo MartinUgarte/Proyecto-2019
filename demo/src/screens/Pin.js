@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Alert, Text, TouchableOpacity, StatusBar, TextInput, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, View, Alert, Text, TouchableOpacity, StatusBar, TextInput, Platform, KeyboardAvoidingView } from 'react-native'
+import PinInput from 'react-native-pin-input-component';
 
-export default class Recuperar extends Component{
+export default class Pin extends Component{
 
     static navigationOptions = {
         //To hide the ActionBar/NavigationBar
@@ -12,25 +13,24 @@ export default class Recuperar extends Component{
 
         super( props );
         this.state = {
-            email: "",
-            wrongEmail: false,
+            PIN: "",
+            wrongPIN: false,
 
         };
     }
 
-    onChangeEmail = (email) => {
-        this.setState({ email });
+    onChangePIN = () => {
+        this.setState({ PIN });
     }
 
-    checkWrongEmail(){
-        if(this.state.wrongEmail){
+    checkWrongPIN(){
+        if(this.state.wrongPIN){
             return true
         }
     }
 
     onPressEnviar(){
-            this.props.navigation.navigate('Menu')
-    
+        this.props.navigation.navigate('NuevaContra');
     }
 
     render(){
@@ -46,27 +46,38 @@ export default class Recuperar extends Component{
                     </View>
 
                     <View style={styles.txtView}>
-                        <Text style={styles.txtStyle}>Ingresa tu e-mail y recibirás automáticamente un correo de recuperación</Text>
+                        <Text style={styles.txtStyle}>Verifica tu bandeja de entrada e ingresa el PIN de cuatro dígitos.</Text>
                     </View>
                     <View style={styles.formView}>  
+                            
                             <TextInput
-                                    placeholder="Ingresa tu email" 
+                                    placeholder="Ingresa el PIN" 
                                     placeholderTextColor="rgba(0,0,0,0.4)"
                                     returnKeyType="next"
                                     autoCapitalize="none"
                                     autoCorrect={false}
-                                    style={this.checkWrongEmail() ? styles.formStyle2 : styles.formStyle1}
-                                    keyboardType={"email-address"}
-                                    email={this.state.email}
-                                    onChangeText={this.onChangeEmail}
+                                    style={this.checkWrongPIN() ? styles.formStyle2 : styles.formStyle1}
+                                    keyboardType={"numeric"}
+                                    PIN={this.state.PIN}
+                                    onChangeText={this.onChangePIN}
                             />
-
-
+                            
+                            {/*<PinInput
+                                value={this.state.PIN}
+                                onPress={() => {}}
+                                onChangeText={this.onChangePIN}
+                                visibleSelection
+                                cellNormalStyle={styles.normal}
+                                cellFocusStyle={styles.focus}
+                                cellBlurStyle={styles.blur}
+                            
+                            />
+                            */}
                     </View>
 
                     <View style={styles.buttonView}>  
-                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Pin')}>  
-                            <Text style = {styles.txtBtn}>Enviar correo</Text>   
+                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('NuevaContra')}>  
+                            <Text style = {styles.txtBtn}>Verificar</Text>   
                         </TouchableOpacity>
                     </View>
 
@@ -172,5 +183,44 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#fff',
     },
+    normal: {
+        width: 40,
+        height: 40,
+        borderWidth: 0.5,
+        borderColor: '#D5D5D5',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 2,
+        borderRadius: 20,
+      },
+      focus: {
+        width: 40,
+        height: 40,
+        borderWidth: 0.5,
+        borderColor: 'red',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 2,
+        borderRadius: 20,
+        ...Platform.select({
+          ios: {
+            shadowOffset: {width: 0, height: 1},
+            shadowRadius: 2,
+            shadowOpacity: 0.5,
+            shadowColor: 'red',
+          },
+          android: {
+            elevation: 4,
+          },
+        }),
+      },
+      blur: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 2,
+      },
    
 });

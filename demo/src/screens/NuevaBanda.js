@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, TextInput, Button, Alert, Picker, StatusBar } from 'react-native';
+import { NavigationEvents } from 'react-navigation'
 
 import MenuButton from '../components/MenuButton'
-import ArrowLeft from '../components/ArrowLeft'
 
 export default class NuevaBanda extends Component{
 
@@ -120,6 +120,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#fff'
+
+    },
+    darkContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#000'
 
     },
     inputContainer: {

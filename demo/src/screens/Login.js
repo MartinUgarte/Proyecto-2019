@@ -124,7 +124,7 @@ export default class Login extends Component{
                             />
                             
                         <View style={styles.olvidoContainer}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Recuperar')}>
                                 <Text style={styles.olvidoTxt}>Olvidé mi contraseña</Text>
                             </TouchableOpacity>
                         </View>
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 3,
         borderBottomColor: '#A82574',
         padding: 2,
-        fontSize: 18
+        fontSize: 18,
     },
     formStyle2: {
         backgroundColor: 'rgba(255,0,0,0.08)',

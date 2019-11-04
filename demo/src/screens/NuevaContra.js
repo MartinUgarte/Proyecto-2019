@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Alert, Text, TouchableOpacity, StatusBar, TextInput, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, View, Image, Text, TouchableOpacity, KeyboardAvoidingView, StatusBar, TextInput, Alert} from 'react-native'
 
-export default class Recuperar extends Component{
+export default class NuevaContra extends Component{
 
     static navigationOptions = {
         //To hide the ActionBar/NavigationBar
@@ -12,25 +12,29 @@ export default class Recuperar extends Component{
 
         super( props );
         this.state = {
-            email: "",
-            wrongEmail: false,
+            password: "",
+            validatePassword: "",
 
+            wrongPassword: false,
         };
     }
 
-    onChangeEmail = (email) => {
-        this.setState({ email });
+    onChangePassword = (password) => {
+        this.setState({ password });
     }
 
-    checkWrongEmail(){
-        if(this.state.wrongEmail){
+    onChangeValidatePassword = (validatePassword) => {
+        this.setState({ validatePassword });
+    }
+
+    checkWrongPassword(){
+        if(this.state.wrongPassword){
             return true
         }
     }
 
     onPressEnviar(){
-            this.props.navigation.navigate('Menu')
-    
+        this.props.navigation.navigate('Login');
     }
 
     render(){
@@ -42,31 +46,45 @@ export default class Recuperar extends Component{
                     <StatusBar barStyle="light-content" />
 
                     <View style={styles.titleView}>
-                        <Text style={styles.title}>Recupera tu cuenta</Text>
+                        <Text style={styles.title}>Éxito</Text>
                     </View>
 
                     <View style={styles.txtView}>
-                        <Text style={styles.txtStyle}>Ingresa tu e-mail y recibirás automáticamente un correo de recuperación</Text>
+                        <Text style={styles.txtStyle}>Introduce la nueva contraseña.</Text>
                     </View>
+
                     <View style={styles.formView}>  
+
                             <TextInput
-                                    placeholder="Ingresa tu email" 
+                                    placeholder="Contraseña" 
                                     placeholderTextColor="rgba(0,0,0,0.4)"
                                     returnKeyType="next"
                                     autoCapitalize="none"
                                     autoCorrect={false}
-                                    style={this.checkWrongEmail() ? styles.formStyle2 : styles.formStyle1}
-                                    keyboardType={"email-address"}
-                                    email={this.state.email}
-                                    onChangeText={this.onChangeEmail}
+                                    style={this.checkWrongPassword() ? styles.formStyle2 : styles.formStyle1}
+                                    secureTextEntry
+                                    password={this.state.password}
+                                    onChangeText={this.onChangePassword}
                             />
 
+                            <TextInput
+                                    placeholder="Validar Contraseña" 
+                                    placeholderTextColor="rgba(0,0,0,0.4)"
+                                    returnKeyType="next"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    style={this.checkWrongPassword() ? styles.formStyle2 : styles.formStyle1}
+                                    secureTextEntry
+                                    password={this.state.validatePassword}
+                                    onChangeText={this.onChangeValidatePassword}
+                            />
 
                     </View>
 
+
                     <View style={styles.buttonView}>  
-                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Pin')}>  
-                            <Text style = {styles.txtBtn}>Enviar correo</Text>   
+                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Login')}>  
+                            <Text style = {styles.txtBtn}>Listo</Text>   
                         </TouchableOpacity>
                     </View>
 
@@ -90,7 +108,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         marginLeft: 50,
         justifyContent: 'center',
-        marginTop: 50
+        marginTop: 50,
+
     },
     txtView:{
         flex: 1,
@@ -102,7 +121,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     formView: {
-        flex: 1,
+        flex: 1.5,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around',
@@ -113,18 +132,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    olvidoContainer: {
-        width: 240,
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-    },
-    olvidoTxt: {
-        opacity: .6,
-        textDecorationLine: 'underline'
-    },
     title: {
         fontSize: 40,
         color: '#A82574',
+
    //     fontFamily: 'sans-serif'
     },
     logo: {

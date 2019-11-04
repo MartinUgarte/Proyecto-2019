@@ -1,9 +1,9 @@
 {
   "packagerPort": 19001,
-  "packagerPid": 7636,
+  "packagerPid": 10736,
   "expoServerNgrokUrl": "https://dg-9rb.anonymous.demo.exp.direct",
   "packagerNgrokUrl": "https://packager.dg-9rb.anonymous.demo.exp.direct",
-  "ngrokPid": 1176,
+  "ngrokPid": 5800,
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "webpackServerPort": null
