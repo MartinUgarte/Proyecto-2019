@@ -272,16 +272,18 @@ app.post('/newPasswordRequest', function(req, res){
 	let userData = req.body.userData;
 	let cantUsuarios;
 	let userEmail;
+	let nombreDeUsuario;
 	db.collection('Usuarios').get().then(snap => {
 		cantUsuarios = snap.size; 									// Will return the collection size
 	});
 	db.collection("Usuarios").get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
 			if (userData === doc.id){
+				nombreDeUsuario = doc.id;
 				usuarioEncontrado = true;
-				securityCode = Math.floor(100000 + Math.random() * 900000);
+				securityCode = Math.floor(1000 + Math.random() * 9000);
 				userEmail = doc.data().Email;
-				db.collection("Usuarios").doc(doc).update({
+				db.collection("Usuarios").doc(doc.id).update({
 					Codigo_de_Seguridad: securityCode
 				})
 					.then(function (docRef) {
@@ -301,7 +303,7 @@ app.post('/newPasswordRequest', function(req, res){
 						var mailOptions = {
 							from: 'El equipo MycroTech <mycrotech2019@gmail.com>',
 							to: userEmail,
-							subject: 'Cambio de Contraseña solcitado',
+							subject: 'Cambio de Contraseña solicitado',
 							text: 'Buenos Dias,\r\nUsted ha solicitado un cambio en su contraseña. Para ello, se le va a solicitar un codigo de seguridad.\r\nSu codigo de seguridad es: ' + securityCode + '\r\nEl equipo de MycroTech.'
 						}
 
@@ -314,15 +316,17 @@ app.post('/newPasswordRequest', function(req, res){
 						})
 						
 						reply = {
-							msg: 'Listo'
+							msg: 'Listo',
+							username: nombreDeUsuario,
 						};
 						res.end(JSON.stringify(reply));
 					})
 			}
 			else if (userData === doc.data().Email){
+				nombreDeUsuario = doc.id;
 				usuarioEncontrado = true;
-				securityCode = Math.floor(100000 + Math.random() * 900000);
-				db.collection("Usuarios").doc(doc).update({
+				securityCode = Math.floor(1000 + Math.random() * 9000);
+				db.collection("Usuarios").doc(doc.id).update({
 					Codigo_de_Seguridad: securityCode
 				})
 					.then(function (docRef) {
@@ -342,7 +346,7 @@ app.post('/newPasswordRequest', function(req, res){
 						var mailOptions = {
 							from: 'El equipo MycroTech <mycrotech2019@gmail.com>',
 							to: userData,
-							subject: 'Cambio de Contraseña solcitado',
+							subject: 'Cambio de Contraseña solicitado',
 							text: 'Buenos Dias,\r\nUsted ha solicitado un cambio en su contraseña. Para ello, se le va a solicitar un codigo de seguridad.\r\nSu codigo de seguridad es: ' + securityCode + '\r\nEl equipo de MycroTech.'
 						}
 
@@ -355,13 +359,15 @@ app.post('/newPasswordRequest', function(req, res){
 						})
 						
 						reply = {
-							msg: 'Listo'
+							msg: 'Listo',
+							username: nombreDeUsuario,
 						};
 						res.end(JSON.stringify(reply));
 					})
 			}
 			else{
 				cantUsuarios--;
+				console.log(cantUsuarios);
 			}
 			if (cantUsuarios === 0){
 				reply = {
@@ -374,27 +380,20 @@ app.post('/newPasswordRequest', function(req, res){
 })
 
 
-// Cambio de Contraseña
-app.post('/newPassword', function(req, res){
-	let nombreN = req.body.username;
-	let passwordN = req.body.password;
-	let codeN = req.body.securityCode;
-	usuario = db.collection("Usuarios").doc(nombreN);
+// Verifica el codigo de seguridad
+app.post('/verifySecurityCode', function(req, res){
+	let nombreV = req.body.userData;
+	let codeV = req.body.securityCode;
+	usuario = db.collection("Usuarios").doc(nombreV);
 	usuario.get()
 		.then(doc => {
 			// Verifica si el usuario existe
 			if (doc.exists) {
-				if (doc.data().Codigo_de_Seguridad === codeN){
-					usuario.update({
-						Codigo_de_Seguridad: null,
-						Contraseña: passwordN
-					})
-						.then(function(){
-							reply = {
-								msg: 'Listo'
-							}
-							res.end(JSON.stringify(reply));
-						})
+				if (doc.data().Codigo_de_Seguridad === parseInt(codeV)){
+					reply = {
+						msg: 'Correcto'
+					}
+					res.end(JSON.stringify(reply));
 				}
 				else if (doc.data().Codigo_de_Seguridad === null){
 					reply = {
@@ -407,6 +406,44 @@ app.post('/newPassword', function(req, res){
 						msg: 'Error, codigo'
 					}
 					res.end(JSON.stringify(reply));
+				}
+			}
+			else {
+				reply = {
+					msg: 'Error, usuario'
+				}
+				res.end(JSON.stringify(reply));
+			}
+		})
+})
+
+
+// Cambio de Contraseña
+app.post('/newPassword', function(req, res){
+	let nombreN = req.body.userData;
+	let passwordN = req.body.password;
+	usuario = db.collection("Usuarios").doc(nombreN);
+	usuario.get()
+		.then(doc => {
+			// Verifica si el usuario existe
+			if (doc.exists) {
+				if (doc.data().Codigo_de_Seguridad === null){
+					reply = {
+						msg: 'Error, no solicitado'
+					}
+					res.end(JSON.stringify(reply));
+				}
+				else{
+					usuario.update({
+						Codigo_de_Seguridad: null,
+						Contraseña: passwordN
+					})
+						.then(function(){
+							reply = {
+								msg: 'Listo'
+							}
+							res.end(JSON.stringify(reply));
+						})
 				}
 			}
 			else {

@@ -33,8 +33,45 @@ export default class NuevaContra extends Component{
         }
     }
 
-    onPressEnviar(){
-        this.props.navigation.navigate('Login');
+    onPressEnviar = () => {
+        if (this.state.validatePassword === this.state.password){
+            fetch('http://' + global.IP + '/newPassword', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userData: global.recuperar,
+                    password: this.state.password,
+                })
+            })
+                .then((response) => response.json())
+                    .then((responseJson) => {
+                        
+                        this.setState({ wrongPassword: false });
+
+                        if(responseJson.msg === "Listo"){
+                            global.recuperar = null;
+                            Alert.alert("Contraseña actualizada correctamente");
+                            this.props.navigation.navigate('Login');
+                        }
+                        else if(responseJson.msg === "Error, no solicitado"){
+                            Alert.alert("ERROR", "No se ha solicitado un cambio de contraseña");
+                        }    
+                        else if(responseJson.msg === "Error, usuario"){
+                            Alert.alert("ERROR", "El usuario no existe");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+        }
+        else {
+            this.setState({ wrongPassword: true });
+            Alert.alert("Las contraseñas no coinciden");
+        }
+        
     }
 
     render(){
@@ -83,7 +120,7 @@ export default class NuevaContra extends Component{
 
 
                     <View style={styles.buttonView}>  
-                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Login')}>  
+                        <TouchableOpacity style={styles.btn} onPress={this.onPressEnviar}>  
                             <Text style = {styles.txtBtn}>Listo</Text>   
                         </TouchableOpacity>
                     </View>

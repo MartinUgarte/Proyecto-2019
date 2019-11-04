@@ -18,6 +18,38 @@ export default class Recuperar extends Component{
         };
     }
 
+    onPressEnviar = () => {
+        fetch('http://' + global.IP + '/newPasswordRequest', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userData: this.state.email,
+            })
+        })
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    
+                    this.setState({ wrongEmail: false });
+
+                    if(responseJson.msg === "Listo"){
+                        global.recuperar = responseJson.username;
+                        Alert.alert("Se ha enviado un mail con el codigo de verificación");
+                        this.props.navigation.navigate('Pin');
+                    }
+        
+                    else if(responseJson.msg === "Error, usuario"){
+                        this.setState({ wrongEmail: true });
+                        Alert.alert("ERROR", "El usuario no existe");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });  
+    }
+
     onChangeEmail = (email) => {
         this.setState({ email });
     }
@@ -26,11 +58,6 @@ export default class Recuperar extends Component{
         if(this.state.wrongEmail){
             return true
         }
-    }
-
-    onPressEnviar(){
-            this.props.navigation.navigate('Menu')
-    
     }
 
     render(){
@@ -46,11 +73,11 @@ export default class Recuperar extends Component{
                     </View>
 
                     <View style={styles.txtView}>
-                        <Text style={styles.txtStyle}>Ingresa tu e-mail y recibirás automáticamente un correo de recuperación</Text>
+                        <Text style={styles.txtStyle}>Ingresa tu e-mail o nombre de usuario y recibirás automáticamente un correo de recuperación</Text>
                     </View>
                     <View style={styles.formView}>  
                             <TextInput
-                                    placeholder="Ingresa tu email" 
+                                    placeholder="Ingresa tu email/nombre de usuario" 
                                     placeholderTextColor="rgba(0,0,0,0.4)"
                                     returnKeyType="next"
                                     autoCapitalize="none"
@@ -65,7 +92,7 @@ export default class Recuperar extends Component{
                     </View>
 
                     <View style={styles.buttonView}>  
-                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('Pin')}>  
+                        <TouchableOpacity style={styles.btn} onPress={this.onPressEnviar}>  
                             <Text style = {styles.txtBtn}>Enviar correo</Text>   
                         </TouchableOpacity>
                     </View>

@@ -19,7 +19,7 @@ export default class Pin extends Component{
         };
     }
 
-    onChangePIN = () => {
+    onChangePIN = (PIN) => {
         this.setState({ PIN });
     }
 
@@ -29,8 +29,42 @@ export default class Pin extends Component{
         }
     }
 
-    onPressEnviar(){
-        this.props.navigation.navigate('NuevaContra');
+    onPressEnviar = () => {
+        fetch('http://' + global.IP + '/verifySecurityCode', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userData: global.recuperar,
+                securityCode: this.state.PIN,
+            })
+        })
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    
+                    this.setState({ wrongPIN: false });
+
+                    if(responseJson.msg === "Correcto"){
+                        Alert.alert("Codigo de seguridad ingresado correctamente");
+                        this.props.navigation.navigate('NuevaContra');
+                    }
+                    else if(responseJson.msg === "Error, no solicitado"){
+                        this.setState({ wrongPIN: true });
+                        Alert.alert("ERROR", "No se ha solicitado un cambio de contraseña");
+                    }
+                    else if(responseJson.msg === "Error, codigo"){
+                        this.setState({ wrongPIN: true });
+                        Alert.alert("ERROR", "Codigo de seguridad ingresado incorrecto");
+                    }        
+                    else if(responseJson.msg === "Error, usuario"){
+                        Alert.alert("ERROR", "El usuario no existe");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });  
     }
 
     render(){
@@ -76,7 +110,7 @@ export default class Pin extends Component{
                     </View>
 
                     <View style={styles.buttonView}>  
-                        <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('NuevaContra')}>  
+                        <TouchableOpacity style={styles.btn} onPress={this.onPressEnviar}>  
                             <Text style = {styles.txtBtn}>Verificar</Text>   
                         </TouchableOpacity>
                     </View>
