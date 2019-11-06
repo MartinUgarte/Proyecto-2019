@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Alert, Text, TouchableOpacity, StatusBar, TextInput, Platform, KeyboardAvoidingView } from 'react-native'
-import PinInput from 'react-native-pin-input-component';
 
 export default class Pin extends Component{
 
@@ -96,17 +95,6 @@ export default class Pin extends Component{
                                     onChangeText={this.onChangePIN}
                             />
                             
-                            {/*<PinInput
-                                value={this.state.PIN}
-                                onPress={() => {}}
-                                onChangeText={this.onChangePIN}
-                                visibleSelection
-                                cellNormalStyle={styles.normal}
-                                cellFocusStyle={styles.focus}
-                                cellBlurStyle={styles.blur}
-                            
-                            />
-                            */}
                     </View>
 
                     <View style={styles.buttonView}>  
@@ -140,11 +128,13 @@ const styles = StyleSheet.create({
     txtView:{
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginHorizontal: 5,
     },
     txtStyle: {
         fontSize: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginHorizontal: 5,
     },
     formView: {
         flex: 1,

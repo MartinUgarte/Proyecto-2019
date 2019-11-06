@@ -93,7 +93,7 @@ export default class NuevaBanda extends Component{
                         returnKeyType="next"
                         autoCapitalize="none"
                         autoCorrect={false}
-                        style={this.checkWrongBandName() ? styles.formStyle2 : styles.formStyle1}                    
+                        style={this.state.temaNegro ? styles.darkFormStyle1 : styles.formStyle1}                    
                         band={this.state.band}
                         onChangeText={this.onChangeBand}
                     />
@@ -173,15 +173,16 @@ const styles = StyleSheet.create({
         borderBottomWidth: 3,
         borderBottomColor: '#A82574',
         padding: 2,
-        fontSize: 18
+        fontSize: 30,
+        borderRadius: 10,
     },
-    formStyle2: {
-        backgroundColor: 'rgba(255,0,0,0.08)',
+    darkFormStyle1: {
+        backgroundColor: 'rgba(40,35,35,1)',
         width: 250,
-        borderBottomWidth: 3,
-        borderBottomColor: 'red',
         padding: 2,
-        fontSize: 18
+        fontSize: 30,
+        borderRadius: 10,
+        color: 'white'
     },
     btn: {
         height: 50,

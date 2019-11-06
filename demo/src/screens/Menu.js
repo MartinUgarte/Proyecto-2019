@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, StatusBar } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, Alert, StatusBar } from 'react-native';
 import { NavigationEvents } from 'react-navigation'
-
-
 
 import MenuButton from '../components/MenuButton'
 
@@ -95,12 +93,12 @@ const styles = StyleSheet.create({
 
     },
     btnsContainer: {
-        width: 400,
-        height: 400,
+        width: '100%',
+        height: '100%',
         flexDirection: 'column',
         justifyContent: 'center',
         position: 'absolute',
-        top: 310,
+        top: '10%',
     },
     duoContainer: {
         flexDirection: 'row',
@@ -180,8 +178,8 @@ const styles = StyleSheet.create({
     },
     bandaActualContainer: {
         position: 'absolute',
-        top: 380,
-        left: 185,
+        top: '54%',
+        left: '56%',
         width: 150,
         alignItems: 'center',
         justifyContent: 'center'

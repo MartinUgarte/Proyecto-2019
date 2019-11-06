@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, StatusBar } from 'react-native'
+import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Dimensions, StatusBar } from 'react-native'
 
 import { NavigationEvents } from 'react-navigation'
 
@@ -18,6 +18,9 @@ export default class Inicio extends Component{
         global.presetR = [0, 0, 0]; //ej: presetR[2] es la posicion R del tercer preset
         global.temaNegro = false;
         global.recuperar = null;
+
+        global.screenWidth = Math.round(Dimensions.get('window').width);
+        global.screenHeight = Math.round(Dimensions.get('window').height);
     }
 
     static navigationOptions = {

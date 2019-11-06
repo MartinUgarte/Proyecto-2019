@@ -12,6 +12,7 @@ import MenuButton from '../components/MenuButton'
 import ArrowLeft from '../components/ArrowLeft'
 import AddButton from '../components/AddButton'
 
+import { NavigationEvents } from 'react-navigation'
 
 
 export default class Control extends Component{
@@ -258,14 +259,14 @@ export default class Control extends Component{
                         <AntDesign 
                             name="caretleft" 
                             size={30} 
-                            color="#000" 
+                            color={this.state.temaNegro ? '#fff' : '#000'}
                             onPress={this.buttonVerticalSliderN}  
                         />
 
                         <Slider
                             trackStyle={this.state.temaNegro ? customStyles4.darkTrack : customStyles4.track}
                             thumbStyle={customStyles4.thumb}
-                            minimumTrackTintColor='#000'
+                            minimumTrackTintColor={this.state.temaNegro ? '#fff' : '#000'}
                             minimumValue={-100}
                             maximumValue={100}
                             step={1}
@@ -278,7 +279,7 @@ export default class Control extends Component{
                         <AntDesign 
                             name="caretright" 
                             size={30} 
-                            color="#000" 
+                            color={this.state.temaNegro ? '#fff' : '#000'}
                             onPress={this.buttonVerticalSliderP} 
                         />
 
@@ -288,13 +289,13 @@ export default class Control extends Component{
                         <AntDesign 
                             name="caretleft" 
                             size={30} 
-                            color="#000" 
+                            color={this.state.temaNegro ? '#fff' : '#000'}
                             onPress={this.buttonSliderN}  
                         />
                         <Slider
                             trackStyle={this.state.temaNegro ? customStyles4.darkTrack : customStyles4.track}
                             thumbStyle={customStyles4.thumb}
-                            minimumTrackTintColor='#000'
+                            minimumTrackTintColor={this.state.temaNegro ? '#fff' : '#000'}
                             minimumValue={-100}
                             maximumValue={100}
                             step={1}
@@ -307,7 +308,7 @@ export default class Control extends Component{
                         <AntDesign 
                             name="caretright" 
                             size={30} 
-                            color="#000" 
+                            color={this.state.temaNegro ? '#fff' : '#000'}
                             onPress={this.buttonSliderP} 
                         />
                 </View>
@@ -447,7 +448,7 @@ const styles = StyleSheet.create({
         width: 150,
     },
     sliderX: {
-        width: 200
+        width: 200,
     },
     halfCircleSlider: {
         marginTop: 40
@@ -526,12 +527,17 @@ var customStyles4 = StyleSheet.create({
       height: 4,
       borderRadius: 4,
       backgroundColor: '#000',
-      shadowColor: 'black',
+      padding: 2,
+      borderWidth: 3,
+      borderColor: 'rgba(168,37,116,0.1)'
     },
     darkTrack: {
         height: 4,
         borderRadius: 4,
         backgroundColor: '#fff',
+        padding: 2,
+        borderWidth: 3,
+        borderColor: 'rgba(168,37,116,0.1)'
   
       },
     thumb: {
@@ -541,9 +547,5 @@ var customStyles4 = StyleSheet.create({
       borderColor: '#A82574',
       borderWidth: 5,
       borderRadius: 15,
-      shadowColor: 'black',
-      shadowOffset: {width: 0, height: 2},
-      shadowRadius: 2,
-      shadowOpacity: 0.35,
     }
   });

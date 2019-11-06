@@ -103,7 +103,7 @@ export default class NuevaCancion extends Component{
                         returnKeyType="next"
                         autoCapitalize="none"
                         autoCorrect={false}
-                        style={this.checkWrongSongName() ? styles.formStyle2 : styles.formStyle1}
+                        style={this.state.temaNegro ? styles.darkFormStyle1 : styles.formStyle1}
                         cancion={this.state.cancion}
                         onChangeText={this.onChangeCancion}
                     />
@@ -183,24 +183,23 @@ const styles = StyleSheet.create({
         borderBottomWidth: 3,
         borderBottomColor: '#A82574',
         padding: 2,
-        fontSize: 18
+        fontSize: 30,
+        borderRadius: 10,
     },
-    formStyle2: {
-        backgroundColor: 'rgba(255,0,0,0.08)',
+    darkFormStyle1: {
+        backgroundColor: 'rgba(40,35,35,1)',
         width: 250,
-        borderBottomWidth: 3,
-        borderBottomColor: 'red',
         padding: 2,
-        fontSize: 18
+        fontSize: 30,
+        borderRadius: 10,
+        color: 'white'
     },
     btn: {
         height: 50,
         width: 230,
         marginTop: 16,
         overflow: 'hidden',
-        borderColor: '#fff',
         borderRadius: 50,
-        borderWidth: 1.8, 
         backgroundColor: '#A82574',
         alignItems: 'center',
         justifyContent: 'center',

@@ -24,9 +24,9 @@ export default class Tema extends Component{
 
     mostrarImg(){
         if (this.state.temaNegroActual == true){
-            return <Image source={require('../images/temaNegro.jpg')} style={styles.temaImage}/>
+            return <Image source={require('../images/temaNegro2.jpg')} style={styles.temaImage}/>
         }else{
-            return <Image source={require('../images/temaBlanco.jpg')} style={styles.temaImage}/>
+            return <Image source={require('../images/temaBlanco2.jpg')} style={styles.temaImage}/>
         }
     }
 
@@ -111,11 +111,11 @@ export default class Tema extends Component{
                 </View>
 
                 <View style={styles.changeContainer}>
-                    <TouchableOpacity onPress={() => this.cambiarTemaABlanco()} >
-                        <Image source={require('../images/icons/colorIcon.png')} style={styles.changeImg}/>
+                    <TouchableOpacity onPress={() => this.cambiarTemaABlanco()} style={styles.btnStyle}>
+                        <Image source={this.state.temaNegroActual ? require('../images/icons/darkSun.png') : require('../images/icons/whiteSun.png')} style={styles.moonsunStyle}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.cambiarTemaANegro()} >
-                        <Image source={require('../images/icons/colorIcon.png')} style={styles.changeImg}/>
+                    <TouchableOpacity onPress={() => this.cambiarTemaANegro()} style={styles.btnStyle}>
+                        <Image source={this.state.temaNegroActual ? require('../images/icons/darkMoon.png') : require('../images/icons/whiteMoon.png')} style={styles.moonsunStyle} />
                     </TouchableOpacity>
                 </View>
               
@@ -154,10 +154,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     changeContainer: {
-        flex: 1,
+        flex: 0.5,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderTopWidth: 3,
+        borderColor: '#707070',
+        borderRadius: 10,  
+    },
+    moonsunStyle: {
+        
     },
     header: {
         flex: 0.4,

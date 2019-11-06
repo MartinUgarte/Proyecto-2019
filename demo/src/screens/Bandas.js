@@ -67,7 +67,7 @@ export default class Bandas extends Component{
                                     </TouchableOpacity>
                         }
                         ListEmptyComponent={
-                                <Text style={styles.vacioTxt}>Actualmente no tienes bandas.</Text>
+                                <Text style={this.state.temaNegro ? styles.darkVacioTxt : styles.vacioTxt}>Actualmente no tienes bandas. Oprime el botón + para agregar una.</Text>
                         }
                         />
                     
@@ -76,7 +76,7 @@ export default class Bandas extends Component{
 
                 <View style={styles.addBtnContainer} >
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('NuevaBanda')} >
-                        <Image source={require('../images/icons/addIcon.png')} style={styles.addBtn}/>
+                        <Image source={this.state.temaNegro ? require('../images/icons/darkAddIcon.png') : require('../images/icons/addIcon.png')} style={styles.addBtn}/>
                     </TouchableOpacity>
                 </View>
               
@@ -149,6 +149,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center'
     },
+    darkVacioTxt: {
+        fontSize: 20,
+        color: 'white',
+        textAlign: 'center'
+    },
     header: {
         flex: 0.26,
         backgroundColor: 'rgba(235,235,235,1)',
@@ -173,8 +178,8 @@ const styles = StyleSheet.create({
     },
     addBtnContainer: {
         position: 'absolute',
-        top: 560,
-        left: 150,
+        top: '90%',
+        left: '43%',
     },
     menuIcon: {
         zIndex: 9,

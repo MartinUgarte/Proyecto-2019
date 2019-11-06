@@ -4,7 +4,6 @@ import { StyleSheet, View, Image, Text, TouchableOpacity, FlatList, StatusBar } 
 import { NavigationEvents } from 'react-navigation'
 
 import MenuButton from '../components/MenuButton'
-import ArrowLeft from '../components/ArrowLeft'
 
 
 export default class Canciones extends Component{
@@ -16,13 +15,16 @@ export default class Canciones extends Component{
             bandasList: [],
 
             cancionesList: global.canciones,
-            cancionesBandaActual: []
+            cancionesBandaActual: [],
+
+            temaNegro: false
         }
     } 
    
     chequearCanciones(){
         this.setState({
             cancionesList: global.canciones,
+            temaNegro: global.temaNegro
         })
         for(let i = 0; i < this.state.cancionesList.length; i++){
             const res = this.state.cancionesList[i].split('.');
@@ -37,10 +39,12 @@ export default class Canciones extends Component{
         
         return(
 
-            <View style={styles.container}>
+            <View style={this.state.temaNegro ? styles.darkContainer : styles.container}>
                 
                 <NavigationEvents 
-                    onDidFocus={() => this.chequearCanciones()}
+                    onDidFocus={() => this.chequearCanciones()
+                    
+                    }
                 />
 
                 <StatusBar hidden/>
@@ -56,7 +60,7 @@ export default class Canciones extends Component{
                 <View style={styles.bandaContainer}>
                         <TouchableOpacity style={styles.cartContainer} onPress={() => this.props.navigation.navigate('Control')}>
                         </TouchableOpacity>
-                        <Text style={styles.bandaTxt}>{global.bandaActual}</Text>
+                        <Text style={this.state.temaNegro ? styles.darkBandaTxt : styles.bandaTxt}>{global.bandaActual}</Text>
                 </View>
 
                 <View style={styles.cancionesContainer}>
@@ -68,8 +72,9 @@ export default class Canciones extends Component{
                         }}
                         renderItem={({item}) =>                 
                             <View style={styles.temaContainer}>
-                                <Text style={styles.temaTxt}>{item}</Text>
-                                <Image style={styles.arrowImg} source={require('../images/icons/expandIcon.png')}/>
+                                <TouchableOpacity style={this.state.temaNegro ? styles.darkBtnCancion : styles.btnCancion}>  
+                                    <Text style = {this.state.temaNegro ? styles.darkTxtBtnCancion : styles.txtBtnCancion}>{item}</Text>   
+                                </TouchableOpacity>
                             </View>
                         }
                         ListEmptyComponent={
@@ -79,8 +84,8 @@ export default class Canciones extends Component{
                 </View> 
 
                 <View style={styles.addBtnContainer}>
-                    <TouchableOpacity style={styles.btn} onPress={() => this.props.navigation.navigate('NuevaCancion')}>  
-                            <Text style = {styles.txtBtn}>Agregar</Text>   
+                    <TouchableOpacity style={styles.btnAgregar} onPress={() => this.props.navigation.navigate('NuevaCancion')}>  
+                            <Text style = {styles.txtBtnAgregar}>Agregar</Text>   
                     </TouchableOpacity>
                 </View>
 
@@ -101,11 +106,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
 
     },
+    darkContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#000'
+
+    },
     bandaContainer: {
        flex: 1,
        flexDirection: 'row',
        justifyContent: 'space-around',
        alignItems: 'center',
+       borderBottomWidth: 2,
+       borderBottomColor: '#707070'
     },
     cancionesContainer: {
        flex: 2
@@ -123,12 +136,9 @@ const styles = StyleSheet.create({
         borderRadius: 90
     },
     temaContainer: {
-        borderTopWidth: 2,
-        borderColor: 'rgba(44,44,44,0.6)',
-        height: 70,
+        height: 80,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 20,
+        justifyContent: 'center',
         alignItems: 'center'
         
     },
@@ -139,14 +149,64 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
     },
+    darkBtnCancion: {
+        height: 55,
+        width: 276,
+        marginTop: 20,
+        overflow: 'hidden',
+        borderRadius: 50,
+        borderWidth: 1.8, 
+        backgroundColor: 'black',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.85,
+        borderBottomWidth: 4, 
+        borderColor: '#A82574', 
+    },
+    btnCancion: {
+        height: 55,
+        width: 276,
+        marginTop: 20,
+        overflow: 'hidden',
+        borderColor: 'black',
+        borderRadius: 50,
+        borderWidth: 1.8, 
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.85,
+        borderBottomWidth: 5, 
+        borderBottomColor: '#A82574', 
+    },
+    txtBtnCancion: {
+        fontSize: 20,
+        color: '#000',
+    },
+    darkTxtBtnCancion: {
+        fontSize: 20,
+        color: '#fff',
+    },
     titulo: {
         fontSize: 30,
         marginTop: 10,
         fontWeight: '400'
     },  
-    txtStyle: {
+    btnAgregar: {
+        height: 40,
+        width: 230,
+        marginTop: 16,
+        overflow: 'hidden',
+        borderBottomColor: 'rgba(0,0,0,0.4)',
+        borderRadius: 50,
+        borderBottomWidth: 1.8, 
+        backgroundColor: '#A82574',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.85
+    },
+    txtBtnAgregar: {
         fontSize: 20,
-        color: 'white'
+        color: '#fff',
     },
     addBtn: {
         width: 70,
@@ -154,8 +214,8 @@ const styles = StyleSheet.create({
     },
     addBtnContainer: {
         position: 'absolute',
-        top: 560,
-        left: 70,
+        top: '90%',
+        left: '27%',
     },
     btn: {
         height: 50,
@@ -174,18 +234,17 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     bandaTxt: {
+        fontSize: 30,
+        fontWeight: '200',
+        textAlign: 'center',
+        marginRight: 45
+    },
+    darkBandaTxt: {
         fontSize: 20,
         fontWeight: '200',
         textAlign: 'center',
-        marginRight: 35
-    },
-    temaTxt: {
-        fontSize: 20,
-        fontWeight: '300'
-    },
-    arrowImg: {
-        width: 30,
-        height: 30,
+        marginRight: 35,
+        color: 'white'
     },
     menuIcon: {
         zIndex: 9,

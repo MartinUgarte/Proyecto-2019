@@ -122,11 +122,13 @@ const styles = StyleSheet.create({
     txtView:{
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginHorizontal: 25,
     },
     txtStyle: {
         fontSize: 20,
-        textAlign: 'center'
+        textAlign: 'left',
+        marginHorizontal: 25,
     },
     formView: {
         flex: 1,
