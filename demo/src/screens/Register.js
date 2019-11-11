@@ -49,7 +49,7 @@ export default class Register extends Component{
                             if(responseJson.msg === "Listo"){
                                 global.nombre = this.state.username;
                                 Alert.alert("Registro realizado correctamente");
-                                this.props.navigation.navigate('Menu');
+                                this.props.navigation.navigate('Tutorial');
                             }
                             else if(responseJson.msg === "Error"){
                                 this.setState({ wrongUsername: true });

@@ -218,6 +218,8 @@ export default class Control extends Component{
     
     render(){
         
+        const {goBack} = this.props.navigation;
+
         let IPs = global.brazos.map((s, i) => {
             return <Picker.Item key={i} value={s} label={s} />
         });            

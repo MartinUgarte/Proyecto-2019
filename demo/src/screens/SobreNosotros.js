@@ -83,7 +83,7 @@ export default class Tutorial extends Component{
     _renderItem({item,index}){
             return (
                 <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
-                    <Image style={styles.imageStyle} source={item.image} />
+                    <Image style={styles.imgStyle} source={item.image} />
                     <Text style={{color:'#000'}} >{item.title}</Text>
                     {/* this.cambiarInteractivo*/}                        
                 </View>    
@@ -179,13 +179,16 @@ const styles = StyleSheet.create({
         color: '#A82574',
         marginTop: 30
     },
-    imageStyle: {
-        width: 250,
-        height: 350,
+    imgStyle: {
+        width: 320,
+        height: 480,
+        paddingVertical: 15,
+        paddingHorizontal: 10,
         borderWidth: 2,
         borderColor: "rgba(112,112,112,0.5)",
-        borderRadius: 30
-    },  
+        borderRadius: 10
+    },
+    
     carouselStyle: {
 
     },

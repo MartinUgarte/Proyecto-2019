@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Alert, StatusBar } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, Picker, StatusBar } from 'react-native';
 import { NavigationEvents } from 'react-navigation'
 
 import MenuButton from '../components/MenuButton'
@@ -11,12 +11,17 @@ export default class Menu extends Component{
         super( props );
         this.state = {
             bandaSelect: "",
-            temaNegro: false 
+            temaNegro: false,
+            pickerValue: 0
 
         };
     }
 
     render(){
+        
+        {/*let IPs = global.brazos.map((s, i) => {
+            return <Picker.Item key={i} value={s} label={s} />
+        });*/}   
         
         return(
             <View style={this.state.temaNegro ? styles.darkContainer : styles.container}>
@@ -31,7 +36,15 @@ export default class Menu extends Component{
                 <StatusBar hidden/>
 
                 <View style={styles.header}>
-                        <Text style={styles.titulo}>{global.nombre}</Text>
+                        <Picker
+                            style={styles.picker}
+                            selectedValue={this.state.pickerValue}
+                            onValueChange={(itemValue, itemIndex) =>
+                                this.setState({pickerValue: itemValue})
+                        }>
+                            <Picker.Item label="Java" value="Seleccione una IP" />
+                            <Picker.Item label="JavaScript" value="js" /> 
+                        </Picker>
                         <MenuButton navigation={this.props.navigation} />
                 </View>
                 
@@ -132,6 +145,11 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(235,235,235,0.14)',
         borderRadius: 10
         
+    },
+    picker: {
+        height: 30,
+        width: 90,
+        backgroundColor: 'red',
     },
     fondoEstudio: {
         flex: .7,
