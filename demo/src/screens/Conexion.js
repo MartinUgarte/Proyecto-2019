@@ -18,7 +18,7 @@ export default class Conexion extends Component{
             llamados: 0,
 
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
-            valueIP: "10.10.32.151",
+            valueIP: "10.8.17.8",
             valueMask: "255.255.255.0",
 
         };
@@ -84,7 +84,7 @@ export default class Conexion extends Component{
                 for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
                     ipHostCuartoByte = mascaraSubredCuartoByte + k;
 
-                        fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':80/server', {
+                        fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':3000/server', {
                             method: 'POST',
                             headers: {
                                 Accept: 'application/json',
@@ -147,6 +147,7 @@ export default class Conexion extends Component{
             }
 
             global.brazos = requests;
+            global.pickerValue = global.brazos[0];
             
             this.setState({
                 buscado: true,

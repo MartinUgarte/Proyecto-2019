@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Picker, StatusBar } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, Picker, StatusBar, Alert } from 'react-native';
 import { NavigationEvents } from 'react-navigation'
 
 import MenuButton from '../components/MenuButton'
@@ -12,25 +12,33 @@ export default class Menu extends Component{
         this.state = {
             bandaSelect: "",
             temaNegro: false,
-            pickerValue: 0
-
+            pValue: ""        
         };
     }
 
+    actualizar(nuevoValue){
+        this.setState({ pValue: nuevoValue });
+        Alert.alert("pValue: " + this.state.pValue + " y nuevoValue: " + nuevoValue);
+        global.pickerValue = this.state.pValue;
+    }
     render(){
         
-        {/*let IPs = global.brazos.map((s, i) => {
+        let IPs = global.brazos.map((s, i) => {
             return <Picker.Item key={i} value={s} label={s} />
-        });*/}   
+        });   
         
         return(
             <View style={this.state.temaNegro ? styles.darkContainer : styles.container}>
 
                 <NavigationEvents
-                    onDidFocus={() => this.setState({
-                        bandaSelect: global.bandaActual,
-                        temaNegro: global.temaNegro
-                    })}
+                    onDidFocus={() => {
+                            this.setState({
+                                bandaSelect: global.bandaActual,
+                                temaNegro: global.temaNegro,
+                                pValue: global.pickerValue
+                            });
+                        }
+                    }
                 />
 
                 <StatusBar hidden/>
@@ -38,13 +46,13 @@ export default class Menu extends Component{
                 <View style={styles.header}>
                         <Picker
                             style={styles.picker}
-                            selectedValue={this.state.pickerValue}
-                            onValueChange={(itemValue, itemIndex) =>
-                                this.setState({pickerValue: itemValue})
-                        }>
-                            <Picker.Item label="Java" value="Seleccione una IP" />
-                            <Picker.Item label="JavaScript" value="js" /> 
+                            selectedValue={this.state.pValue}
+                            onValueChange={nuevoValue => this.actualizar(nuevoValue)}
+                        >
+                            {IPs}
+
                         </Picker>
+                        
                         <MenuButton navigation={this.props.navigation} />
                 </View>
                 

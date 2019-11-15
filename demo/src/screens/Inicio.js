@@ -18,6 +18,7 @@ export default class Inicio extends Component{
         global.presetR = [0, 0, 0]; //ej: presetR[2] es la posicion R del tercer preset
         global.temaNegro = false;
         global.recuperar = null;
+        global.pickerValue = global.brazos[0];
 
         global.screenWidth = Math.round(Dimensions.get('window').width);
         global.screenHeight = Math.round(Dimensions.get('window').height);

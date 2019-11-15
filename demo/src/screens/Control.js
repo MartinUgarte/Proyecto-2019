@@ -30,9 +30,6 @@ export default class Control extends Component{
             lastValueR: 0,
 
             timer: null,
-            brazos: [],
-            pickerValue: global.brazos[0],
-
             actualPreset: 0,
             temaNegro: false,
         } 
@@ -108,33 +105,34 @@ export default class Control extends Component{
     }
 
     sendData = (direccion, valor, preset, nroPreset) => {
-        let IP = this.state.pickerValue;
-        fetchTimeout('http://' + IP + ':80/move', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                direction: direccion,
-                value: parseInt(valor),
-            })
-        }, 5000)
-            .then((response) => response.json())
-                .then((responseJson) => {
-                    if(responseJson.msg === "Listo"){
-                        if (preset){
-                            Alert.alert("Posicion cambiada al brazo " + IP, "Se movió a las coordenadas del preset" + nroPreset);
-                        }
-                        else if (!preset){
-                            Alert.alert("Posicion cambiada al brazo " + IP, direccion + " -> " + valor);
-                        }
-                    }
-                })
-                .catch((error) => {
-                    //console.error(error);
-                    Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
-                });
+        Alert.alert(global.pickerValue);
+        let IP = global.pickerValue;
+        // fetchTimeout('http://' + IP + ':3000/move', {
+        //     method: 'POST',
+        //     headers: {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         direction: direccion,
+        //         value: parseInt(valor),
+        //     })
+        // }, 5000)
+        //     .then((response) => response.json())
+        //         .then((responseJson) => {
+        //             if(responseJson.msg === "Listo"){
+        //                 if (preset){
+        //                     Alert.alert("Posicion cambiada al brazo " + IP, "Se movió a las coordenadas del preset" + nroPreset);
+        //                 }
+        //                 else if (!preset){
+        //                     Alert.alert("Posicion cambiada al brazo " + IP, direccion + " -> " + valor);
+        //                 }
+        //             }
+        //         })
+        //         .catch((error) => {
+        //             //console.error(error);
+        //             Alert.alert("Brazo no encontrado", "Verifique que su brazo este encendido y conectado a la red");
+        //         });
     }
 
     checkActualPreset(n){
@@ -220,9 +218,9 @@ export default class Control extends Component{
         
         const {goBack} = this.props.navigation;
 
-        let IPs = global.brazos.map((s, i) => {
-            return <Picker.Item key={i} value={s} label={s} />
-        });            
+        // let IPs = global.brazos.map((s, i) => {
+        //     return <Picker.Item key={i} value={s} label={s} />
+        // });            
 
 
         return(
