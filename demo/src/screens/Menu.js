@@ -16,10 +16,13 @@ export default class Menu extends Component{
         };
     }
 
-    actualizar(nuevoValue){
-        this.setState({ pValue: nuevoValue });
-        Alert.alert("pValue: " + this.state.pValue + " y nuevoValue: " + nuevoValue);
-        global.pickerValue = this.state.pValue;
+    actualizar(neww){
+        const nuevoValue = neww
+        this.setState({ pValue: nuevoValue }, function () {
+            console.log(this.state.pValue);
+        });
+        console.log("pValue: " + this.state.pValue + " y nuevoValue: " + nuevoValue);
+        global.pickerValue = nuevoValue;
     }
     render(){
         
@@ -44,14 +47,16 @@ export default class Menu extends Component{
                 <StatusBar hidden/>
 
                 <View style={styles.header}>
-                        <Picker
-                            style={styles.picker}
-                            selectedValue={this.state.pValue}
-                            onValueChange={nuevoValue => this.actualizar(nuevoValue)}
-                        >
-                            {IPs}
+                        <View style={{height: '50%', width: '43%', borderRadius: 20, borderWidth: 2, borderColor: '#bdc3c7'}}>
+                            <Picker
+                                style={styles.picker}
+                                selectedValue={this.state.pValue}
+                                onValueChange={nuevoValue => this.actualizar(nuevoValue)}
+                            >
+                                {IPs}
 
-                        </Picker>
+                            </Picker>
+                        </View>
                         
                         <MenuButton navigation={this.props.navigation} />
                 </View>
@@ -132,7 +137,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        width: 170,
+        width: '43.5%',
         height: 170,
         borderBottomWidth: 4,
         borderLeftWidth: 2,
@@ -155,9 +160,8 @@ const styles = StyleSheet.create({
         
     },
     picker: {
-        height: 30,
-        width: 90,
-        backgroundColor: 'red',
+        height: '100%',
+        width: '100%',
     },
     fondoEstudio: {
         flex: .7,
@@ -174,8 +178,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'black'
     },
     header: {
-        flex: 0.248,
-        backgroundColor: 'rgba(170,170,170,1)',
+        flex: 0.18,
+        backgroundColor: 'rgba(165,165,165,1)',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',

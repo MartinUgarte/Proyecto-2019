@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, ActivityIndicator, StatusBar } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-
-import MenuButton from '../components/MenuButton';
-
 import fetchTimeout from 'fetch-timeout';
 
 
@@ -18,7 +14,7 @@ export default class Conexion extends Component{
             llamados: 0,
 
             //Acordarse de cambiar el valor de IP cada vez que se cambie de maquina
-            valueIP: "10.8.17.8",
+            valueIP: "192.168.0.11",
             valueMask: "255.255.255.0",
 
         };
@@ -158,7 +154,7 @@ export default class Conexion extends Component{
                 this.props.navigation.navigate('Control');
             }
             
-        }.bind(this), 5000)
+        }.bind(this), 12000)
     }
 
     buscarBrazosFrontEnd = () => {

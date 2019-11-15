@@ -155,12 +155,14 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     header: {
-        flex: 0.26,
+        flex: 0.22,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        marginBottom: 10
+        marginBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(0,0,0,0.3)'
     },
     titulo: {
         fontSize: 30,

@@ -4,13 +4,11 @@ import Slider from "react-native-slider";
 import { AntDesign } from '@expo/vector-icons';
 
 import fetchTimeout from 'fetch-timeout';
-
 import CircularSlider from 'rn-circular-slider'
 
 
 import MenuButton from '../components/MenuButton'
 import ArrowLeft from '../components/ArrowLeft'
-import AddButton from '../components/AddButton'
 
 import { NavigationEvents } from 'react-navigation'
 
@@ -342,22 +340,6 @@ export default class Control extends Component{
 
                 </View>
 
-                {/*
-                <View style={styles.dropdown}> 
-                        
-                        <Picker
-                            style={styles.picker}
-                            selectedValue={this.state.pickerValue}
-                            onValueChange={pickerValue => this.setState({ pickerValue })}
-                        >
-                            {IPs}
-
-                        </Picker>
-                        <AddButton/>
-                        
-                    </View> 
-                */}
-
             </View>
 
         );
@@ -482,15 +464,13 @@ const styles = StyleSheet.create({
         marginLeft: 25
     },
     header: {
-        flex: 0.6,
+        flex: 0.5,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        shadowColor: 'black',
-        shadowOffset: {width: 1, height: 2},
-        shadowRadius: 2,
-        shadowOpacity: 0.6,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(0,0,0,0.3)'
     },
     titulo: {
         fontSize: 30,

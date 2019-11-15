@@ -37,7 +37,7 @@ export default class MenuDrawer extends React.Component {
                     </View>
                     <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/controlIcon.png')} style={styles.img} />
-                        {this.navLink('Conexion','Control')}
+                        {this.navLink('Conexion','Conectar')}
                     </View>
                     <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/sesionesIcon.png')} style={styles.img} />
@@ -77,11 +77,11 @@ export default class MenuDrawer extends React.Component {
                     </View>
                     <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/notaIcon.png')} style={styles.img} />
-                        {this.navLink('SobreNosotros','Canciones')}
+                        {this.navLink('Canciones','Canciones')}
                     </View>
                     <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/colorIcon.png')} style={styles.img} />
-                        {this.navLink('Tutorial','Color')}
+                        {this.navLink('Tema','Tema')}
                     </View>
                     <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <TouchableOpacity style={styles.siguienteBtn} onPress={() => this.cerrarSesion()}>  

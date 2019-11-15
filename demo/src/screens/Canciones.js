@@ -143,11 +143,13 @@ const styles = StyleSheet.create({
         
     },
     header: {
-        flex: 0.4,
+        flex: 0.3,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(0,0,0,0.3)'
     },
     darkBtnCancion: {
         height: 55,
