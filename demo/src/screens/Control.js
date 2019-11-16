@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Alert, Picker, StatusBar } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, Alert, Modal, StatusBar } from 'react-native';
 import Slider from "react-native-slider";
-import { AntDesign } from '@expo/vector-icons';
+import StepModal from '../components/StepModal';
 
 import fetchTimeout from 'fetch-timeout';
 import CircularSlider from 'rn-circular-slider'
-
 
 import MenuButton from '../components/MenuButton'
 import ArrowLeft from '../components/ArrowLeft'
@@ -26,6 +25,11 @@ export default class Control extends Component{
             lastValueX: 0,
             valueR: 0,
             lastValueR: 0,
+
+            isModalXvisible: false,
+            isModalZvisible: false,
+            stepX: 1,
+            stepZ: 1,
 
             timer: null,
             actualPreset: 0,
@@ -53,7 +57,7 @@ export default class Control extends Component{
     }
 
     buttonVerticalSliderN = () => {
-        this.setState({valueZ: this.state.valueZ-1});
+        this.setState({valueZ: this.state.valueZ - parseInt(this.state.stepZ)});
         this.setState({lastValueZ: this.state.valueZ});
         setTimeout(function(){
             this.sendData("Z", this.state.valueZ, false, null);
@@ -61,7 +65,7 @@ export default class Control extends Component{
     }
 
     buttonVerticalSliderP = () => {
-        this.setState({valueZ: this.state.valueZ+1});
+        this.setState({valueZ: this.state.valueZ + parseInt(this.state.stepZ)});
         this.setState({lastValueZ: this.state.valueZ});
         setTimeout(function(){
             this.sendData("Z", this.state.valueZ, false, null);
@@ -76,7 +80,7 @@ export default class Control extends Component{
     }
 
     buttonSliderN = () => {
-        this.setState({valueX: this.state.valueX-1});
+        this.setState({valueX: this.state.valueX - parseInt(this.state.stepX)});
         this.setState({lastValueX: this.state.valueX});
         setTimeout(function(){
             this.sendData("X", this.state.valueX, false, null);
@@ -84,7 +88,7 @@ export default class Control extends Component{
     }
 
     buttonSliderP = () => {
-        this.setState({valueX: this.state.valueX+1});
+        this.setState({valueX: this.state.valueX + parseInt(this.state.stepX)});
         this.setState({lastValueX: this.state.valueX});
         setTimeout(function(){
             this.sendData("X", this.state.valueX, false, null);
@@ -211,6 +215,25 @@ export default class Control extends Component{
                     console.error(error);
                 });
     }
+
+    longPress(){
+        console.log("Mantuviste apretado")
+    }
+
+    changeModalXVisibility = (bool) => {
+        this.setState({ isModalXvisible: bool });
+    }
+    changeModalZVisibility = (bool) => {
+        this.setState({ isModalZvisible: bool });
+    }
+
+    setStepX = (data) => {
+        this.setState({ stepX: data})
+    }
+
+    setStepZ = (data) => {
+        this.setState({ stepZ: data})
+    }
     
     render(){
         
@@ -254,12 +277,10 @@ export default class Control extends Component{
                 
                 <View style={styles.sliderZContainer}>
                     
-                        <AntDesign 
-                            name="caretleft" 
-                            size={30} 
-                            color={this.state.temaNegro ? '#fff' : '#000'}
-                            onPress={this.buttonVerticalSliderN}  
-                        />
+                        <TouchableOpacity style={styles.btnStyle} onPress={this.buttonVerticalSliderN} onLongPress={() => this.changeModalZVisibility(true)}>
+                            <Image source={this.state.temaNegro ? require('../images/icons/darkControlLeft.png') : require('../images/icons/controlLeft.png')} style={styles.menuIcon}/>
+                        </TouchableOpacity>
+
 
                         <Slider
                             trackStyle={this.state.temaNegro ? customStyles4.darkTrack : customStyles4.track}
@@ -274,22 +295,16 @@ export default class Control extends Component{
                             vertical
                             style={styles.sliderZ}                         
                         />
-                        <AntDesign 
-                            name="caretright" 
-                            size={30} 
-                            color={this.state.temaNegro ? '#fff' : '#000'}
-                            onPress={this.buttonVerticalSliderP} 
-                        />
+                        <TouchableOpacity style={styles.btnStyle} onPress={this.buttonVerticalSliderP} onLongPress={() => this.changeModalZVisibility(true)}>
+                            <Image source={this.state.temaNegro ? require('../images/icons/darkControlRight.png') : require('../images/icons/controlRight.png')} style={styles.menuIcon}/>
+                        </TouchableOpacity>
 
                 </View>
 
                 <View style={styles.sliderXContainer}>
-                        <AntDesign 
-                            name="caretleft" 
-                            size={30} 
-                            color={this.state.temaNegro ? '#fff' : '#000'}
-                            onPress={this.buttonSliderN}  
-                        />
+                        <TouchableOpacity style={styles.btnStyle} onPress={this.buttonSliderN} onLongPress={() => this.changeModalXVisibility(true)}>
+                            <Image source={this.state.temaNegro ? require('../images/icons/darkControlLeft.png') : require('../images/icons/controlLeft.png')} style={styles.menuIcon}/>
+                        </TouchableOpacity>
                         <Slider
                             trackStyle={this.state.temaNegro ? customStyles4.darkTrack : customStyles4.track}
                             thumbStyle={customStyles4.thumb}
@@ -303,13 +318,18 @@ export default class Control extends Component{
                             style={styles.sliderX}  
                                                 
                         />
-                        <AntDesign 
-                            name="caretright" 
-                            size={30} 
-                            color={this.state.temaNegro ? '#fff' : '#000'}
-                            onPress={this.buttonSliderP} 
-                        />
+                        <TouchableOpacity style={styles.btnStyle} onPress={this.buttonSliderP} onLongPress={() => this.changeModalXVisibility(true)}>
+                            <Image source={this.state.temaNegro ? require('../images/icons/darkControlRight.png') : require('../images/icons/controlRight.png')} style={styles.menuIcon}/>
+                        </TouchableOpacity>
                 </View>
+
+                <Modal transparent ={true} visible={this.state.isModalXvisible} onRequestClose={() => this.changeModalXVisibility(false)} animationType='fade'>
+                    <StepModal changeModalVisibility={this.changeModalXVisibility} setData={this.setStepX}/>
+                </Modal>
+
+                <Modal transparent ={true} visible={this.state.isModalZvisible} onRequestClose={() => this.changeModalZVisibility(false)} animationType='fade'>
+                    <StepModal changeModalVisibility={this.changeModalZVisibility} setData={this.setStepZ}/>
+                </Modal>
                         
 
                 <View style={styles.sliderRContainer}>
@@ -497,6 +517,15 @@ const styles = StyleSheet.create({
     saveIcon: {
         width: 60,
         height: 60
+    },
+    menuIcon: {
+        zIndex: 9,
+        width: 40,
+        height: 40
+    },
+    btnStyle: {
+        width: 40,
+        height: 40
     }
     
 

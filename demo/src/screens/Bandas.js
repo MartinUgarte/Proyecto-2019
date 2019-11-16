@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     },
     bandasContainer: {
         marginTop: 15,
-        width: 350,
+        width: '98%',
         height: 450,
         flexDirection: 'column',
         justifyContent: 'center',

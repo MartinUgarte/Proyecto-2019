@@ -66,11 +66,14 @@ export default class Tutorial extends Component{
     checkRightArrow = () => {
         if(this.state.currentIndex == 0 || this.state.currentIndex == 1 || this.state.currentIndex == 2 || this.state.currentIndex == 3 || this.state.currentIndex == 4 || this.state.currentIndex == 5 ){
             return (
-                <AntDesign name="right" color='#A82574' size={40} style={styles.menuIcon} onPress={() => this.carousel._snapToItem(this.state.currentIndex+1)}/>
+                <TouchableOpacity style={styles.btnStyle} onPress={() => this.carousel._snapToItem(this.state.currentIndex+1)}>
+                            <Image source={require('../images/icons/controlRight.png')} style={styles.menuIcon}/>
+                </TouchableOpacity>
             )
         }else{
             return (
-                <AntDesign name="right" color='#fff' size={40} style={styles.menuIcon}/>  
+                <TouchableOpacity style={styles.btnStyle}>
+                </TouchableOpacity>
             )
         }
     }
@@ -78,11 +81,14 @@ export default class Tutorial extends Component{
     checkLeftArrow = () => {
         if(this.state.currentIndex == 1 || this.state.currentIndex == 2 || this.state.currentIndex == 3 || this.state.currentIndex == 4 || this.state.currentIndex == 5 || this.state.currentIndex == 6 ){
             return (
-                <AntDesign name="left" color='#A82574' size={40} style={styles.menuIcon} onPress={() => this.carousel._snapToItem(this.state.currentIndex-1)}/>
+                <TouchableOpacity style={styles.btnStyle} onPress={() => this.carousel._snapToItem(this.state.currentIndex-1)}>
+                    <Image source={require('../images/icons/controlLeft.png')} style={styles.menuIcon}/>
+                </TouchableOpacity>
             )
         }else{
             return (
-                <AntDesign name="left" color='#fff' size={40} style={styles.menuIcon}/>  
+                <TouchableOpacity style={styles.btnStyle}>
+                </TouchableOpacity>
             )
         }
     }

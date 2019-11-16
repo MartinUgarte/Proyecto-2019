@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Alert, Text, TouchableOpacity, StatusBar, TextInput, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, View, Image, Alert, Text, TouchableOpacity, StatusBar, TextInput, KeyboardAvoidingView } from 'react-native'
 
 export default class Login extends Component{
 
@@ -89,10 +89,13 @@ export default class Login extends Component{
 
     render(){
         return(
-
-                
                 <KeyboardAvoidingView style={styles.container}>
                   
+                    <View style={styles.menuIcon}>
+                            <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack()} >
+                                <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
+                            </TouchableOpacity>
+                    </View>
                     <StatusBar barStyle="light-content" />
 
                     <View style={styles.titleView}>
@@ -230,6 +233,14 @@ const styles = StyleSheet.create({
     txtBtn: {
         fontSize: 20,
         color: '#fff',
+    },
+    menuIcon: {
+        zIndex: 9,
+        position: 'absolute',
+        left: 13,
+        top: 12,
+        width: 50,
+        height: 50
     },
    
 });
