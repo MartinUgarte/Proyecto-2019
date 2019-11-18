@@ -78,7 +78,7 @@ export default class Canciones extends Component{
                             </View>
                         }
                         ListEmptyComponent={
-                                <Text style={styles.vacioTxt}>Actualmente no tienes canciones.</Text>
+                                <Text style={this.state.temaNegro ? styles.darkVacioTxt : styles.vacioTxt}>Actualmente no tienes canciones.</Text>
                         }
                     />
                 </View> 
@@ -263,6 +263,15 @@ const styles = StyleSheet.create({
     btnStyle: {
         width: 50,
         height: 50
-    }
+    },
+    vacioTxt: {
+        fontSize: 20,
+        textAlign: 'center'
+    },
+    darkVacioTxt: {
+        fontSize: 20,
+        color: 'white',
+        textAlign: 'center'
+    },
 });
 

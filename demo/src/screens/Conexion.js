@@ -194,9 +194,9 @@ export default class Conexion extends Component{
 
     comprobarConf = () => {
         if(!this.state.conectado){
-            return <Text style={styles.confTxt}>Ir a configuración</Text>
+            return <Text style={styles.confTxt}>Si lo estás, ¡busca brazos!</Text>
         }else{
-            return <Text style={{color: '#fff', fontSize: 30}}>Ir a configuración</Text>
+            return <Text style={{color: '#fff', fontSize: 30}}>Si lo estás, ¡busca brazos!</Text>
         }
     }
 

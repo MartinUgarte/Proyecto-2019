@@ -19,6 +19,7 @@
     "react-native-pin-input-component": "^1.0.4",
     "react-native-slider": "^0.11.0",
     "react-native-snap-carousel": "^3.8.0",
+    "react-native-svg": "^9.13.3",
     "react-navigation": "^3.11.0",
     "react-redux": "^7.0.2",
     "redux": "^4.0.1",

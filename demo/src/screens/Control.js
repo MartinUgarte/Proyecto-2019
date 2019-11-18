@@ -334,11 +334,7 @@ export default class Control extends Component{
 
                 <View style={styles.sliderRContainer}>
 
-                    <TouchableOpacity style={styles.btnStyle} onPress={() => this.saveActualPreset(this.state.actualPreset)}>
-                        <Image source={require('../images/icons/saveIcon.png')} style={styles.saveIcon}/>
-                    </TouchableOpacity>
-
-                    {/* <CircularSlider
+                    <CircularSlider
                         style={styles.halfCircleSlider}
                         step={1}
                         min={-45}
@@ -351,13 +347,18 @@ export default class Control extends Component{
                         buttonStrokeWidth={5}
                         openingRadian={Math.PI / 2}
                         buttonRadius={11}
-                        radius={70}
-                        backgroundTrackColor={'#000'}
-                        linearGradient={[{ stop: '0%', color: '#000' }, { stop: '100%', color: '#000' }]}
-
+                        radius={90}
+                        backgroundTrackColor={this.state.temaNegro ? '#fff' : '#000'}
+                        linearGradient={[{ stop: '100%', color: this.state.temaNegro ? '#fff' : '#000' }, { stop: '100%', color: '#000' }]}
                         >
-                    </CircularSlider> */}
+                    </CircularSlider>
 
+                </View>
+
+                <View style={styles.saveContainer}> 
+                    <TouchableOpacity style={styles.btnStyle} onPress={() => this.saveActualPreset(this.state.actualPreset)}>
+                            <Image source={require('../images/icons/saveIcon.png')} style={styles.saveIcon}/>
+                    </TouchableOpacity>
                 </View>
 
             </View>
@@ -395,6 +396,19 @@ const styles = StyleSheet.create({
         marginTop: 60,
         marginBottom: 70
         
+    },
+    sliderRContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    saveContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginBottom: 22,
+        marginRight: 20
     },
     circleButtonsContainer: {
         top: 15,
@@ -437,15 +451,6 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center'
     },
-    sliderRContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        marginRight: 20,
-        marginBottom: 20
-    },
-
     sliderZ: {
         width: 150,
     },

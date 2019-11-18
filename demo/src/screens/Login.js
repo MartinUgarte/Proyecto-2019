@@ -92,7 +92,7 @@ export default class Login extends Component{
                 <KeyboardAvoidingView style={styles.container}>
                   
                     <View style={styles.menuIcon}>
-                            <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack()} >
+                            <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack(null)} >
                                 <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
                             </TouchableOpacity>
                     </View>
